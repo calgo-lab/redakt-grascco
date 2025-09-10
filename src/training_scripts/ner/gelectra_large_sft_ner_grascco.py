@@ -6,14 +6,14 @@ from data_handlers.grascco_data_handler import GrasccoDataHandler
 from flair.data import Corpus, Dictionary
 from flair.datasets import ColumnCorpus
 from flair.embeddings import TokenEmbeddings, TransformerWordEmbeddings
+from flair.models import SequenceTagger
+from flair.trainers import ModelTrainer
 from utils.project_utils import ProjectUtils
 
 import os
 
 
 def fine_tune():
-
-    project_root: Path = ProjectUtils.get_project_root()
 
     model_checkpoints_root_dir = os.environ.get("MODEL_CHECKPOINTS_ROOT_DIR", None)
     model_checkpoints_root_dir = Path(model_checkpoints_root_dir) if model_checkpoints_root_dir else Path.home() / "model_checkpoints"
@@ -26,6 +26,7 @@ def fine_tune():
     mini_batch_size = os.environ.get("MINI_BATCH_SIZE", None)
     mini_batch_size = int(mini_batch_size) if mini_batch_size else 2
 
+    project_root: Path = ProjectUtils.get_project_root()
     data_handler = GrasccoDataHandler(project_root)
     datasetdict = data_handler.get_train_dev_test_datasetdict(data_fold_k_value)
     train_df = datasetdict["train"].to_pandas()
@@ -57,13 +58,40 @@ def fine_tune():
 
     corpus: Corpus = ColumnCorpus(data_dir_path, {0: 'text', 1: 'ner'})
     label_dict: Dictionary = corpus.make_label_dictionary(label_type="ner")
-    print(f"{label_dict}")
 
     model_dir_path = data_dir_path / f"learning-rate-{learning_rate:.0e}".replace('e-0', 'e-')
     model_dir_path = model_dir_path / f"max-epochs-{max_epochs}"
     model_dir_path = model_dir_path / f"mini-batch-size-{mini_batch_size}"
     os.makedirs(model_dir_path, exist_ok=True)
 
+    embeddings: TokenEmbeddings = TransformerWordEmbeddings(
+        model="deepset/gelectra-large",
+        use_context=True,
+        fine_tune=True
+    )
+
+    tagger: SequenceTagger = SequenceTagger(
+        hidden_size = 256,
+        embeddings=embeddings,
+        tag_dictionary=label_dict,
+        tag_type="ner",
+        use_rnn=False,
+        use_crf=False,
+        reproject_embeddings=False
+    )
+    tagger.label_dictionary.add_unk = True
+
+    trainer: ModelTrainer = ModelTrainer(tagger, corpus)
+    trainer.fine_tune(
+        model_dir_path,
+        learning_rate=learning_rate,
+        max_epochs=max_epochs,
+        mini_batch_size=mini_batch_size,
+        eval_batch_size=mini_batch_size,
+        write_weights=True,
+        save_final_model=False,
+        use_final_model_for_eval=False
+    )
     
 if __name__ == "__main__":
     fine_tune()
