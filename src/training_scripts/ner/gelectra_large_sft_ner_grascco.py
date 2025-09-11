@@ -22,9 +22,9 @@ def fine_tune():
     learning_rate = os.environ.get("LEARNING_RATE", None)
     learning_rate = float(learning_rate) if learning_rate else 5e-5
     max_epochs = os.environ.get("MAX_EPOCHS", None)
-    max_epochs = int(max_epochs) if max_epochs else 15
+    max_epochs = int(max_epochs) if max_epochs else 35
     mini_batch_size = os.environ.get("MINI_BATCH_SIZE", None)
-    mini_batch_size = int(mini_batch_size) if mini_batch_size else 2
+    mini_batch_size = int(mini_batch_size) if mini_batch_size else 1
 
     project_root: Path = ProjectUtils.get_project_root()
     data_handler = GrasccoDataHandler(project_root)
