@@ -31,6 +31,7 @@ class GrasccoDataHandler:
             "type": "%TYPE",
             "document_meta_data": "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
             "sofa": "uima.cas.Sofa",
+            "sentence": "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
             "token": "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token",
             "phi": "webanno.custom.PHI",
             "document_title": "documentTitle",
@@ -66,6 +67,7 @@ class GrasccoDataHandler:
         
         document_title: str = ""
         document_text: str = ""
+        sentences: List[Dict[str, Any]] = list()
         tokens: List[Dict[str, Any]] = list()
         entities: List[Dict[str, Any]] = list()
 
@@ -76,6 +78,12 @@ class GrasccoDataHandler:
                 document_title = item[self._json_data_required_key_dict["document_title"]]
             elif item[self._json_data_required_key_dict["type"]] == self._json_data_required_key_dict["sofa"]:
                 document_text = item[self._json_data_required_key_dict["sofa_string"]]
+            elif item[self._json_data_required_key_dict["type"]] == self._json_data_required_key_dict["sentence"]:
+                sentence: Dict[str, Any] = {
+                    "begin": item[self._json_data_required_key_dict["begin"]],
+                    "end": item[self._json_data_required_key_dict["end"]]
+                }
+                sentences.append(sentence)
             elif item[self._json_data_required_key_dict["type"]] == self._json_data_required_key_dict["token"]:
                 token: Dict[str, Any] = {
                     "begin": item[self._json_data_required_key_dict["begin"]],
@@ -95,11 +103,13 @@ class GrasccoDataHandler:
                 }
                 entities.append(entity)
 
+        [s.update({"text": document_text[s["begin"]:s["end"]]}) for s in sentences]
         [t.update({"text": document_text[t["begin"]:t["end"]]}) for t in tokens]
-        [entity.update({"text": document_text[entity["begin"]:entity["end"]]}) for entity in entities]
+        [e.update({"text": document_text[e["begin"]:e["end"]]}) for e in entities]
 
         ner_data["document_title"] = document_title
         ner_data["document_text"] = document_text
+        ner_data["sentences"] = sentences
         ner_data["tokens"] = tokens
         ner_data["entities"] = entities
 
@@ -179,21 +189,24 @@ class GrasccoDataHandler:
         :param rare_label_entity_count_threshold: Threshold to consider a label as rare.
         """
         ner_data_items = self.get_ner_data_items()
-    
+
+        total_sentences: int = 0
         total_tokens: int = 0
         total_entities: int = 0
-        file_wise_token_and_entity_count: Dict[str, Tuple[int, int]] = dict()
+        file_wise_sentence_token_entity_count: Dict[str, Tuple[int, int, int]] = dict()
         label_wise_entity_count: Dict[str, int] = dict()
         file_wise_label_wise_entity_count: Dict[str, Dict[str, int]] = dict()
         
         for item in ner_data_items:
             document_title = item.get("document_title", "")
+            sentence_count = len(item.get("sentences", []))
+            total_sentences += sentence_count
             token_count = len(item.get("tokens", []))
             total_tokens += token_count
             entities = item.get("entities", [])
             entity_count = len(entities)
             total_entities += entity_count
-            file_wise_token_and_entity_count[document_title] = (token_count, entity_count)
+            file_wise_sentence_token_entity_count[document_title] = (sentence_count, token_count, entity_count)
             for entity in entities:
                 label = entity.get("label", "")
                 if label:
@@ -208,10 +221,11 @@ class GrasccoDataHandler:
             file_wise_label_wise_entity_count[k] = dict(sorted(v.items()))
                 
         self._eda_summary["total_files"] = len(ner_data_items)
+        self._eda_summary["total_sentences"] = total_sentences
         self._eda_summary["total_tokens"] = total_tokens
         self._eda_summary["total_labels"] = len(label_wise_entity_count)
         self._eda_summary["total_entities"] = total_entities
-        self._eda_summary["file_wise_token_and_entity_count"] = file_wise_token_and_entity_count
+        self._eda_summary["file_wise_sentence_token_entity_count"] = file_wise_sentence_token_entity_count
         self._eda_summary["label_wise_entity_count"] = dict(sorted(label_wise_entity_count.items()))
         self._eda_summary["file_wise_label_wise_entity_count"] = dict(sorted(file_wise_label_wise_entity_count.items()))
 
@@ -253,36 +267,42 @@ class GrasccoDataHandler:
         for idx, item in enumerate(ner_data_items):
             document_title = item.get("document_title", "")
             document_text = item.get("document_text", "")
+            sentences = json.dumps(item.get("sentences", []), ensure_ascii=False)
             tokens = json.dumps(item.get("tokens", []), ensure_ascii=False)
             entities = json.dumps(item.get("entities", []), ensure_ascii=False)
-            token_count = eda_summary.get("file_wise_token_and_entity_count", {}).get(document_title, (0, 0))[0]
-            entity_count = eda_summary.get("file_wise_token_and_entity_count", {}).get(document_title, (0, 0))[1]
+            sentence_count = eda_summary.get("file_wise_sentence_token_entity_count", {}).get(document_title, (0, 0, 0))[0]
+            token_count = eda_summary.get("file_wise_sentence_token_entity_count", {}).get(document_title, (0, 0, 0))[1]
+            entity_count = eda_summary.get("file_wise_sentence_token_entity_count", {}).get(document_title, (0, 0, 0))[2]
             label_wise_entity_count = json.dumps(eda_summary.get("file_wise_label_wise_entity_count", {}).get(document_title, {}), ensure_ascii=False)
             bioes_text = self._build_bioes_text_for_ner_data_item(item)
 
             tuples.append((
-                idx,
+                idx, 
                 document_title, 
                 document_text, 
+                sentences, 
                 tokens, 
                 entities, 
+                sentence_count, 
                 token_count, 
                 entity_count,
-                label_wise_entity_count,
+                label_wise_entity_count, 
                 bioes_text
             ))
             
         self._ner_dataframe = pd.DataFrame(
             tuples,
             columns=[
-                "ID",
+                "ID", 
                 "document_title", 
                 "document_text", 
+                "sentences", 
                 "tokens", 
                 "entities", 
+                "sentence_count", 
                 "token_count", 
-                "entity_count",
-                "label_wise_entity_count",
+                "entity_count", 
+                "label_wise_entity_count", 
                 "bioes_text"
             ]
         )

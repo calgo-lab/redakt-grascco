@@ -1,0 +1,1031 @@
+{
+    "total_files": 63,
+    "total_sentences": 2872,
+    "total_tokens": 41992,
+    "total_labels": 19,
+    "total_entities": 1439,
+    "file_wise_sentence_token_entity_count": {
+        "Albers.txt": [
+            93,
+            1478,
+            40
+        ],
+        "Amanda_Alzheimer.txt": [
+            67,
+            1163,
+            46
+        ],
+        "Baastrup.txt": [
+            21,
+            248,
+            24
+        ],
+        "Beuerle.txt": [
+            25,
+            424,
+            6
+        ],
+        "Boeck.txt": [
+            36,
+            476,
+            10
+        ],
+        "Cajal.txt": [
+            31,
+            524,
+            25
+        ],
+        "Clausthal.txt": [
+            19,
+            345,
+            16
+        ],
+        "Colon_Fake_A.txt": [
+            18,
+            446,
+            22
+        ],
+        "Colon_Fake_B.txt": [
+            31,
+            571,
+            15
+        ],
+        "Colon_Fake_C.txt": [
+            22,
+            481,
+            19
+        ],
+        "Colon_Fake_D.txt": [
+            44,
+            675,
+            25
+        ],
+        "Colon_Fake_E.txt": [
+            41,
+            712,
+            25
+        ],
+        "Colon_Fake_F.txt": [
+            23,
+            549,
+            21
+        ],
+        "Colon_Fake_G.txt": [
+            28,
+            619,
+            17
+        ],
+        "Colon_Fake_H.txt": [
+            89,
+            1641,
+            38
+        ],
+        "Colon_Fake_I.txt": [
+            59,
+            712,
+            14
+        ],
+        "Colon_Fake_J.txt": [
+            124,
+            1551,
+            31
+        ],
+        "Colon_Fake_K.txt": [
+            74,
+            938,
+            27
+        ],
+        "Dewald.txt": [
+            27,
+            488,
+            26
+        ],
+        "Dupuytren.txt": [
+            13,
+            247,
+            19
+        ],
+        "Ehrenberger.txt": [
+            18,
+            290,
+            13
+        ],
+        "Fabry.txt": [
+            45,
+            573,
+            21
+        ],
+        "Fleischmann.txt": [
+            52,
+            943,
+            27
+        ],
+        "Fuss.txt": [
+            120,
+            1585,
+            47
+        ],
+        "Gebauer.txt": [
+            63,
+            1075,
+            18
+        ],
+        "Haefner.txt": [
+            35,
+            463,
+            18
+        ],
+        "Ilgner.txt": [
+            37,
+            440,
+            13
+        ],
+        "Jadassohn.txt": [
+            72,
+            848,
+            28
+        ],
+        "Jenninger.txt": [
+            99,
+            669,
+            7
+        ],
+        "Joubert.txt": [
+            11,
+            257,
+            23
+        ],
+        "Kawasaki.txt": [
+            64,
+            721,
+            19
+        ],
+        "Koenig.txt": [
+            51,
+            780,
+            32
+        ],
+        "Leitner.txt": [
+            17,
+            188,
+            13
+        ],
+        "Meulengracht.txt": [
+            22,
+            302,
+            18
+        ],
+        "Meyr.txt": [
+            25,
+            403,
+            22
+        ],
+        "Neubauer.txt": [
+            56,
+            927,
+            24
+        ],
+        "Obradovic.txt": [
+            104,
+            2058,
+            61
+        ],
+        "Osler.txt": [
+            58,
+            1013,
+            19
+        ],
+        "Popovic.txt": [
+            40,
+            463,
+            7
+        ],
+        "Praechtel.txt": [
+            23,
+            263,
+            16
+        ],
+        "Queisser.txt": [
+            97,
+            677,
+            10
+        ],
+        "Quervain.txt": [
+            17,
+            318,
+            12
+        ],
+        "Recklinghausen.txt": [
+            24,
+            309,
+            13
+        ],
+        "Rieser.txt": [
+            25,
+            309,
+            10
+        ],
+        "Schielaug.txt": [
+            68,
+            863,
+            40
+        ],
+        "Schnitzler.txt": [
+            19,
+            307,
+            18
+        ],
+        "Schuh.txt": [
+            25,
+            346,
+            30
+        ],
+        "Stölzl.txt": [
+            50,
+            694,
+            17
+        ],
+        "Sudeck.txt": [
+            15,
+            131,
+            12
+        ],
+        "Theodor.txt": [
+            109,
+            1490,
+            51
+        ],
+        "Tupolev_1.txt": [
+            29,
+            274,
+            19
+        ],
+        "Tupolev_2.txt": [
+            32,
+            269,
+            18
+        ],
+        "Tupolev_3.txt": [
+            22,
+            252,
+            13
+        ],
+        "Tupolev_4.txt": [
+            16,
+            326,
+            24
+        ],
+        "Utz.txt": [
+            16,
+            305,
+            18
+        ],
+        "Vogler.txt": [
+            26,
+            401,
+            13
+        ],
+        "Waldenström.txt": [
+            38,
+            634,
+            33
+        ],
+        "Wankel.txt": [
+            80,
+            802,
+            18
+        ],
+        "Weber.txt": [
+            60,
+            1407,
+            20
+        ],
+        "Weil.txt": [
+            18,
+            309,
+            27
+        ],
+        "Xavier.txt": [
+            41,
+            1132,
+            63
+        ],
+        "Ypsilanti.txt": [
+            67,
+            874,
+            26
+        ],
+        "Zezelj.txt": [
+            81,
+            1014,
+            22
+        ]
+    },
+    "label_wise_entity_count": {
+        "AGE": 24,
+        "CONTACT_EMAIL": 1,
+        "CONTACT_FAX": 7,
+        "CONTACT_PHONE": 18,
+        "DATE": 694,
+        "ID": 58,
+        "LOCATION_CITY": 59,
+        "LOCATION_COUNTRY": 2,
+        "LOCATION_HOSPITAL": 36,
+        "LOCATION_ORGANIZATION": 2,
+        "LOCATION_STREET": 36,
+        "LOCATION_ZIP": 38,
+        "NAME_DOCTOR": 154,
+        "NAME_EXT": 1,
+        "NAME_PATIENT": 166,
+        "NAME_RELATIVE": 1,
+        "NAME_TITLE": 139,
+        "NAME_USERNAME": 1,
+        "PROFESSION": 2
+    },
+    "file_wise_label_wise_entity_count": {
+        "Albers.txt": {
+            "DATE": 26,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 10,
+            "NAME_TITLE": 2
+        },
+        "Amanda_Alzheimer.txt": {
+            "CONTACT_PHONE": 2,
+            "DATE": 25,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 8,
+            "NAME_PATIENT": 3,
+            "NAME_RELATIVE": 1,
+            "NAME_TITLE": 6
+        },
+        "Baastrup.txt": {
+            "CONTACT_PHONE": 1,
+            "DATE": 6,
+            "LOCATION_CITY": 3,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 3,
+            "LOCATION_ZIP": 2,
+            "NAME_DOCTOR": 4,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 2
+        },
+        "Beuerle.txt": {
+            "DATE": 2,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 1
+        },
+        "Boeck.txt": {
+            "AGE": 1,
+            "DATE": 5,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "PROFESSION": 1
+        },
+        "Cajal.txt": {
+            "DATE": 5,
+            "LOCATION_CITY": 4,
+            "LOCATION_HOSPITAL": 2,
+            "LOCATION_STREET": 2,
+            "LOCATION_ZIP": 3,
+            "NAME_DOCTOR": 5,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 3
+        },
+        "Clausthal.txt": {
+            "DATE": 11,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 3
+        },
+        "Colon_Fake_A.txt": {
+            "DATE": 21,
+            "NAME_PATIENT": 1
+        },
+        "Colon_Fake_B.txt": {
+            "AGE": 1,
+            "DATE": 10,
+            "ID": 1,
+            "NAME_PATIENT": 3
+        },
+        "Colon_Fake_C.txt": {
+            "AGE": 1,
+            "DATE": 11,
+            "ID": 1,
+            "LOCATION_CITY": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Colon_Fake_D.txt": {
+            "AGE": 1,
+            "DATE": 13,
+            "ID": 2,
+            "LOCATION_CITY": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 4,
+            "NAME_TITLE": 2
+        },
+        "Colon_Fake_E.txt": {
+            "DATE": 14,
+            "ID": 2,
+            "LOCATION_CITY": 1,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 2
+        },
+        "Colon_Fake_F.txt": {
+            "AGE": 1,
+            "DATE": 13,
+            "ID": 1,
+            "LOCATION_CITY": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Colon_Fake_G.txt": {
+            "DATE": 10,
+            "ID": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 2
+        },
+        "Colon_Fake_H.txt": {
+            "AGE": 1,
+            "CONTACT_PHONE": 1,
+            "DATE": 26,
+            "ID": 2,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 3
+        },
+        "Colon_Fake_I.txt": {
+            "AGE": 3,
+            "DATE": 3,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 1
+        },
+        "Colon_Fake_J.txt": {
+            "DATE": 25,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Colon_Fake_K.txt": {
+            "DATE": 17,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 3
+        },
+        "Dewald.txt": {
+            "DATE": 20,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 2
+        },
+        "Dupuytren.txt": {
+            "CONTACT_FAX": 1,
+            "CONTACT_PHONE": 1,
+            "DATE": 2,
+            "ID": 1,
+            "LOCATION_CITY": 3,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 2,
+            "LOCATION_ZIP": 2,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Ehrenberger.txt": {
+            "DATE": 5,
+            "ID": 4,
+            "LOCATION_CITY": 1,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_PATIENT": 2
+        },
+        "Fabry.txt": {
+            "DATE": 7,
+            "LOCATION_CITY": 2,
+            "LOCATION_STREET": 2,
+            "LOCATION_ZIP": 2,
+            "NAME_DOCTOR": 4,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 2
+        },
+        "Fleischmann.txt": {
+            "AGE": 1,
+            "DATE": 10,
+            "LOCATION_CITY": 2,
+            "LOCATION_HOSPITAL": 3,
+            "NAME_DOCTOR": 2,
+            "NAME_EXT": 1,
+            "NAME_PATIENT": 7,
+            "NAME_TITLE": 1
+        },
+        "Fuss.txt": {
+            "AGE": 1,
+            "DATE": 22,
+            "LOCATION_CITY": 2,
+            "LOCATION_HOSPITAL": 2,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 5,
+            "NAME_PATIENT": 9,
+            "NAME_TITLE": 4
+        },
+        "Gebauer.txt": {
+            "DATE": 11,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 4,
+            "NAME_TITLE": 1
+        },
+        "Haefner.txt": {
+            "DATE": 12,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 2
+        },
+        "Ilgner.txt": {
+            "DATE": 7,
+            "LOCATION_CITY": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 1
+        },
+        "Jadassohn.txt": {
+            "DATE": 17,
+            "ID": 2,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 6,
+            "NAME_TITLE": 1
+        },
+        "Jenninger.txt": {
+            "AGE": 1,
+            "DATE": 2,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Joubert.txt": {
+            "CONTACT_FAX": 1,
+            "CONTACT_PHONE": 1,
+            "DATE": 4,
+            "ID": 1,
+            "LOCATION_CITY": 3,
+            "LOCATION_ORGANIZATION": 1,
+            "LOCATION_STREET": 3,
+            "LOCATION_ZIP": 3,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 3
+        },
+        "Kawasaki.txt": {
+            "AGE": 1,
+            "DATE": 10,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 3
+        },
+        "Koenig.txt": {
+            "DATE": 27,
+            "ID": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 1
+        },
+        "Leitner.txt": {
+            "DATE": 4,
+            "LOCATION_CITY": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 3
+        },
+        "Meulengracht.txt": {
+            "CONTACT_FAX": 1,
+            "CONTACT_PHONE": 1,
+            "DATE": 2,
+            "ID": 2,
+            "LOCATION_CITY": 2,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 2,
+            "LOCATION_ZIP": 2,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Meyr.txt": {
+            "DATE": 16,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 1
+        },
+        "Neubauer.txt": {
+            "DATE": 9,
+            "ID": 2,
+            "LOCATION_CITY": 2,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 5,
+            "NAME_TITLE": 2
+        },
+        "Obradovic.txt": {
+            "CONTACT_PHONE": 2,
+            "DATE": 37,
+            "ID": 2,
+            "LOCATION_CITY": 2,
+            "NAME_DOCTOR": 5,
+            "NAME_PATIENT": 8,
+            "NAME_TITLE": 5
+        },
+        "Osler.txt": {
+            "AGE": 1,
+            "DATE": 13,
+            "ID": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 1
+        },
+        "Popovic.txt": {
+            "DATE": 3,
+            "ID": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 1
+        },
+        "Praechtel.txt": {
+            "DATE": 8,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 3
+        },
+        "Queisser.txt": {
+            "AGE": 1,
+            "DATE": 3,
+            "LOCATION_CITY": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 1
+        },
+        "Quervain.txt": {
+            "DATE": 2,
+            "LOCATION_CITY": 2,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 1
+        },
+        "Recklinghausen.txt": {
+            "DATE": 4,
+            "ID": 2,
+            "LOCATION_COUNTRY": 1,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 1
+        },
+        "Rieser.txt": {
+            "CONTACT_PHONE": 1,
+            "DATE": 5,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 1
+        },
+        "Schielaug.txt": {
+            "AGE": 3,
+            "CONTACT_FAX": 1,
+            "CONTACT_PHONE": 1,
+            "DATE": 4,
+            "ID": 1,
+            "LOCATION_CITY": 4,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 4,
+            "LOCATION_ZIP": 4,
+            "NAME_DOCTOR": 8,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 8
+        },
+        "Schnitzler.txt": {
+            "DATE": 5,
+            "ID": 4,
+            "LOCATION_CITY": 2,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 1
+        },
+        "Schuh.txt": {
+            "CONTACT_FAX": 2,
+            "CONTACT_PHONE": 4,
+            "DATE": 3,
+            "ID": 2,
+            "LOCATION_CITY": 4,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 3,
+            "LOCATION_ZIP": 3,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 4
+        },
+        "Stölzl.txt": {
+            "DATE": 7,
+            "LOCATION_CITY": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 2
+        },
+        "Sudeck.txt": {
+            "DATE": 2,
+            "ID": 2,
+            "NAME_DOCTOR": 3,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 3
+        },
+        "Theodor.txt": {
+            "AGE": 1,
+            "DATE": 18,
+            "LOCATION_CITY": 2,
+            "LOCATION_HOSPITAL": 3,
+            "LOCATION_ORGANIZATION": 1,
+            "LOCATION_STREET": 2,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 7,
+            "NAME_PATIENT": 8,
+            "NAME_TITLE": 7,
+            "PROFESSION": 1
+        },
+        "Tupolev_1.txt": {
+            "DATE": 2,
+            "ID": 5,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 5,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 5
+        },
+        "Tupolev_2.txt": {
+            "DATE": 2,
+            "ID": 4,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 5,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 5
+        },
+        "Tupolev_3.txt": {
+            "DATE": 2,
+            "ID": 4,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2,
+            "NAME_USERNAME": 1
+        },
+        "Tupolev_4.txt": {
+            "DATE": 11,
+            "ID": 1,
+            "LOCATION_CITY": 1,
+            "LOCATION_STREET": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 4,
+            "NAME_TITLE": 3
+        },
+        "Utz.txt": {
+            "DATE": 11,
+            "ID": 2,
+            "LOCATION_CITY": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 1
+        },
+        "Vogler.txt": {
+            "AGE": 1,
+            "DATE": 6,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 2
+        },
+        "Waldenström.txt": {
+            "AGE": 1,
+            "DATE": 13,
+            "LOCATION_CITY": 3,
+            "LOCATION_COUNTRY": 1,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 2,
+            "LOCATION_ZIP": 2,
+            "NAME_DOCTOR": 5,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 4
+        },
+        "Wankel.txt": {
+            "DATE": 12,
+            "LOCATION_CITY": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 3,
+            "NAME_TITLE": 1
+        },
+        "Weber.txt": {
+            "DATE": 5,
+            "ID": 1,
+            "NAME_DOCTOR": 7,
+            "NAME_PATIENT": 2,
+            "NAME_TITLE": 5
+        },
+        "Weil.txt": {
+            "CONTACT_EMAIL": 1,
+            "CONTACT_FAX": 1,
+            "CONTACT_PHONE": 2,
+            "DATE": 5,
+            "ID": 2,
+            "LOCATION_CITY": 4,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_STREET": 3,
+            "LOCATION_ZIP": 3,
+            "NAME_DOCTOR": 2,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 2
+        },
+        "Xavier.txt": {
+            "DATE": 55,
+            "ID": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 4,
+            "NAME_TITLE": 2
+        },
+        "Ypsilanti.txt": {
+            "DATE": 20,
+            "LOCATION_CITY": 1,
+            "LOCATION_HOSPITAL": 1,
+            "LOCATION_ZIP": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 1,
+            "NAME_TITLE": 1
+        },
+        "Zezelj.txt": {
+            "AGE": 3,
+            "CONTACT_PHONE": 1,
+            "DATE": 6,
+            "LOCATION_HOSPITAL": 1,
+            "NAME_DOCTOR": 1,
+            "NAME_PATIENT": 9,
+            "NAME_TITLE": 1
+        }
+    },
+    "rare_label_wise_entity_items": {
+        "CONTACT_EMAIL": [
+            {
+                "begin": 392,
+                "end": 422,
+                "label": "CONTACT_EMAIL",
+                "text": "termin.dot@uniklinik-berlin.de",
+                "document_title": "Weil.txt"
+            }
+        ],
+        "CONTACT_FAX": [
+            {
+                "begin": 206,
+                "end": 221,
+                "label": "CONTACT_FAX",
+                "text": "02216/325-15338",
+                "document_title": "Dupuytren.txt"
+            },
+            {
+                "begin": 141,
+                "end": 155,
+                "label": "CONTACT_FAX",
+                "text": "0816/333-13284",
+                "document_title": "Joubert.txt"
+            },
+            {
+                "begin": 195,
+                "end": 217,
+                "label": "CONTACT_FAX",
+                "text": "+43 (453) 14-592-12098",
+                "document_title": "Meulengracht.txt"
+            },
+            {
+                "begin": 171,
+                "end": 192,
+                "label": "CONTACT_FAX",
+                "text": "+43(0)333 775-8422334",
+                "document_title": "Schielaug.txt"
+            },
+            {
+                "begin": 187,
+                "end": 208,
+                "label": "CONTACT_FAX",
+                "text": "+43(0)333 775-8447334",
+                "document_title": "Schuh.txt"
+            },
+            {
+                "begin": 331,
+                "end": 352,
+                "label": "CONTACT_FAX",
+                "text": "+43(0)333 775-8447339",
+                "document_title": "Schuh.txt"
+            },
+            {
+                "begin": 371,
+                "end": 391,
+                "label": "CONTACT_FAX",
+                "text": "030 110-2619 o. 2452",
+                "document_title": "Weil.txt"
+            }
+        ],
+        "LOCATION_COUNTRY": [
+            {
+                "begin": 203,
+                "end": 206,
+                "label": "LOCATION_COUNTRY",
+                "text": "USA",
+                "document_title": "Recklinghausen.txt"
+            },
+            {
+                "begin": 1020,
+                "end": 1024,
+                "label": "LOCATION_COUNTRY",
+                "text": "Peru",
+                "document_title": "Waldenström.txt"
+            }
+        ],
+        "LOCATION_ORGANIZATION": [
+            {
+                "begin": 442,
+                "end": 445,
+                "label": "LOCATION_ORGANIZATION",
+                "text": "BVA",
+                "document_title": "Joubert.txt"
+            },
+            {
+                "begin": 2686,
+                "end": 2720,
+                "label": "LOCATION_ORGANIZATION",
+                "text": "Alpen-Adria-Universität Kragenfurt",
+                "document_title": "Theodor.txt"
+            }
+        ],
+        "NAME_EXT": [
+            {
+                "begin": 5579,
+                "end": 5582,
+                "label": "NAME_EXT",
+                "text": "Fuß",
+                "document_title": "Fleischmann.txt"
+            }
+        ],
+        "NAME_RELATIVE": [
+            {
+                "begin": 6126,
+                "end": 6141,
+                "label": "NAME_RELATIVE",
+                "text": "Alois Alzheimer",
+                "document_title": "Amanda_Alzheimer.txt"
+            }
+        ],
+        "NAME_USERNAME": [
+            {
+                "begin": 298,
+                "end": 303,
+                "label": "NAME_USERNAME",
+                "text": "WinA.",
+                "document_title": "Tupolev_3.txt"
+            }
+        ],
+        "PROFESSION": [
+            {
+                "begin": 1572,
+                "end": 1581,
+                "label": "PROFESSION",
+                "text": "Floristin",
+                "document_title": "Boeck.txt"
+            },
+            {
+                "begin": 2608,
+                "end": 2629,
+                "label": "PROFESSION",
+                "text": "Maschinenbauingenieur",
+                "document_title": "Theodor.txt"
+            }
+        ]
+    }
+}
