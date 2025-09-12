@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: xlm-roberta-large-sft-ner-grascco
+  namespace: ssaha
+spec:
+  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: xlm-roberta-large-sft-ner-grascco
+    spec:
+      containers:
+        - name: xlm-roberta-large-sft-ner-grascco-container
+          image: sksdotsauravs/python-nlp-dev-container:ubuntu24.04-python3.12.11-cuda12.8.1-torch2.7.1
+          workingDir: /home/ssaha
+          resources:
+            requests:
+              nvidia.com/gpu: "1"
+              memory: "32Gi"
+              cpu: "16000m"
+            limits:
+              nvidia.com/gpu: "1"
+              memory: "64Gi"
+              cpu: "32000m"
+          volumeMounts:
+            - name: ssaha-pv
+              mountPath: /home/ssaha
+          env:
+            - name: FLAIR_CACHE_ROOT
+              value: /home/ssaha/.flair
+            - name: HF_HOME
+              value: /home/ssaha/.cache/huggingface
+            - name: MODEL_CHECKPOINTS_ROOT_DIR
+              value: /home/ssaha/model-checkpoints
+            - name: DATA_FOLD_K_VALUE
+              value: "1"
+            - name: LEARNING_RATE
+              value: "5e-5"
+            - name: MAX_EPOCHS
+              value: "35"
+            - name: MINI_BATCH_SIZE
+              value: "1"
+            - name: RUN_PYTHON_SCRIPT
+              value: "yes"
+            - name: PYTHON_SCRIPT_PATH
+              value: "/home/ssaha/Projects/redakt-grascco/src/training_scripts/ner/xlm_roberta_large_sft_ner_grascco.py"
+      restartPolicy: Never
+      volumes:
+        - name: ssaha-pv
+          persistentVolumeClaim:
+            claimName: ssaha-pvc
+      nodeSelector:
+        gpu: a100

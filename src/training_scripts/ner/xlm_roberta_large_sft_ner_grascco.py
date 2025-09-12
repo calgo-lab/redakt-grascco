@@ -41,7 +41,7 @@ def fine_tune():
     print(f"mini_batch_size: {mini_batch_size}")
     print(f"max_epochs: {max_epochs}")
 
-    data_dir_path = model_checkpoints_root_dir / "grascco" / "ner" / "google-bert-base-german-cased"
+    data_dir_path = model_checkpoints_root_dir / "grascco" / "ner" / "facebook-xlm-roberta-large"
     data_dir_path = data_dir_path / "additional-embeddings-none" / "use-context"
     data_dir_path =  data_dir_path / f"sample-size-{sample_size}" / f"data-fold-{data_fold_k_value}"
     data_dir_path.mkdir(parents=True, exist_ok=True)
@@ -65,7 +65,7 @@ def fine_tune():
     model_dir_path.mkdir(parents=True, exist_ok=True)
 
     embeddings: TokenEmbeddings = TransformerWordEmbeddings(
-        model="google-bert/bert-base-german-cased",
+        model="facebook/xlm-roberta-large",
         use_context=True,
         fine_tune=True
     )

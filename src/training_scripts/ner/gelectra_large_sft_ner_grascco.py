@@ -62,7 +62,7 @@ def fine_tune():
     model_dir_path = data_dir_path / f"learning-rate-{learning_rate:.0e}".replace('e-0', 'e-')
     model_dir_path = model_dir_path / f"max-epochs-{max_epochs}"
     model_dir_path = model_dir_path / f"mini-batch-size-{mini_batch_size}"
-    os.makedirs(model_dir_path, exist_ok=True)
+    model_dir_path.mkdir(parents=True, exist_ok=True)
 
     embeddings: TokenEmbeddings = TransformerWordEmbeddings(
         model="deepset/gelectra-large",
