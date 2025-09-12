@@ -85,7 +85,8 @@ Columns:<br>
 11. **bioes_text**
 
 
-Two separate transformers based NER models are fine-tuned on these annotations:
+Three separate transformers based language models are fine-tuned for the NER downstream task on these annotations of GraSCCo corpus:
 
-1. deepset/gelectra-large
-2. google-bert/bert-base-german-cased
+1. google-bert/bert-base-german-cased
+2. FacebookAI/xlm-roberta-large
+3. deepset/gelectra-large
