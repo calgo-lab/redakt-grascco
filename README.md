@@ -2,19 +2,15 @@
 
 For developing NER models based on [GraSCCo_PHI](https://zenodo.org/records/11502329) corpus.
 
-GraSCCo - short for Graz Synthetic Clinical text Corpus - is a collection of artificially generated semi-structured and unstructured German-language clinical summaries designed to support research in clinical Natural Language Processing (cNLP).
+GraSCCo - short for <u>Gra</u>z <u>S</u>ynthetic <u>C</u>linical text <u>Co</u>rpus - is a collection of artificially generated semi-structured and unstructured German-language clinical summaries designed to support research in clinical Natural Language Processing (cNLP).
 
-https://ebooks.iospress.nl/doi/10.3233/SHTI220805 <br>
-https://zenodo.org/records/6539131
-
-These documents underwent rigorous alienation steps - textual paraphrasing, anonymization, and restructuring - to remove any privacy-sensitive information derived from real clinical texts. This transformation allows GraSCCo to be fully shareable with no legal restrictions.
-
-To evaluate its utility, GraSCCo was compared to other real, non-shareable clinical corpora. The study found that GraSCCo captures sufficient linguistic characteristics to approximate real clinical language use - making it an effective resource for training clinical language models, though not necessarily domain-specific models.
+Research Article: [GRASCCO — The First Publicly Shareable, Multiply-Alienated German Clinical Text Corpus](https://ebooks.iospress.nl/doi/10.3233/SHTI220805)<br>
+Zenodo Data Repository: https://zenodo.org/records/6539131
 
 Later, the corpus was annotated with PHI (Protected Health Information) entities. The annotations were exported XMI and JSON formats created with the INCEpTION annotation platform.
 
-https://ebooks.iospress.nl/doi/10.3233/SHTI240853 <br>
-https://zenodo.org/records/11502329
+Research Article: [De-Identifying GRASCCO – A Pilot Study for the De-Identification of the German Medical Text Project (GeMTeX) Corpus](https://ebooks.iospress.nl/doi/10.3233/SHTI240853) <br>
+Zenodo Data Repository: https://zenodo.org/records/11502329
 
 The following metrics are based on processing of [JSON exports](data/raw/11502329/grascco_phi_annotation_json) of the annotations .
 
@@ -90,3 +86,21 @@ Three separate transformers based language models are fine-tuned for the NER dow
 1. google-bert/bert-base-german-cased
 2. FacebookAI/xlm-roberta-large
 3. deepset/gelectra-large
+
+## Model Performance
+
+(macro avg):
+
+| Model              | Precision     | Recall        | F1-score      |
+|--------------------|---------------|---------------|---------------|
+| gBERT-base         | 0.51 ± 0.040  | 0.57 ± 0.046  | 0.53 ± 0.044  |
+| XLM-RoBERTa-large  | 0.61 ± 0.019  | 0.62 ± 0.047  | 0.60 ± 0.036  |
+| gELECTRA-large     | 0.56 ± 0.043  | 0.61 ± 0.030  | 0.58 ± 0.038  |
+
+(micro avg):
+
+| Model              | Precision     | Recall        | F1-score      |
+|--------------------|---------------|---------------|---------------|
+| gBERT-base         | 0.79 ± 0.045  | 0.84 ± 0.035  | 0.81 ± 0.040  |
+| XLM-RoBERTa-large  | 0.84 ± 0.022  | 0.87 ± 0.023  | 0.85 ± 0.021  |
+| gELECTRA-large     | 0.83 ± 0.040  | 0.87 ± 0.021  | 0.85 ± 0.030  |
