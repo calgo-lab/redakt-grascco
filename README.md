@@ -92,17 +92,31 @@ List of all LOCATION_ZIP (38) entities in different documents:
 1. 01334, 2. 09221, 3. 10117, 4. 10117, 5. 10247, 6. 12299, 7. 20223, 8. 20223, 9. 24937, 10. 24941, 11. 33455, 12. 33455, 13. 34443, 14. 35745, 15. 47809, 16. 47809, 17. 69115, 18. 72119, 19. 73333, 20. 76646, 21. 8010, 22. 9010, 23. 9011, 24. 9020, 25. 91022, 26. A-2236, 27. A-2236, 28. A-2236, 29. A-3336, 30. A-3337, 31. A-8120, 32. A-9011, 33. A-9011, 34. A-9011, 35. A-9011, 36. A-9011, 37. A-9012, 38. A-9580
 ```
 
+<br>
 
-Due to insufficient number of entities for labels, such as - 
+**Rarely (count <= 10)** present labels and entities:
 
-1. **CONTACT_EMAIL (1)**
-2. **NAME_EXT (1)**
-3. **NAME_RELATIVE (1)**
-4. **NAME_USERNAME (1)**
+| Label                | Entity                            | Document Title          | Begin | End  |
+|----------------------|-----------------------------------|-------------------------|-------|------|
+| CONTACT_EMAIL        | termin.dot@uniklinik-berlin.de    | Weil.txt                | 392   | 422  |
+| CONTACT_FAX          | 02216/325-15338                   | Dupuytren.txt           | 206   | 221  |
+| CONTACT_FAX          | 0816/333-13284                    | Joubert.txt             | 141   | 155  |
+| CONTACT_FAX          | +43 (453) 14-592-12098            | Meulengracht.txt        | 195   | 217  |
+| CONTACT_FAX          | +43(0)333 775-8422334             | Schielaug.txt           | 171   | 192  |
+| CONTACT_FAX          | +43(0)333 775-8447334             | Schuh.txt               | 187   | 208  |
+| CONTACT_FAX          | +43(0)333 775-8447339             | Schuh.txt               | 331   | 352  |
+| CONTACT_FAX          | 030 110-2619 o. 2452              | Weil.txt                | 371   | 391  |
+| LOCATION_COUNTRY     | USA                               | Recklinghausen.txt      | 203   | 206  |
+| LOCATION_COUNTRY     | Peru                              | Waldenström.txt         | 1020  | 1024 |
+| LOCATION_ORGANIZATION| BVA                               | Joubert.txt             | 442   | 445  |
+| LOCATION_ORGANIZATION| Alpen-Adria-Universität Kragenfurt| Theodor.txt             | 2686  | 2720 |
+| NAME_EXT             | Fuß                               | Fleischmann.txt         | 5579  | 5582 |
+| NAME_RELATIVE        | Alois Alzheimer                   | Amanda_Alzheimer.txt    | 6126  | 6141 |
+| NAME_USERNAME        | WinA.                             | Tupolev_3.txt           | 298   | 303  |
+| PROFESSION           | Floristin                         | Boeck.txt               | 1572  | 1581 |
+| PROFESSION           | Maschinenbauingenieur             | Theodor.txt             | 2608  | 2629 |
 
-\- documents containing these entities were made part of train set. Due to this curation, the test set contains only the rest 15 labels.
-
-A separate pandas dataframe is prepared with rows for all the documents and with additionally prepared BIOES tagged tokenized text per document.
+A separate pandas [dataframe](data/grascco_ner_data.csv) is prepared with rows for all the documents and with additionally prepared BIOES tagged tokenized text per document to facilitate fine-tuning and evaluation.
 
 Columns:<br>
 
@@ -117,6 +131,54 @@ Columns:<br>
 9. **entity_count**
 10. **label_wise_entity_count**
 11. **bioes_text**
+
+
+Before preparing a 5-fold train/dev/test split, to evenly distribute rarely present entities: 
+
+1. files containing labels with one entity - **CONTACT_EMAIL - Weil.txt**, **NAME_EXT - Fleischmann.txt**, **NAME_RELATIVE - Amanda_Alzheimer.txt** and **NAME_USERNAME - Tupolev_3.txt**  are kept in the training set, if we keep aside these files from any split, we loose significant amount of tokens and other entities that are present in these files.
+
+2. files containing labels with two entities (e.g. **LOCATION_COUNTRY - Recklinghausen.txt, Waldenström.txt**) are split such that one file goes to train set and the other to test set.
+
+3. files containing labels with three or more entities (e.g. **CONTACT_FAX**) are split such that one file goes to train set, one to dev set and the other to test set.
+
+
+After this setup - train/dev/test sets contains the following files in every fold along with fold-wise rest of the files:
+
+| Train                      | Dev                | Test                        |
+|----------------------------|--------------------|-----------------------------|
+| Weil.txt<br>Fleischmann.txt<br>Amanda_Alzheimer.txt<br>Tupolev_3.txt<br>Schielaug.txt<br>Waldenström.txt<br>Theodor.txt| Schuh.txt<br>Dupuytren.txt | Joubert.txt<br>Meulengracht.txt<br>Recklinghausen.txt<br>Boeck.txt |
+
+In the next step, 5 more files are selected randomly for test set excluding the files from the table above.
+
+Finally, with the rest 45 files a 5-fold split is performed to create train/dev sets.
+
+| Label/Stat           | K-1                                   | K-2                                   | K-3                                   | K-4                                   | K-5                                   |
+|----------------------|---------------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|
+| Total Files          | Train: 43<br>Dev: 11<br>Test: 9       | Train: 42<br>Dev: 12<br>Test: 9       | Train: 42<br>Dev: 12<br>Test: 9       | Train: 43<br>Dev: 11<br>Test: 9       | Train: 43<br>Dev: 11<br>Test: 9       |
+| Total Sentences      | Train: 2004<br>Dev: 579<br>Test: 289  | Train: 2209<br>Dev: 374<br>Test: 289  | Train: 2198<br>Dev: 385<br>Test: 289  | Train: 2019<br>Dev: 564<br>Test: 289  | Train: 2018<br>Dev: 565<br>Test: 289  |
+| Total Tokens         | Train: 29065<br>Dev: 7868<br>Test: 5059| Train: 30587<br>Dev: 6346<br>Test: 5059| Train: 31192<br>Dev: 5741<br>Test: 5059| Train: 29654<br>Dev: 7279<br>Test: 5059| Train: 29019<br>Dev: 7914<br>Test: 5059|
+| Total Entities       | Train: 1028<br>Dev: 216<br>Test: 195  | Train: 972<br>Dev: 272<br>Test: 195   | Train: 1023<br>Dev: 221<br>Test: 195  | Train: 969<br>Dev: 275<br>Test: 195   | Train: 952<br>Dev: 292<br>Test: 195   |
+| DATE                 | Train: 523<br>Dev: 84<br>Test: 87     | Train: 471<br>Dev: 136<br>Test: 87    | Train: 521<br>Dev: 86<br>Test: 87     | Train: 470<br>Dev: 137<br>Test: 87    | Train: 483<br>Dev: 124<br>Test: 87    |
+| NAME_PATIENT         | Train: 119<br>Dev: 27<br>Test: 20     | Train: 121<br>Dev: 25<br>Test: 20     | Train: 122<br>Dev: 24<br>Test: 20     | Train: 115<br>Dev: 31<br>Test: 20     | Train: 119<br>Dev: 27<br>Test: 20     |
+| NAME_DOCTOR          | Train: 105<br>Dev: 28<br>Test: 21     | Train: 108<br>Dev: 25<br>Test: 21     | Train: 109<br>Dev: 24<br>Test: 21     | Train: 109<br>Dev: 24<br>Test: 21     | Train: 98<br>Dev: 35<br>Test: 21      |
+| NAME_TITLE           | Train: 94<br>Dev: 26<br>Test: 19      | Train: 96<br>Dev: 24<br>Test: 19      | Train: 99<br>Dev: 21<br>Test: 19      | Train: 98<br>Dev: 22<br>Test: 19      | Train: 87<br>Dev: 33<br>Test: 19      |
+| LOCATION_CITY        | Train: 39<br>Dev: 11<br>Test: 9       | Train: 35<br>Dev: 15<br>Test: 9       | Train: 34<br>Dev: 16<br>Test: 9       | Train: 36<br>Dev: 14<br>Test: 9       | Train: 36<br>Dev: 14<br>Test: 9       |
+| ID                   | Train: 41<br>Dev: 4<br>Test: 13       | Train: 32<br>Dev: 13<br>Test: 13      | Train: 31<br>Dev: 14<br>Test: 13      | Train: 37<br>Dev: 8<br>Test: 13       | Train: 33<br>Dev: 12<br>Test: 13      |
+| LOCATION_ZIP         | Train: 24<br>Dev: 8<br>Test: 6        | Train: 23<br>Dev: 9<br>Test: 6        | Train: 22<br>Dev: 10<br>Test: 6       | Train: 23<br>Dev: 9<br>Test: 6        | Train: 20<br>Dev: 12<br>Test: 6       |
+| LOCATION_HOSPITAL    | Train: 25<br>Dev: 7<br>Test: 4        | Train: 28<br>Dev: 4<br>Test: 4        | Train: 27<br>Dev: 5<br>Test: 4        | Train: 24<br>Dev: 8<br>Test: 4        | Train: 25<br>Dev: 7<br>Test: 4        |
+| LOCATION_STREET      | Train: 23<br>Dev: 7<br>Test: 6        | Train: 22<br>Dev: 8<br>Test: 6        | Train: 21<br>Dev: 9<br>Test: 6        | Train: 21<br>Dev: 9<br>Test: 6        | Train: 18<br>Dev: 12<br>Test: 6       |
+| AGE                  | Train: 19<br>Dev: 4<br>Test: 1        | Train: 19<br>Dev: 4<br>Test: 1        | Train: 20<br>Dev: 3<br>Test: 1        | Train: 18<br>Dev: 5<br>Test: 1        | Train: 18<br>Dev: 5<br>Test: 1        |
+| CONTACT_PHONE        | Train: 7<br>Dev: 7<br>Test: 4         | Train: 9<br>Dev: 5<br>Test: 4         | Train: 8<br>Dev: 6<br>Test: 4         | Train: 9<br>Dev: 5<br>Test: 4         | Train: 7<br>Dev: 7<br>Test: 4         |
+| CONTACT_FAX          | Train: 2<br>Dev: 3<br>Test: 2         | Train: 2<br>Dev: 3<br>Test: 2         | Train: 2<br>Dev: 3<br>Test: 2         | Train: 2<br>Dev: 3<br>Test: 2         | Train: 1<br>Dev: 4<br>Test: 2         |
+| LOCATION_COUNTRY     | Train: 1<br>Dev: 0<br>Test: 1         | Train: 0<br>Dev: 1<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         |
+| LOCATION_ORGANIZATION| Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         |
+| PROFESSION           | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         |
+| CONTACT_EMAIL        | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
+| NAME_EXT             | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
+| NAME_RELATIVE        | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
+| NAME_USERNAME        | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
+
+Due to (1) curation, the test set contains only the rest 15 labels.
 
 
 Three separate transformers based language models are fine-tuned for the NER downstream task on these annotations of GraSCCo corpus:
