@@ -26,7 +26,18 @@ The following keys are used to extract relevant information from the JSON files:
 5. **uima.cas.Sofa** - the value of **%TYPE** key - used to access the whole text of the document
 6. **webanno.custom.PHI** - the value of **%TYPE** key - used to access PHI entity-level boundaries and labels
 
-The processing and extraction done can be tracked in [grascco_data_processing.py](src/data_handlers/grascco_data_handler.py) script.
+The processing and extraction done can be tracked in [src/data_handlers/grascco_data_handler.py](src/data_handlers/grascco_data_handler.py) script.
+
+While extracting data, some inconsistencies were found in the annotations - 
+
+1. For marking labels, two keys were found to be used - **kind** and **label**
+2. Label keys were missing for one **AGE** entity in **Queisser.txt** document.
+
+| Document Title  | Boundary     | Token  | Sentence                     |
+|-----------------|--------------|--------|------------------------------|
+| Queisser.txt    | (1219, 1221) | 49     | Untersuchungsbefund: 49jähr. |
+
+This missing label was fixed manually by adding the label key with value **AGE** for this entity.
 
 | Metric                   | Value      |
 | ------------------------ | ---------- |
