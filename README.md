@@ -2,6 +2,8 @@
 
 For developing NER models based on [GraSCCo_PHI](https://zenodo.org/records/11502329) corpus.
 
+## About GraSCCo Corpus
+
 GraSCCo - short for <u>Gra</u>z <u>S</u>ynthetic <u>C</u>linical text <u>Co</u>rpus - is a collection of artificially generated semi-structured and unstructured German-language clinical summaries designed to support research in clinical Natural Language Processing (cNLP).
 
 Research Article: [GRASCCO — The First Publicly Shareable, Multiply-Alienated German Clinical Text Corpus](https://ebooks.iospress.nl/doi/10.3233/SHTI220805)<br>
@@ -12,8 +14,19 @@ Later, the corpus was annotated with PHI (Protected Health Information) entities
 Research Article: [De-Identifying GRASCCO – A Pilot Study for the De-Identification of the German Medical Text Project (GeMTeX) Corpus](https://ebooks.iospress.nl/doi/10.3233/SHTI240853) <br>
 Zenodo Data Repository: https://zenodo.org/records/11502329
 
-The following metrics are based on processing of [JSON exports](data/raw/11502329/grascco_phi_annotation_json) of the annotations .
+## Data Preparation
 
+For some feature analysis and data preparation to fine-tune NER models, [JSON exports](data/raw/11502329/grascco_phi_annotation_json) of the corpus are utilized.
+
+The following keys are used to extract relevant information from the JSON files:
+1. **%FEATURE_STRUCTURES** - the root object key that contains arrays of sentences, tokens, whole text and PHI information, each object in these arrays contains a **%TYPE** key to identify the type of information
+2. **de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData** - the value of **%TYPE** key - used to access document-level metadata, such as title
+3. **de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence** - the value of **%TYPE** key - used to access sentence-level boundaries
+4. **de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token** - the value of **%TYPE** key - used to access token-level boundaries
+5. **uima.cas.Sofa** - the value of **%TYPE** key - used to access the whole text of the document
+6. **webanno.custom.PHI** - the value of **%TYPE** key - used to access PHI entity-level boundaries and labels
+
+The processing and extraction done can be tracked in [grascco_data_processing.py](src/data_handlers/grascco_data_handler.py) script.
 
 | Metric                   | Value      |
 | ------------------------ | ---------- |
