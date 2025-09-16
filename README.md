@@ -150,6 +150,11 @@ After this setup - train/dev/test sets contains the following files in every fol
 
 In the next step, 5 more files are selected randomly for test set excluding the files from the table above.
 
+Files in test set (9 files in total):
+```
+Boeck.txt, Colon_Fake_A.txt, Colon_Fake_G.txt, Joubert.txt, Meulengracht.txt, Obradovic.txt, Quervain.txt, Recklinghausen.txt, Tupolev_2.txt
+```
+
 Finally, with the rest 45 files a 5-fold split is performed - to create 5 separate train(4)/dev(1) sets with rolling.
 
 | Stat/Label           | Fold 1                                 | Fold 2                                 | Fold 3                                 | Fold 4                                 | Fold 5                                 |
@@ -191,16 +196,16 @@ Three separate transformers based language models are fine-tuned for the NER dow
 
 (macro avg):
 
-| Model              | Precision     | Recall        | F1-score      |
-|--------------------|---------------|---------------|---------------|
-| gBERT-base         | 0.51 ± 0.040  | 0.57 ± 0.046  | 0.53 ± 0.044  |
-| XLM-RoBERTa-large  | 0.61 ± 0.019  | 0.62 ± 0.047  | 0.60 ± 0.036  |
-| gELECTRA-large     | 0.56 ± 0.043  | 0.61 ± 0.030  | 0.58 ± 0.038  |
+| Model             | Precision    | Recall       | F1-score     |
+|-------------------|--------------|--------------|--------------|
+| germanBERT-base   | 0.52 ± 0.025 | 0.59 ± 0.010 | 0.54 ± 0.018 |
+| XLM-RoBERTa-large | 0.65 ± 0.046 | 0.67 ± 0.045 | 0.65 ± 0.045 |
+| gELECTRA-large    | 0.53 ± 0.004 | 0.61 ± 0.018 | 0.56 ± 0.009 |
 
 (micro avg):
 
-| Model              | Precision     | Recall        | F1-score      |
-|--------------------|---------------|---------------|---------------|
-| gBERT-base         | 0.79 ± 0.045  | 0.84 ± 0.035  | 0.81 ± 0.040  |
-| XLM-RoBERTa-large  | 0.84 ± 0.022  | 0.87 ± 0.023  | 0.85 ± 0.021  |
-| gELECTRA-large     | 0.83 ± 0.040  | 0.87 ± 0.021  | 0.85 ± 0.030  |
+| Model             | Precision    | Recall       | F1-score     |
+|-------------------|--------------|--------------|--------------|
+| germanBERT-base   | 0.79 ± 0.019 | 0.84 ± 0.010 | 0.82 ± 0.013 |
+| XLM-RoBERTa-large | 0.87 ± 0.026 | 0.89 ± 0.008 | 0.88 ± 0.015 |
+| gELECTRA-large    | 0.82 ± 0.014 | 0.88 ± 0.013 | 0.85 ± 0.013 |
