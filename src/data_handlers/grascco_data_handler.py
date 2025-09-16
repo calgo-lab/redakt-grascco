@@ -1,3 +1,4 @@
+from collections import Counter
 from datasets import Dataset, DatasetDict
 from pandas import DataFrame
 from pathlib import Path
@@ -414,7 +415,61 @@ class GrasccoDataHandler:
             "dev": dev_ds,
             "test": test_ds
         })
+    
+    def get_fold_stats(self, 
+                       fold_datasetdict: DatasetDict, 
+                       label_order: List[str], 
+                       delimiter: str = "<br>") -> Dict[str, str]:
+        """
+        Given a DatasetDict with 'train', 'dev', 'test' splits,
+        returns a dict with total files, sentences, tokens, entities,
+        and per-label entity counts for each split.
+        :param fold_datasetdict: The DatasetDict containing 'train', 'dev', 'test' datasets.
+        :param label_order: The order of labels to display in the stats.
+        :param delimiter: The delimiter to use between train, dev, and test stats.
+        :return: A dictionary with stats as keys and formatted strings as values
+        """
+        train_df = fold_datasetdict["train"].to_pandas()
+        dev_df = fold_datasetdict["dev"].to_pandas()
+        test_df = fold_datasetdict["test"].to_pandas()
 
+        stats: Dict[str, str] = dict()
+        stats["Total Files"] = (
+            f"Train: {len(train_df['document_title'].unique())}{delimiter}"
+            f"Dev: {len(dev_df['document_title'].unique())}{delimiter}"
+            f"Test: {len(test_df['document_title'].unique())}"
+        )
+        stats["Total Sentences"] = (
+            f"Train: {sum(train_df['sentence_count'])}{delimiter}"
+            f"Dev: {sum(dev_df['sentence_count'])}{delimiter}"
+            f"Test: {sum(test_df['sentence_count'])}"
+        )
+        stats["Total Tokens"] = (
+            f"Train: {sum(train_df['token_count'])}{delimiter}"
+            f"Dev: {sum(dev_df['token_count'])}{delimiter}"
+            f"Test: {sum(test_df['token_count'])}"
+        )
+        stats["Total Entities"] = (
+            f"Train: {sum(train_df['entity_count'])}{delimiter}"
+            f"Dev: {sum(dev_df['entity_count'])}{delimiter}"
+            f"Test: {sum(test_df['entity_count'])}"
+        )
+
+        train_counts = self._aggregate_label_counts(train_df)
+        dev_counts = self._aggregate_label_counts(dev_df)
+        test_counts = self._aggregate_label_counts(test_df)
+
+        for label in label_order:
+            train_val = train_counts.get(label, 0)
+            dev_val = dev_counts.get(label, 0)
+            test_val = test_counts.get(label, 0)
+            stats[label] = (
+                f"Train: {train_val}{delimiter}"
+                f"Dev: {dev_val}{delimiter}"
+                f"Test: {test_val}"
+            )
+
+        return stats
 
     @staticmethod
     def get_train_dev_folds(n_fold: int = 5) -> List[Tuple]:
@@ -430,3 +485,11 @@ class GrasccoDataHandler:
                 dev_indices
             ))
         return fold_tuples
+    
+    @staticmethod
+    def _aggregate_label_counts(input_df: DataFrame, 
+                                column_name: str = "label_wise_entity_count"):
+        total = Counter()
+        for item in input_df[column_name]:
+            total.update(json.loads(item))
+        return total

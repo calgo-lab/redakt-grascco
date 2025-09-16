@@ -144,39 +144,39 @@ Before preparing a 5-fold train/dev/test split, to evenly distribute rarely pres
 
 After this setup - train/dev/test sets contains the following files in every fold along with fold-wise rest of the files:
 
-| Train                      | Dev                | Test                        |
+| Train (7)                  | Dev (2)            | Test (4)                    |
 |----------------------------|--------------------|-----------------------------|
 | Weil.txt<br>Fleischmann.txt<br>Amanda_Alzheimer.txt<br>Tupolev_3.txt<br>Schielaug.txt<br>Waldenström.txt<br>Theodor.txt| Schuh.txt<br>Dupuytren.txt | Joubert.txt<br>Meulengracht.txt<br>Recklinghausen.txt<br>Boeck.txt |
 
 In the next step, 5 more files are selected randomly for test set excluding the files from the table above.
 
-Finally, with the rest 45 files a 5-fold split is performed to create train/dev sets.
+Finally, with the rest 45 files a 5-fold split is performed - to create 5 separate train(4)/dev(1) sets with rolling.
 
-| Label/Stat           | K-1                                   | K-2                                   | K-3                                   | K-4                                   | K-5                                   |
-|----------------------|---------------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|
-| Total Files          | Train: 43<br>Dev: 11<br>Test: 9       | Train: 42<br>Dev: 12<br>Test: 9       | Train: 42<br>Dev: 12<br>Test: 9       | Train: 43<br>Dev: 11<br>Test: 9       | Train: 43<br>Dev: 11<br>Test: 9       |
-| Total Sentences      | Train: 2004<br>Dev: 579<br>Test: 289  | Train: 2209<br>Dev: 374<br>Test: 289  | Train: 2198<br>Dev: 385<br>Test: 289  | Train: 2019<br>Dev: 564<br>Test: 289  | Train: 2018<br>Dev: 565<br>Test: 289  |
-| Total Tokens         | Train: 29065<br>Dev: 7868<br>Test: 5059| Train: 30587<br>Dev: 6346<br>Test: 5059| Train: 31192<br>Dev: 5741<br>Test: 5059| Train: 29654<br>Dev: 7279<br>Test: 5059| Train: 29019<br>Dev: 7914<br>Test: 5059|
-| Total Entities       | Train: 1028<br>Dev: 216<br>Test: 195  | Train: 972<br>Dev: 272<br>Test: 195   | Train: 1023<br>Dev: 221<br>Test: 195  | Train: 969<br>Dev: 275<br>Test: 195   | Train: 952<br>Dev: 292<br>Test: 195   |
-| DATE                 | Train: 523<br>Dev: 84<br>Test: 87     | Train: 471<br>Dev: 136<br>Test: 87    | Train: 521<br>Dev: 86<br>Test: 87     | Train: 470<br>Dev: 137<br>Test: 87    | Train: 483<br>Dev: 124<br>Test: 87    |
-| NAME_PATIENT         | Train: 119<br>Dev: 27<br>Test: 20     | Train: 121<br>Dev: 25<br>Test: 20     | Train: 122<br>Dev: 24<br>Test: 20     | Train: 115<br>Dev: 31<br>Test: 20     | Train: 119<br>Dev: 27<br>Test: 20     |
-| NAME_DOCTOR          | Train: 105<br>Dev: 28<br>Test: 21     | Train: 108<br>Dev: 25<br>Test: 21     | Train: 109<br>Dev: 24<br>Test: 21     | Train: 109<br>Dev: 24<br>Test: 21     | Train: 98<br>Dev: 35<br>Test: 21      |
-| NAME_TITLE           | Train: 94<br>Dev: 26<br>Test: 19      | Train: 96<br>Dev: 24<br>Test: 19      | Train: 99<br>Dev: 21<br>Test: 19      | Train: 98<br>Dev: 22<br>Test: 19      | Train: 87<br>Dev: 33<br>Test: 19      |
-| LOCATION_CITY        | Train: 39<br>Dev: 11<br>Test: 9       | Train: 35<br>Dev: 15<br>Test: 9       | Train: 34<br>Dev: 16<br>Test: 9       | Train: 36<br>Dev: 14<br>Test: 9       | Train: 36<br>Dev: 14<br>Test: 9       |
-| ID                   | Train: 41<br>Dev: 4<br>Test: 13       | Train: 32<br>Dev: 13<br>Test: 13      | Train: 31<br>Dev: 14<br>Test: 13      | Train: 37<br>Dev: 8<br>Test: 13       | Train: 33<br>Dev: 12<br>Test: 13      |
-| LOCATION_ZIP         | Train: 24<br>Dev: 8<br>Test: 6        | Train: 23<br>Dev: 9<br>Test: 6        | Train: 22<br>Dev: 10<br>Test: 6       | Train: 23<br>Dev: 9<br>Test: 6        | Train: 20<br>Dev: 12<br>Test: 6       |
-| LOCATION_HOSPITAL    | Train: 25<br>Dev: 7<br>Test: 4        | Train: 28<br>Dev: 4<br>Test: 4        | Train: 27<br>Dev: 5<br>Test: 4        | Train: 24<br>Dev: 8<br>Test: 4        | Train: 25<br>Dev: 7<br>Test: 4        |
-| LOCATION_STREET      | Train: 23<br>Dev: 7<br>Test: 6        | Train: 22<br>Dev: 8<br>Test: 6        | Train: 21<br>Dev: 9<br>Test: 6        | Train: 21<br>Dev: 9<br>Test: 6        | Train: 18<br>Dev: 12<br>Test: 6       |
-| AGE                  | Train: 19<br>Dev: 4<br>Test: 1        | Train: 19<br>Dev: 4<br>Test: 1        | Train: 20<br>Dev: 3<br>Test: 1        | Train: 18<br>Dev: 5<br>Test: 1        | Train: 18<br>Dev: 5<br>Test: 1        |
-| CONTACT_PHONE        | Train: 7<br>Dev: 7<br>Test: 4         | Train: 9<br>Dev: 5<br>Test: 4         | Train: 8<br>Dev: 6<br>Test: 4         | Train: 9<br>Dev: 5<br>Test: 4         | Train: 7<br>Dev: 7<br>Test: 4         |
-| CONTACT_FAX          | Train: 2<br>Dev: 3<br>Test: 2         | Train: 2<br>Dev: 3<br>Test: 2         | Train: 2<br>Dev: 3<br>Test: 2         | Train: 2<br>Dev: 3<br>Test: 2         | Train: 1<br>Dev: 4<br>Test: 2         |
-| LOCATION_COUNTRY     | Train: 1<br>Dev: 0<br>Test: 1         | Train: 0<br>Dev: 1<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         |
-| LOCATION_ORGANIZATION| Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         |
-| PROFESSION           | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         | Train: 1<br>Dev: 0<br>Test: 1         |
-| CONTACT_EMAIL        | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
-| NAME_EXT             | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
-| NAME_RELATIVE        | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
-| NAME_USERNAME        | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         | Train: 1<br>Dev: 0<br>Test: 0         |
+| Stat/Label           | Fold 1                                 | Fold 2                                 | Fold 3                                 | Fold 4                                 | Fold 5                                 |
+|----------------------|----------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|
+| Total Files          | Train: 43<br>Dev: 11<br>Test: 9        | Train: 43<br>Dev: 11<br>Test: 9        | Train: 43<br>Dev: 11<br>Test: 9        | Train: 43<br>Dev: 11<br>Test: 9        | Train: 43<br>Dev: 11<br>Test: 9        |
+| Total Sentences      | Train: 2001<br>Dev: 579<br>Test: 292   | Train: 2222<br>Dev: 358<br>Test: 292   | Train: 2217<br>Dev: 363<br>Test: 292   | Train: 1983<br>Dev: 597<br>Test: 292   | Train: 2119<br>Dev: 461<br>Test: 292   |
+| Total Tokens         | Train: 29070<br>Dev: 7868<br>Test: 5054| Train: 30969<br>Dev: 5969<br>Test: 5054| Train: 32232<br>Dev: 4706<br>Test: 5054| Train: 28927<br>Dev: 8011<br>Test: 5054| Train: 29836<br>Dev: 7102<br>Test: 5054|
+| Total Entities       | Train: 1029<br>Dev: 216<br>Test: 194   | Train: 978<br>Dev: 267<br>Test: 194    | Train: 1042<br>Dev: 203<br>Test: 194   | Train: 979<br>Dev: 266<br>Test: 194    | Train: 993<br>Dev: 252<br>Test: 194    |
+| DATE                 | Train: 523<br>Dev: 84<br>Test: 87      | Train: 463<br>Dev: 144<br>Test: 87     | Train: 521<br>Dev: 86<br>Test: 87      | Train: 492<br>Dev: 115<br>Test: 87     | Train: 486<br>Dev: 121<br>Test: 87     |
+| NAME_PATIENT         | Train: 119<br>Dev: 27<br>Test: 20      | Train: 123<br>Dev: 23<br>Test: 20      | Train: 128<br>Dev: 18<br>Test: 20      | Train: 108<br>Dev: 38<br>Test: 20      | Train: 120<br>Dev: 26<br>Test: 20      |
+| NAME_DOCTOR          | Train: 105<br>Dev: 28<br>Test: 21      | Train: 109<br>Dev: 24<br>Test: 21      | Train: 112<br>Dev: 21<br>Test: 21      | Train: 105<br>Dev: 28<br>Test: 21      | Train: 111<br>Dev: 22<br>Test: 21      |
+| NAME_TITLE           | Train: 94<br>Dev: 26<br>Test: 19       | Train: 96<br>Dev: 24<br>Test: 19       | Train: 97<br>Dev: 23<br>Test: 19       | Train: 99<br>Dev: 21<br>Test: 19       | Train: 100<br>Dev: 20<br>Test: 19      |
+| LOCATION_CITY        | Train: 39<br>Dev: 11<br>Test: 9        | Train: 39<br>Dev: 11<br>Test: 9        | Train: 37<br>Dev: 13<br>Test: 9        | Train: 35<br>Dev: 15<br>Test: 9        | Train: 37<br>Dev: 13<br>Test: 9        |
+| ID                   | Train: 42<br>Dev: 4<br>Test: 12        | Train: 32<br>Dev: 14<br>Test: 12       | Train: 35<br>Dev: 11<br>Test: 12       | Train: 38<br>Dev: 8<br>Test: 12        | Train: 32<br>Dev: 14<br>Test: 12       |
+| LOCATION_ZIP         | Train: 24<br>Dev: 8<br>Test: 6         | Train: 26<br>Dev: 6<br>Test: 6         | Train: 22<br>Dev: 10<br>Test: 6        | Train: 23<br>Dev: 9<br>Test: 6         | Train: 23<br>Dev: 9<br>Test: 6         |
+| LOCATION_HOSPITAL    | Train: 25<br>Dev: 7<br>Test: 4         | Train: 27<br>Dev: 5<br>Test: 4         | Train: 30<br>Dev: 2<br>Test: 4         | Train: 23<br>Dev: 9<br>Test: 4         | Train: 26<br>Dev: 6<br>Test: 4         |
+| LOCATION_STREET      | Train: 23<br>Dev: 7<br>Test: 6         | Train: 25<br>Dev: 5<br>Test: 6         | Train: 21<br>Dev: 9<br>Test: 6         | Train: 21<br>Dev: 9<br>Test: 6         | Train: 21<br>Dev: 9<br>Test: 6         |
+| AGE                  | Train: 19<br>Dev: 4<br>Test: 1         | Train: 20<br>Dev: 3<br>Test: 1         | Train: 21<br>Dev: 2<br>Test: 1         | Train: 18<br>Dev: 5<br>Test: 1         | Train: 20<br>Dev: 3<br>Test: 1         |
+| CONTACT_PHONE        | Train: 7<br>Dev: 7<br>Test: 4          | Train: 9<br>Dev: 5<br>Test: 4          | Train: 9<br>Dev: 5<br>Test: 4          | Train: 8<br>Dev: 6<br>Test: 4          | Train: 8<br>Dev: 6<br>Test: 4          |
+| CONTACT_FAX          | Train: 2<br>Dev: 3<br>Test: 2          | Train: 2<br>Dev: 3<br>Test: 2          | Train: 2<br>Dev: 3<br>Test: 2          | Train: 2<br>Dev: 3<br>Test: 2          | Train: 2<br>Dev: 3<br>Test: 2          |
+| LOCATION_COUNTRY     | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          |
+| LOCATION_ORGANIZATION| Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          |
+| PROFESSION           | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          | Train: 1<br>Dev: 0<br>Test: 1          |
+| CONTACT_EMAIL        | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          |
+| NAME_EXT             | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          |
+| NAME_RELATIVE        | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          |
+| NAME_USERNAME        | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          | Train: 1<br>Dev: 0<br>Test: 0          |
 
 Due to (1) curation, the test set contains only the rest 15 labels.
 
