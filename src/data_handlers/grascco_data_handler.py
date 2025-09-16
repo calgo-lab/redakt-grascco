@@ -94,8 +94,6 @@ class GrasccoDataHandler:
                 label: str = ""
                 if self._json_data_required_key_dict["kind"] in item:
                     label = item[self._json_data_required_key_dict["kind"]]
-                elif self._json_data_required_key_dict["label"] in item:
-                    label = item[self._json_data_required_key_dict["label"]]
                 entity: Dict[str, Any] = {
                     "begin": item[self._json_data_required_key_dict["begin"]],
                     "end": item[self._json_data_required_key_dict["end"]],
@@ -361,8 +359,8 @@ class GrasccoDataHandler:
             'Fleischmann.txt', 
             'Amanda_Alzheimer.txt', 
             'Tupolev_3.txt', 
-            'Schielaug.txt'
-            'Waldenström.txt',
+            'Schielaug.txt', 
+            'Waldenström.txt', 
             'Theodor.txt'
         ]
         fixed_test_items = [
