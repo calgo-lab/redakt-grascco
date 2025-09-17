@@ -455,6 +455,9 @@ class GrasccoDataHandler:
             f"Test: {sum(test_df['entity_count'])}"
         )
 
+        stats["Train Files"] = delimiter.join(sorted(train_df['document_title'].unique()))
+        stats["Dev Files"] = delimiter.join(sorted(dev_df['document_title'].unique()))
+
         train_counts = self._aggregate_label_counts(train_df)
         dev_counts = self._aggregate_label_counts(dev_df)
         test_counts = self._aggregate_label_counts(test_df)
