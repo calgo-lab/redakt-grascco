@@ -190,15 +190,15 @@ Due to (1) curation, the test set contains only the rest 15 labels.
 
 Three separate transformers based language models are fine-tuned for the NER downstream task on these annotations of GraSCCo corpus:
 
-1. google-bert/bert-base-german-cased (aka germanBERT-base)
-2. FacebookAI/xlm-roberta-large (aka XLM-RoBERTa-large)
-3. deepset/gelectra-large (aka gELECTRA-large)
+1. google-bert/bert-base-german-cased (<b>aka</b> germanBERT-base)
+2. FacebookAI/xlm-roberta-large (<b>aka</b> XLM-RoBERTa-large)
+3. deepset/gelectra-large (<b>aka</b> gELECTRA-large)
 
 ## Model Performance
 
 NER performance comparison of the three models on the test set with mean and standard deviation over 5-folds cross validation setup:
 
-(micro avg):
+<b>(micro avg)</b>:
 
 | Model             | Precision    | Recall       | F1-score     |   Support |
 |-------------------|--------------|--------------|--------------|-----------|
@@ -206,7 +206,7 @@ NER performance comparison of the three models on the test set with mean and sta
 | XLM-RoBERTa-large | 0.87 ± 0.026 | 0.89 ± 0.008 | 0.88 ± 0.015 |       194 |
 | gELECTRA-large    | 0.82 ± 0.014 | 0.88 ± 0.013 | 0.85 ± 0.013 |       194 |
 
-(macro avg):
+<b>(macro avg)</b>:
 
 | Model             | Precision    | Recall       | F1-score     |   Support |
 |-------------------|--------------|--------------|--------------|-----------|
@@ -214,7 +214,7 @@ NER performance comparison of the three models on the test set with mean and sta
 | XLM-RoBERTa-large | 0.65 ± 0.046 | 0.67 ± 0.045 | 0.65 ± 0.045 |       194 |
 | gELECTRA-large    | 0.53 ± 0.004 | 0.61 ± 0.018 | 0.56 ± 0.009 |       194 |
 
-(weighted avg):
+<b>(weighted avg)</b>:
 
 | Model             | Precision    | Recall       | F1-score     |   Support |
 |-------------------|--------------|--------------|--------------|-----------|
@@ -225,4 +225,34 @@ NER performance comparison of the three models on the test set with mean and sta
 <br>
 
 ![ner_micro_macro_weighted](reports/figures/entity_prediction_performance_comparison_of_models_micro_macro_weighted_avg.jpg)
+
+<br>
+
+<b>(DATE):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.92 ± 0.030 | 0.95 ± 0.012 | 0.94 ± 0.020 |        87 |
+| XLM-RoBERTa-large | 0.96 ± 0.018 | 0.97 ± 0.011 | 0.97 ± 0.014 |        87 |
+| gELECTRA-large    | 0.93 ± 0.016 | 0.96 ± 0.009 | 0.95 ± 0.011 |        87 |
+
+<b>(NAME_DOCTOR):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.69 ± 0.044 | 0.85 ± 0.056 | 0.76 ± 0.038 |        21 |
+| XLM-RoBERTa-large | 0.82 ± 0.035 | 0.98 ± 0.023 | 0.89 ± 0.026 |        21 |
+| gELECTRA-large    | 0.82 ± 0.031 | 0.97 ± 0.023 | 0.89 ± 0.014 |        21 |
+
+<b>(NAME_PATIENT):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.72 ± 0.048 | 0.73 ± 0.024 | 0.72 ± 0.035 |        20 |
+| XLM-RoBERTa-large | 0.94 ± 0.038 | 0.88 ± 0.024 | 0.91 ± 0.020 |        20 |
+| gELECTRA-large    | 0.96 ± 0.038 | 0.85 ± 0.032 | 0.90 ± 0.020 |        20 |
+
+<br>
+
+![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_date_name_doctor_name_patient.jpg)
 
