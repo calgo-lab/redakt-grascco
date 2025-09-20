@@ -256,3 +256,35 @@ NER performance comparison of the three models on the test set with mean and sta
 
 ![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_date_name_doctor_name_patient.jpg)
 
+<br>
+
+<b>(NAME_TITLE):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.87 ± 0.076 | 0.96 ± 0.061 | 0.91 ± 0.068 |        19 |
+| XLM-RoBERTa-large | 0.96 ± 0.038 | 0.96 ± 0.039 | 0.96 ± 0.032 |        19 |
+| gELECTRA-large    | 0.96 ± 0.038 | 0.95 ± 0.047 | 0.95 ± 0.039 |        19 |
+
+<b>(ID):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.66 ± 0.098 | 0.68 ± 0.033 | 0.67 ± 0.059 |        12 |
+| XLM-RoBERTa-large | 0.62 ± 0.113 | 0.77 ± 0.082 | 0.68 ± 0.098 |        12 |
+| gELECTRA-large    | 0.51 ± 0.012 | 0.75 ± 0.000 | 0.60 ± 0.008 |        12 |
+
+<b>(LOCATION_CITY):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.86 ± 0.142 | 0.73 ± 0.089 | 0.79 ± 0.106 |         9 |
+| XLM-RoBERTa-large | 0.93 ± 0.090 | 0.58 ± 0.163 | 0.69 ± 0.092 |         9 |
+| gELECTRA-large    | 0.91 ± 0.085 | 0.78 ± 0.000 | 0.83 ± 0.037 |         9 |
+
+<br>
+
+![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_name_title_id_location_city.jpg)
+
+
+
