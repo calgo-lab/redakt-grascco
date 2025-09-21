@@ -318,5 +318,60 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <br>
 
+<b>(LOCATION_HOSPITAL):</b>
 
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.36 ± 0.136 | 0.55 ± 0.187 | 0.43 ± 0.156 |         4 |
+| XLM-RoBERTa-large | 0.52 ± 0.233 | 0.60 ± 0.200 | 0.55 ± 0.218 |         4 |
+| gELECTRA-large    | 0.44 ± 0.107 | 0.70 ± 0.100 | 0.54 ± 0.102 |         4 |
 
+<b>(CONTACT_FAX):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         2 |
+| XLM-RoBERTa-large | 0.30 ± 0.400 | 0.30 ± 0.400 | 0.30 ± 0.400 |         2 |
+| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         2 |
+
+<b>(AGE):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|-----------|
+| germanBERT-base   | 0.87 ± 0.267 | 1.00 ± 0.000 | 0.90 ± 0.200 |         1 |
+| XLM-RoBERTa-large | 1.00 ± 0.000 | 1.00 ± 0.000 | 1.00 ± 0.000 |         1 |
+| gELECTRA-large    | 0.80 ± 0.245 | 1.00 ± 0.000 | 0.87 ± 0.163 |         1 |
+
+<br>
+
+![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_location_hospital_contact_fax_age.jpg)
+
+<br>
+
+<b>(LOCATION_COUNTRY):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|----------:|
+| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| XLM-RoBERTa-large | 0.60 ± 0.490 | 0.60 ± 0.490 | 0.60 ± 0.490 |         1 |
+| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+
+<b>(LOCATION_ORGANIZATION):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|----------:|
+| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| XLM-RoBERTa-large | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+
+<b>(PROFESSION):</b>
+
+| Model             | Precision    | Recall       | F1-score     |   Support |
+|-------------------|--------------|--------------|--------------|----------:|
+| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| XLM-RoBERTa-large | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+
+<br>
+
+![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_location_country_location_organization_profession.jpg)
