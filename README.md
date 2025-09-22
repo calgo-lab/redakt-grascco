@@ -2,7 +2,7 @@
 
 For developing NER models based on [GraSCCo_PHI](https://zenodo.org/records/11502329) corpus.
 
-## About GraSCCo Corpus
+## About GraSCCo corpus
 
 GraSCCo - short for <u>Gra</u>z <u>S</u>ynthetic <u>C</u>linical text <u>Co</u>rpus - is a collection of artificially generated semi-structured and unstructured German-language clinical summaries designed to support research in clinical Natural Language Processing (cNLP).
 
@@ -14,7 +14,7 @@ Later, the corpus was annotated with PHI (Protected Health Information) entities
 Research Article: [De-Identifying GRASCCO – A Pilot Study for the De-Identification of the German Medical Text Project (GeMTeX) Corpus](https://ebooks.iospress.nl/doi/10.3233/SHTI240853) <br>
 Zenodo Data Repository: https://zenodo.org/records/11502329
 
-## Data Preparation
+## Data pre-processing and insights
 
 For feature analysis and data preparation to fine-tune NER models, [JSON exports](data/raw/11502329/grascco_phi_annotation_json) of the corpus are utilized.
 
@@ -133,7 +133,9 @@ Columns:<br>
 11. **bioes_text**
 
 
-Before preparing a 5-fold train/dev/test split, to evenly distribute rarely present entities: 
+## Data preparation for NER model fine-tuning
+
+Before preparing a 5-fold cross-validation setup, to evenly distribute rarely present entities:
 
 1. files containing labels with one entity - **CONTACT_EMAIL - Weil.txt**, **NAME_EXT - Fleischmann.txt**, **NAME_RELATIVE - Amanda_Alzheimer.txt** and **NAME_USERNAME - Tupolev_3.txt**  are kept in the training set, if we keep aside these files from any split, we loose significant amount of tokens and other entities that are present in these files.
 
@@ -188,13 +190,39 @@ Finally, with the rest 45 files a 5-fold split is performed - to create 5 separa
 Due to (1) curation, the test set contains only the rest 15 labels.
 
 
-Three separate transformers based language models are fine-tuned for the NER downstream task on these annotations of GraSCCo corpus:
+## Selected PLMs and frameworks
+
+Three separate transformers based pre-trained language models are fine-tuned for the NER downstream task on the GraSCCo corpus using the FLERT approach (i.e., Flair’s transformer embeddings with extended context via use_context=True in TransformerWordEmbeddings class):
 
 1. google-bert/bert-base-german-cased (<b>aka</b> germanBERT-base)
 2. FacebookAI/xlm-roberta-large (<b>aka</b> XLM-RoBERTa-large)
 3. deepset/gelectra-large (<b>aka</b> gELECTRA-large)
 
-## Model Performance
+## System setup
+
+The experiments were performed on a system with following configuration:
+
+| Package      | Version      |
+|-------------|-------------|
+| datasets    | 4.0.0       |
+| flair       | 0.15.1      |
+| pyarrow     | 20.0.0      |
+| tokenizers  | 0.21.4      |
+| torch       | 2.7.1+cu128 |
+| transformers| 4.49.0      |
+
+## Fine-tuning parameters
+The following hyperparameters were used for fine-tuning all the three models:
+
+* learning_rate: "5e-05"
+* mini_batch_size: "1"
+* max_epochs: "35"
+* shuffle: "True"
+* context_size: "64"
+* LinearScheduler | warmup_fraction: '0.1'
+
+
+## Overall model performance
 
 NER performance comparison of the three models on the test set with mean and standard deviation over 5-folds cross validation setup:
 
@@ -227,6 +255,8 @@ NER performance comparison of the three models on the test set with mean and sta
 ![ner_micro_macro_weighted](reports/figures/entity_prediction_performance_comparison_of_models_micro_macro_weighted_avg.jpg)
 
 <br>
+
+## Label-wise model performance
 
 <b>(DATE):</b>
 
@@ -375,3 +405,15 @@ NER performance comparison of the three models on the test set with mean and sta
 <br>
 
 ![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_location_country_location_organization_profession.jpg)
+
+<br>
+
+## Best Models per Architecture 
+
+Based on micro avg F1-score:
+
+| Model             | Fold | Precision | Recall | F1-score |
+|-------------------|------|-----------|--------|----------|
+| germanBERT-base   | K1   | 0.8300    | 0.8557 | 0.8426   |
+| XLM-RoBERTa-large | K5   | 0.9062    | 0.8969 | 0.9016   |
+| gELECTRA-large    | K4   | 0.8406    | 0.8969 | 0.8678   |
