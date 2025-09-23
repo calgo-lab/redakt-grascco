@@ -252,7 +252,7 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <br>
 
-![ner_micro_macro_weighted](reports/figures/entity_prediction_performance_comparison_of_models_micro_macro_weighted_avg.jpg)
+![ner_micro_macro_weighted](reports/figures/entity_prediction_performance_comparison_of_models_micro_avg_macro_avg_weighted_avg.jpg)
 
 <br>
 
@@ -408,7 +408,7 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <br>
 
-## Best Models per Architecture 
+## Best models per architecture
 
 Based on micro avg F1-score:
 

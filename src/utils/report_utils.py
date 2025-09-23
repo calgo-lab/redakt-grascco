@@ -107,6 +107,7 @@ class ReportUtils:
             performance_metrics_dict[class_or_stat] = (model_metrics_list, class_or_stat_support)
         return performance_metrics_dict
 
+    @staticmethod
     def get_performance_metrics_summary_by_class_or_stat(metrics_dir: Path, 
                                                          model_alias_dict: Dict[str, str], 
                                                          stat_or_label: str) -> DataFrame:
