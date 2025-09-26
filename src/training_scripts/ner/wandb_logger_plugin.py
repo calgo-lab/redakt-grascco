@@ -19,6 +19,7 @@ class WandbLoggerPlugin(TrainerPlugin):
         self.tracked = set(tracked) if tracked is not None else None
         self.reinit = reinit
         self._run = None
+        self._pluggable = None
 
     def after_setup(self, trainer, **kw):
         self._run = wandb.init(
