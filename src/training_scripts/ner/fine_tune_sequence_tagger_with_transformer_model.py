@@ -62,13 +62,13 @@ def fine_tune():
     data_dir_path = model_checkpoints_root_dir / "grascco" / "ner" / model_dir_name
     data_dir_path = data_dir_path / "additional-embeddings-none"
 
-    if isinstance(use_context, int):
-        data_dir_path =  data_dir_path / f"use-context-{use_context}"
-    elif isinstance(use_context, bool):
+    if isinstance(use_context, bool):
         if use_context:
-            data_dir_path =  data_dir_path / "use-context-64"
+            data_dir_path = data_dir_path / "use-context-64"
         else:
-            data_dir_path =  data_dir_path / "use-context-none"
+            data_dir_path = data_dir_path / "use-context-none"
+    elif isinstance(use_context, int):
+        data_dir_path = data_dir_path / f"use-context-{use_context}"
 
     data_dir_path =  data_dir_path / f"sample-size-{sample_size}" / f"data-fold-{data_fold_k_value}"
     data_dir_path.mkdir(parents=True, exist_ok=True)
