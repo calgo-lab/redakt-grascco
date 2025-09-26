@@ -73,7 +73,7 @@ def fine_tune():
     data_dir_path =  data_dir_path / f"sample-size-{sample_size}" / f"data-fold-{data_fold_k_value}"
     data_dir_path.mkdir(parents=True, exist_ok=True)
 
-    """
+    
     train_text = train_df.bioes_text.str.cat(sep="\n\n")
     dev_text = dev_df.bioes_text.str.cat(sep="\n\n")
     test_text = test_df.bioes_text.str.cat(sep="\n\n")
@@ -117,10 +117,11 @@ def fine_tune():
         mini_batch_size=mini_batch_size,
         eval_batch_size=mini_batch_size,
         write_weights=True,
+        monitor_test=True,
         save_final_model=False,
         use_final_model_for_eval=False
     )
-    """
+   
     
 if __name__ == "__main__":
     fine_tune()
