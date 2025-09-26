@@ -8,7 +8,9 @@ from flair.datasets import ColumnCorpus
 from flair.embeddings import TokenEmbeddings, TransformerWordEmbeddings
 from flair.models import SequenceTagger
 from flair.trainers import ModelTrainer
+from training_scripts.ner.wandb_logger_plugin import WandbLoggerPlugin
 from utils.project_utils import ProjectUtils
+
 
 import os
 
@@ -41,6 +43,15 @@ def fine_tune():
     project_root: Path = ProjectUtils.get_project_root()
     data_handler = GrasccoDataHandler(project_root)
     datasetdict = data_handler.get_train_dev_test_datasetdict(data_fold_k_value)
+    
+    label_order = [
+        "DATE", "NAME_PATIENT", "NAME_DOCTOR", "NAME_TITLE", "LOCATION_CITY", "ID",
+        "LOCATION_ZIP", "LOCATION_HOSPITAL", "LOCATION_STREET", "AGE", "CONTACT_PHONE",
+        "CONTACT_FAX", "LOCATION_COUNTRY", "LOCATION_ORGANIZATION", "PROFESSION",
+        "CONTACT_EMAIL", "NAME_EXT", "NAME_RELATIVE", "NAME_USERNAME"
+    ]
+    fold_stats = data_handler.get_fold_stats(datasetdict, label_order, " || ")
+
     train_df = datasetdict["train"].to_pandas()
     dev_df = datasetdict["dev"].to_pandas()
     test_df = datasetdict["test"].to_pandas()
@@ -110,18 +121,41 @@ def fine_tune():
     tagger.label_dictionary.add_unk = True
 
     trainer: ModelTrainer = ModelTrainer(tagger, corpus)
-    trainer.fine_tune(
-        model_dir_path,
-        learning_rate=learning_rate,
-        max_epochs=max_epochs,
-        mini_batch_size=mini_batch_size,
-        eval_batch_size=mini_batch_size,
-        write_weights=True,
-        monitor_test=True,
-        save_final_model=False,
-        use_final_model_for_eval=False
-    )
-   
     
+    wandb_plugin = WandbLoggerPlugin(
+        project = "redakt-grascco",
+        config = {
+            "transformer_model_name": transformer_model_name, 
+            "data_fold": data_fold_k_value, 
+            "learning_rate": learning_rate, 
+            "max_epochs": max_epochs, 
+            "mini_batch_size": mini_batch_size, 
+            "use_context": use_context, 
+            "sample_size": sample_size, 
+            "fold_stats": fold_stats
+        },
+        tracked = {
+            "train/loss", 
+            "dev/loss", 
+            "dev/score", 
+            "test/loss", 
+            "test/score", 
+            "learning_rate"
+        }
+    )
+
+    trainer.fine_tune(
+        model_dir_path, 
+        learning_rate = learning_rate, 
+        max_epochs = max_epochs, 
+        mini_batch_size = mini_batch_size, 
+        eval_batch_size = mini_batch_size, 
+        write_weights = True, 
+        monitor_test = True, 
+        save_final_model = False, 
+        use_final_model_for_eval = False, 
+        plugins = [wandb_plugin]
+    )
+
 if __name__ == "__main__":
     fine_tune()
