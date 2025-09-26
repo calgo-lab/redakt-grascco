@@ -8,7 +8,7 @@ from typing import Any, List, Dict, Set, Tuple
 import json
 import numpy as np
 import pandas as pd
-import random
+
 
 class GrasccoDataHandler:
     """
@@ -377,19 +377,12 @@ class GrasccoDataHandler:
 
         # remove fixed items from ner_df
         remaining_ner_df = ner_df[~ner_df['document_title'].isin(fixed_train_items + fixed_test_items + fixed_dev_items)]
-        
-        # select 5 more random items from remaining_ner_df for test set and remove them from remaining_ner_df
-        remaining_test_items = random.Random(random_state).sample(remaining_ner_df.document_title.tolist(), 5)
-        remaining_ner_df = remaining_ner_df[~remaining_ner_df['document_title'].isin(remaining_test_items)]
-
-        test_items = fixed_test_items + remaining_test_items
-
         remaining_ner_df.reset_index(drop=True, inplace=True)
 
         fold_tuples = list()
         splits = list(KFold(n_splits=5, shuffle=True, random_state=random_state).split(remaining_ner_df.index.to_numpy()))
-        train_dev_k_folds = self.get_train_dev_folds()
-        for index, fold in enumerate(train_dev_k_folds):
+        train_dev_test_k_folds = self.get_train_dev_test_folds()
+        for index, fold in enumerate(train_dev_test_k_folds):
             train_indices = list()
             fold_train_indices = fold[1]
             for fold_train_index in fold_train_indices:
@@ -398,11 +391,15 @@ class GrasccoDataHandler:
             fold_dev_indices = fold[2]
             for fold_dev_index in fold_dev_indices:
                 dev_indices += list(splits[fold_dev_index][1])
+            test_indices = list()
+            fold_test_indices = fold[3]
+            for fold_test_index in fold_test_indices:
+                test_indices += list(splits[fold_test_index][1])
             fold_tuples.append((
                 index + 1,
                 remaining_ner_df[remaining_ner_df.index.isin(train_indices)].document_title.tolist() + fixed_train_items,
                 remaining_ner_df[remaining_ner_df.index.isin(dev_indices)].document_title.tolist() + fixed_dev_items,
-                test_items
+                remaining_ner_df[remaining_ner_df.index.isin(test_indices)].document_title.tolist() + fixed_test_items
             ))
         
         kth_tuple = fold_tuples[k-1]
@@ -411,8 +408,8 @@ class GrasccoDataHandler:
         test_ds = Dataset.from_pandas(ner_df[ner_df.document_title.isin(kth_tuple[3])])
 
         return DatasetDict({
-            "train": train_ds,
-            "dev": dev_ds,
+            "train": train_ds, 
+            "dev": dev_ds, 
             "test": test_ds
         })
     
@@ -457,6 +454,7 @@ class GrasccoDataHandler:
 
         stats["Train Files"] = delimiter.join(sorted(train_df['document_title'].unique()))
         stats["Dev Files"] = delimiter.join(sorted(dev_df['document_title'].unique()))
+        stats["Test Files"] = delimiter.join(sorted(test_df['document_title'].unique()))
 
         train_counts = self._aggregate_label_counts(train_df)
         dev_counts = self._aggregate_label_counts(dev_df)
@@ -473,19 +471,29 @@ class GrasccoDataHandler:
             )
 
         return stats
-
+    
     @staticmethod
-    def get_train_dev_folds(n_fold: int = 5) -> List[Tuple]:
+    def get_train_dev_test_folds(n_fold: int = 5, 
+                                 train_percent: float = 0.6, 
+                                 dev_percent: float = 0.2) -> List[Tuple]:
         fold_tuples = list()
         indices = list(range(n_fold))
+        train_start = 0
+        train_end = int(round(n_fold * train_percent))
+        dev_start = train_end
+        dev_end = int(round(n_fold * (train_percent + dev_percent)))
+        test_start = dev_end
+        test_end = n_fold
         for index in indices:
             rolled_indices = np.roll(indices, -index)
-            train_indices = list(rolled_indices[0:(n_fold - 1)])
-            dev_indices = [rolled_indices[-1]]
+            train_indices = list(rolled_indices[train_start: train_end])
+            dev_indices = list(rolled_indices[dev_start: dev_end])
+            test_indices = list(rolled_indices[test_start: test_end])
             fold_tuples.append((
                 index + 1,
                 train_indices,
-                dev_indices
+                dev_indices,
+                test_indices
             ))
         return fold_tuples
     
