@@ -50,7 +50,7 @@ def fine_tune():
         "CONTACT_FAX", "LOCATION_COUNTRY", "LOCATION_ORGANIZATION", "PROFESSION",
         "CONTACT_EMAIL", "NAME_EXT", "NAME_RELATIVE", "NAME_USERNAME"
     ]
-    fold_stats = data_handler.get_fold_stats(datasetdict, label_order, " || ")
+    fold_stats = data_handler.get_fold_stats(datasetdict, label_order)
 
     train_df = datasetdict["train"].to_pandas()
     dev_df = datasetdict["dev"].to_pandas()
@@ -104,7 +104,7 @@ def fine_tune():
     model_dir_path.mkdir(parents=True, exist_ok=True)
 
     embeddings: TokenEmbeddings = TransformerWordEmbeddings(
-        model="google-bert/bert-base-german-cased",
+        model=transformer_model_name,
         use_context=use_context,
         fine_tune=True
     )
@@ -123,7 +123,7 @@ def fine_tune():
     trainer: ModelTrainer = ModelTrainer(tagger, corpus)
     
     wandb_plugin = WandbLoggerPlugin(
-        project = "redakt-grascco",
+        project = project_root.name,
         config = {
             "transformer_model_name": transformer_model_name, 
             "data_fold": data_fold_k_value, 
@@ -137,10 +137,21 @@ def fine_tune():
         tracked = {
             "train/loss", 
             "dev/loss", 
-            "dev/score", 
             "test/loss", 
-            "test/score", 
-            "learning_rate"
+            "dev/micro avg/precision", 
+            "dev/micro avg/recall", 
+            "dev/micro avg/f1-score", 
+            "dev/macro avg/precision", 
+            "dev/macro avg/recall", 
+            "dev/macro avg/f1-score", 
+            "dev/accuracy", 
+            "test/micro avg/precision", 
+            "test/micro avg/recall", 
+            "test/micro avg/f1-score", 
+            "test/macro avg/precision", 
+            "test/macro avg/recall", 
+            "test/macro avg/f1-score", 
+            "test/accuracy"
         }
     )
 

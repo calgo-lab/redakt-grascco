@@ -48,7 +48,7 @@ if __name__ == "__main__":
     for fold in range(1, 6):
         fold_datasetdict = data_handler.get_train_dev_test_datasetdict(fold)
         fold_stats[fold] = data_handler.get_fold_stats(fold_datasetdict, label_order)
-    print(json.dumps(fold_stats, indent=4))
+    print(json.dumps(fold_stats, indent=4, ensure_ascii=False))
     """
 
     ### Get model wise, sample size wise and fold wise metrics from classification report text files

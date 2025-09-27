@@ -3,7 +3,7 @@ from datasets import Dataset, DatasetDict
 from pandas import DataFrame
 from pathlib import Path
 from sklearn.model_selection import KFold
-from typing import Any, List, Dict, Set, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 import json
 import numpy as np
@@ -415,15 +415,13 @@ class GrasccoDataHandler:
     
     def get_fold_stats(self, 
                        fold_datasetdict: DatasetDict, 
-                       label_order: List[str], 
-                       delimiter: str = "<br>") -> Dict[str, str]:
+                       label_order: List[str]) -> Dict[str, str]:
         """
         Given a DatasetDict with 'train', 'dev', 'test' splits,
         returns a dict with total files, sentences, tokens, entities,
         and per-label entity counts for each split.
         :param fold_datasetdict: The DatasetDict containing 'train', 'dev', 'test' datasets.
         :param label_order: The order of labels to display in the stats.
-        :param delimiter: The delimiter to use between train, dev, and test stats.
         :return: A dictionary with stats as keys and formatted strings as values
         """
         train_df = fold_datasetdict["train"].to_pandas()
@@ -431,30 +429,31 @@ class GrasccoDataHandler:
         test_df = fold_datasetdict["test"].to_pandas()
 
         stats: Dict[str, str] = dict()
-        stats["Total Files"] = (
-            f"Train: {len(train_df['document_title'].unique())}{delimiter}"
-            f"Dev: {len(dev_df['document_title'].unique())}{delimiter}"
-            f"Test: {len(test_df['document_title'].unique())}"
-        )
-        stats["Total Sentences"] = (
-            f"Train: {sum(train_df['sentence_count'])}{delimiter}"
-            f"Dev: {sum(dev_df['sentence_count'])}{delimiter}"
-            f"Test: {sum(test_df['sentence_count'])}"
-        )
-        stats["Total Tokens"] = (
-            f"Train: {sum(train_df['token_count'])}{delimiter}"
-            f"Dev: {sum(dev_df['token_count'])}{delimiter}"
-            f"Test: {sum(test_df['token_count'])}"
-        )
-        stats["Total Entities"] = (
-            f"Train: {sum(train_df['entity_count'])}{delimiter}"
-            f"Dev: {sum(dev_df['entity_count'])}{delimiter}"
-            f"Test: {sum(test_df['entity_count'])}"
-        )
+        stats["total_files"] = {
+            "train": len(train_df['document_title'].unique()),
+            "dev": len(dev_df['document_title'].unique()),
+            "test": len(test_df['document_title'].unique())
+        }
 
-        stats["Train Files"] = delimiter.join(sorted(train_df['document_title'].unique()))
-        stats["Dev Files"] = delimiter.join(sorted(dev_df['document_title'].unique()))
-        stats["Test Files"] = delimiter.join(sorted(test_df['document_title'].unique()))
+        stats["total_sentences"] = {
+            "train": sum(train_df['sentence_count']),
+            "dev": sum(dev_df['sentence_count']),
+            "test": sum(test_df['sentence_count'])
+        }
+        stats["total_tokens"] = {
+            "train": sum(train_df['token_count']),
+            "dev": sum(dev_df['token_count']),
+            "test": sum(test_df['token_count'])
+        }
+        stats["total_entities"] = {
+            "train": sum(train_df['entity_count']),
+            "dev": sum(dev_df['entity_count']),
+            "test": sum(test_df['entity_count'])
+        }
+
+        stats["train_files"] = sorted(train_df['document_title'].unique())
+        stats["dev_files"] = sorted(dev_df['document_title'].unique())
+        stats["test_files"] = sorted(test_df['document_title'].unique())
 
         train_counts = self._aggregate_label_counts(train_df)
         dev_counts = self._aggregate_label_counts(dev_df)
@@ -464,11 +463,11 @@ class GrasccoDataHandler:
             train_val = train_counts.get(label, 0)
             dev_val = dev_counts.get(label, 0)
             test_val = test_counts.get(label, 0)
-            stats[label] = (
-                f"Train: {train_val}{delimiter}"
-                f"Dev: {dev_val}{delimiter}"
-                f"Test: {test_val}"
-            )
+            stats[label] = {
+                "train": train_val, 
+                "dev": dev_val, 
+                "test": test_val
+            }
 
         return stats
     
