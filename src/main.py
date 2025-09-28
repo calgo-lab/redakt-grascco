@@ -49,6 +49,50 @@ if __name__ == "__main__":
         fold_datasetdict = data_handler.get_train_dev_test_datasetdict(fold)
         fold_stats[fold] = data_handler.get_fold_stats(fold_datasetdict, label_order)
     print(json.dumps(fold_stats, indent=4, ensure_ascii=False))
+
+    printable_fold_stats = dict()
+    for fold, stats in fold_stats.items():
+        printable_fold_stats[fold] = dict()
+        for stat, value in stats.items():
+            if stat == "total_files":
+                printable_fold_stats[fold]["Total Files"] = (
+                    f"Train: {value['train']}<br>"
+                    f"Dev: {value['dev']}<br>"
+                    f"Test: {value['test']}"
+                )
+            elif stat == "total_sentences":
+                printable_fold_stats[fold]["Total Sentences"] = (
+                    f"Train: {value['train']}<br>"
+                    f"Dev: {value['dev']}<br>"
+                    f"Test: {value['test']}"
+                )
+            elif stat == "total_tokens":
+                printable_fold_stats[fold]["Total Tokens"] = (
+                    f"Train: {value['train']}<br>"
+                    f"Dev: {value['dev']}<br>"
+                    f"Test: {value['test']}"
+                )
+            elif stat == "total_entities":
+                printable_fold_stats[fold]["Total Entities"] = (
+                    f"Train: {value['train']}<br>"
+                    f"Dev: {value['dev']}<br>"
+                    f"Test: {value['test']}"
+                )
+            elif stat == "train_files":
+                printable_fold_stats[fold]["Train Files"] = "<br>".join(value)
+            elif stat == "dev_files":
+                printable_fold_stats[fold]["Dev Files"] = "<br>".join(value)
+            elif stat == "test_files":
+                printable_fold_stats[fold]["Test Files"] = "<br>".join(value)
+
+            for label in label_order:
+                if stat == label:
+                    printable_fold_stats[fold][label] = (
+                        f"Train: {value['train']}<br>"
+                        f"Dev: {value['dev']}<br>"
+                        f"Test: {value['test']}"
+                    )
+    print(json.dumps(printable_fold_stats, indent=4, ensure_ascii=False))
     """
 
     ### Get model wise, sample size wise and fold wise metrics from classification report text files
