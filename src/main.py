@@ -106,11 +106,11 @@ if __name__ == "__main__":
     metrics = ReportUtils.get_performance_metrics_summary_by_class_or_stat(
         metrics_dir=project_root / "metrics" / "ner_performance",
         model_alias_dict={
-            "google-bert-base-german-cased": "germanBERT-base",
-            "facebookai-xlm-roberta-large": "XLM-RoBERTa-large",
-            "deepset-gelectra-large": "gELECTRA-large"
+            "google-bert--bert-base-german-cased-flert": "bert-base-german-cased",
+            "xlm-roberta-large-flert": "xlm-roberta-large",
+            "deepset--gelectra-large-flert": "gelectra-large"
         },
-        stat_or_label="PROFESSION",
+        stat_or_label="PROFESSION"
     )
     print(metrics.to_markdown(index=False))
     """
@@ -120,11 +120,11 @@ if __name__ == "__main__":
     figure_output_dir: Path = project_root / "reports" / "figures"
     metrics_dir: Path = project_root / "metrics" / "ner_performance"
     model_alias_dict: Dict[str, str] = {
-        "google-bert-base-german-cased": "germanBERT-base",
-        "facebookai-xlm-roberta-large": "XLM-RoBERTa-large",
-        "deepset-gelectra-large": "gELECTRA-large"
+        "google-bert--bert-base-german-cased-flert": "bert-base-german-cased",
+        "xlm-roberta-large-flert": "xlm-roberta-large",
+        "deepset--gelectra-large-flert": "gelectra-large"
     }
-
+    
     #### Plot micro avg, macro avg and weighted avg performance comparison of models
     PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
         figure_output_dir=figure_output_dir,
@@ -132,12 +132,12 @@ if __name__ == "__main__":
         model_alias_dict=model_alias_dict,
         class_or_stat_list=["micro avg", "macro avg", "weighted avg"],
         plot_config={
-            "y_lim_list": [(0.76, 1.004), (0.47, 0.85), (0.76, 1.004)],
-            "y_ticks_list": [(0.76, 0.921, 0.04), (0.47, 0.73, 0.05), (0.76, 0.921, 0.04)]
+            "y_lim_list": [(0.78, 1.004), (0.49, 0.79), (0.78, 1.004)],
+            "y_ticks_list": [(0.78, 0.931, 0.03), (0.49, 0.691, 0.04), (0.78, 0.931, 0.03)]
         },
         show_logs=True
     )
-
+    
     #### Plot DATE, NAME_DOCTOR, NAME_PATIENT performance comparison of models
     PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
         figure_output_dir=figure_output_dir,
@@ -145,12 +145,12 @@ if __name__ == "__main__":
         model_alias_dict=model_alias_dict,
         class_or_stat_list=["DATE", "NAME_DOCTOR", "NAME_PATIENT"],
         plot_config={
-            "y_lim_list": [(0.88, 1.06), (0.60, 1.20), (0.65, 1.175)],
-            "y_ticks_list": [(0.88, 1.01, 0.03), (0.60, 1.01, 0.08), (0.65, 1.01, 0.07)]
+            "y_lim_list": [(0.88, 1.053), (0.60, 1.178), (0.55, 1.20)],
+            "y_ticks_list": [(0.88, 1.01, 0.03), (0.60, 1.01, 0.08), (0.55, 1.01, 0.09)]
         },
         show_logs=True
     )
-
+    
     #### Plot NAME_TITLE, ID, LOCATION_CITY performance comparison of models
     PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
         figure_output_dir=figure_output_dir,
@@ -158,8 +158,8 @@ if __name__ == "__main__":
         model_alias_dict=model_alias_dict,
         class_or_stat_list=["NAME_TITLE", "ID", "LOCATION_CITY"],
         plot_config={
-            "y_lim_list": [(0.75, 1.125), (0.48, 1.08), (0.40, 1.30)],
-            "y_ticks_list": [(0.75, 1.01, 0.05), (0.48, 0.881, 0.08), (0.40, 1.01, 0.10)]
+            "y_lim_list": [(0.69, 1.125), (0.59, 1.095), (0.44, 1.247)],
+            "y_ticks_list": [(0.69, 0.991, 0.06), (0.59, 0.941, 0.07), (0.44, 1.01, 0.14)]
         },
         show_logs=True
     )
@@ -171,8 +171,8 @@ if __name__ == "__main__":
         model_alias_dict=model_alias_dict,
         class_or_stat_list=["LOCATION_STREET", "LOCATION_ZIP", "CONTACT_PHONE"],
         plot_config={
-            "y_lim_list": [(0.31, 1.23), (0.20, 1.43), (0.30, 1.37)],
-            "y_ticks_list": [(0.31, 0.911, 0.10), (0.20, 1.01, 0.16), (0.30, 1.01, 0.14)]
+            "y_lim_list": [(0.35, 1.285), (0.64, 1.16), (0.05, 1.205)],
+            "y_ticks_list": [(0.35, 1.01, 0.13), (0.64, 1.01, 0.06), (0.05, 0.851, 0.20)]
         },
         show_logs=True
     )
@@ -184,12 +184,12 @@ if __name__ == "__main__":
         model_alias_dict=model_alias_dict,
         class_or_stat_list=["LOCATION_HOSPITAL", "CONTACT_FAX", "AGE"],
         plot_config={
-            "y_lim_list": [(0.20, 1.20), (0.0, 1.07), (0.55, 1.24)],
-            "y_ticks_list": [(0.20, 0.86, 0.13), (0.0, 0.71, 0.14), (0.55, 1.01, 0.09)]
+            "y_lim_list": [(0.20, 1.235), (0.0, 0.87), (0.45, 1.245)],
+            "y_ticks_list": [(0.20, 0.921, 0.12), (0.0, 0.61, 0.12), (0.45, 1.01, 0.11)]
         },
         show_logs=True
     )
-
+    
     #### Plot LOCATION_COUNTRY, LOCATION_ORGANIZATION, PROFESSION performance comparison of models
     PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
         figure_output_dir=figure_output_dir,

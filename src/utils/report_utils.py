@@ -1,6 +1,6 @@
 from pandas import DataFrame
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Union
 
 import numpy as np
 import pandas as pd
@@ -77,34 +77,33 @@ class ReportUtils:
     def get_performance_metrics_grouped_by_class_or_stat(metrics_dir: Path, 
                                                          model_names: List[str], 
                                                          sample_size: int = 63, 
-                                                         folds: List[int] = [1, 2, 3, 4, 5]) -> Dict[str, Tuple[List[List[List[float]]], int]]:
+                                                         folds: List[int] = [1, 2, 3, 4, 5]) -> Dict[str, List[List[List[Union[float, int]]]]]:
         """
-        Collect all metrics (prec./rec./f1.) for all folds, all models in lists for each class or statistic.
+        Collect all metrics (prec./rec./f1./support) for all folds, all models in lists for each class or statistic.
         :param metrics_dir: Path to the root directory containing classification report text files.
         :param model_names: List of model names to include in the output.
         :param sample_size: Sample size to filter the output.
         :param folds: List of fold numbers to include in the output.
-        :return: Dictionary with class or statistic name as keys and lists of metrics for each model plus support as values.
+        :return: Dictionary with class or statistic name as keys and lists of metrics for each model.
         """
         
-        performance_metrics_dict: Dict[str, Tuple[List[List[List[float]]], int]] = dict()
+        performance_metrics_dict: Dict[str, List[List[List[Union[float, int]]]]] = dict()
         model_wise_dict: Dict[str, Dict[str, Dict[str, Dict[str, Dict[str, Any]]]]] = ReportUtils.get_model_and_sample_size_and_fold_wise_metrics(metrics_dir)
         class_or_stat_names: List[str] = list(model_wise_dict[model_names[0]][f'{sample_size}'][f'K{folds[0]}'].keys())
-        class_or_stat_support: int = 0
         for class_or_stat in class_or_stat_names:
-            model_metrics_list: List[List[List[float]]] = list()
+            model_metrics_list: List[List[List[Union[float, int]]]] = list()
             for model_name in model_names:
                 precisions: List[float] = list()
                 recalls: List[float] = list()
                 f1_scores: List[float] = list()
+                supports: List[int] = list()
                 for idx, fold in enumerate(folds):
                     precisions.append(round(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['precision'], 4))
                     recalls.append(round(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['recall'], 4))
                     f1_scores.append(round(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['f1-score'], 4))
-                    if idx == 0:
-                        class_or_stat_support = model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['support']
-                model_metrics_list.append([precisions, recalls, f1_scores])
-            performance_metrics_dict[class_or_stat] = (model_metrics_list, class_or_stat_support)
+                    supports.append(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['support'])
+                model_metrics_list.append([precisions, recalls, f1_scores, supports])
+            performance_metrics_dict[class_or_stat] = model_metrics_list
         return performance_metrics_dict
 
     @staticmethod
@@ -121,7 +120,7 @@ class ReportUtils:
 
         model_names = list(model_alias_dict.keys())
         metrics_data = ReportUtils.get_performance_metrics_grouped_by_class_or_stat(metrics_dir, model_names)
-        label_data = np.array(metrics_data[stat_or_label][0])
+        label_data = np.array(metrics_data[stat_or_label])
         means = np.mean(label_data, axis=2)
         std_devs = np.std(label_data, axis=2)
         table_tuples: List[str] = list()
@@ -129,6 +128,6 @@ class ReportUtils:
             precision_str = f'{round(means[idx][0], 2): .2f} ± {round(std_devs[idx][0], 3)}'
             recall_str = f'{round(means[idx][1], 2): .2f} ± {round(std_devs[idx][1], 3)}'
             f1_score_str = f'{round(means[idx][2], 2): .2f} ± {round(std_devs[idx][2], 3)}'
-            support_str = f'{metrics_data[stat_or_label][1]}'
+            support_str = f'{int(means[idx][3])} ± {int(std_devs[idx][3])}'
             table_tuples.append((model_alias_dict[model_names[idx]], precision_str, recall_str, f1_score_str, support_str))
         return pd.DataFrame(table_tuples, columns=["Model", "Precision", "Recall", "F1-score", "Support"])

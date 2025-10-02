@@ -118,7 +118,9 @@ class PlotUtils:
 
         for class_or_stat_idx, class_or_stat in enumerate(class_or_stat_list):
 
-            class_or_stat_data = np.array(metrics_data[class_or_stat][0])
+            metrics_data[class_or_stat] = [model_data[:3] for model_data in metrics_data[class_or_stat]]
+
+            class_or_stat_data = np.array(metrics_data[class_or_stat])
             class_or_stat_means = np.mean(class_or_stat_data, axis=2)
             class_or_stat_std_devs = np.std(class_or_stat_data, axis=2)
 

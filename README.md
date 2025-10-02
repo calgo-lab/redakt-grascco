@@ -188,9 +188,10 @@ Due to (1) curation, the test set contains only the rest 15 labels.
 
 Three separate transformers based pre-trained language models are fine-tuned for the NER downstream task on the GraSCCo corpus using the FLERT approach (i.e., Flair’s transformer embeddings with extended context via use_context=True in TransformerWordEmbeddings class):
 
-1. google-bert/bert-base-german-cased (<b>aka</b> germanBERT-base)
-2. FacebookAI/xlm-roberta-large (<b>aka</b> XLM-RoBERTa-large)
-3. deepset/gelectra-large (<b>aka</b> gELECTRA-large)
+1. 🤗 [google-bert/bert-base-german-cased](https://huggingface.co/google-bert/bert-base-german-cased) (<b>aka</b> bert-base-german-cased)
+2. 🤗 [xlm-roberta-large](https://huggingface.co/FacebookAI/xlm-roberta-large) (<b>aka</b> xlm-roberta-large)
+3. 🤗 [deepset/gelectra-large](https://huggingface.co/deepset/gelectra-large) (<b>aka</b> gelectra-large)
+
 
 ## System setup
 
@@ -216,33 +217,36 @@ The following hyperparameters were used for fine-tuning all the three models:
 * LinearScheduler | warmup_fraction: '0.1'
 
 
+### 📊 [View experiments on Weights & Biases](https://wandb.ai/sksdotsauravs-dev/redakt-grascco?nw=nwusersksdotsauravs)
+
+
 ## Overall model performance
 
 NER performance comparison of the three models on the test set with mean and standard deviation over 5-folds cross validation setup:
 
 <b>(micro avg)</b>:
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.79 ± 0.019 | 0.84 ± 0.010 | 0.82 ± 0.013 |       194 |
-| XLM-RoBERTa-large | 0.87 ± 0.026 | 0.89 ± 0.008 | 0.88 ± 0.015 |       194 |
-| gELECTRA-large    | 0.82 ± 0.014 | 0.88 ± 0.013 | 0.85 ± 0.013 |       194 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.80 ± 0.015 | 0.83 ± 0.019 | 0.81 ± 0.010 | 280 ± 33  |
+| xlm-roberta-large      | 0.88 ± 0.028 | 0.90 ± 0.022 | 0.89 ± 0.022 | 280 ± 33  |
+| gelectra-large         | 0.87 ± 0.029 | 0.90 ± 0.015 | 0.89 ± 0.020 | 280 ± 33  |
 
 <b>(macro avg)</b>:
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.52 ± 0.025 | 0.59 ± 0.010 | 0.54 ± 0.018 |       194 |
-| XLM-RoBERTa-large | 0.65 ± 0.046 | 0.67 ± 0.045 | 0.65 ± 0.045 |       194 |
-| gELECTRA-large    | 0.53 ± 0.004 | 0.61 ± 0.018 | 0.56 ± 0.009 |       194 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.53 ± 0.029 | 0.56 ± 0.038 | 0.53 ± 0.025 | 280 ± 33  |
+| xlm-roberta-large      | 0.61 ± 0.057 | 0.64 ± 0.043 | 0.62 ± 0.047 | 280 ± 33  |
+| gelectra-large         | 0.56 ± 0.049 | 0.62 ± 0.016 | 0.58 ± 0.037 | 280 ± 33  |
 
 <b>(weighted avg)</b>:
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.79 ± 0.018 | 0.84 ± 0.010 | 0.81 ± 0.013 |       194 |
-| XLM-RoBERTa-large | 0.87 ± 0.021 | 0.89 ± 0.008 | 0.88 ± 0.012 |       194 |
-| gELECTRA-large    | 0.83 ± 0.012 | 0.88 ± 0.013 | 0.85 ± 0.012 |       194 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.80 ± 0.011 | 0.83 ± 0.019 | 0.81 ± 0.010 | 280 ± 33  |
+| xlm-roberta-large      | 0.88 ± 0.025 | 0.90 ± 0.022 | 0.89 ± 0.022 | 280 ± 33  |
+| gelectra-large         | 0.88 ± 0.027 | 0.90 ± 0.015 | 0.88 ± 0.019 | 280 ± 33  |
 
 <br>
 
@@ -254,27 +258,27 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <b>(DATE):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.92 ± 0.030 | 0.95 ± 0.012 | 0.94 ± 0.020 |        87 |
-| XLM-RoBERTa-large | 0.96 ± 0.018 | 0.97 ± 0.011 | 0.97 ± 0.014 |        87 |
-| gELECTRA-large    | 0.93 ± 0.016 | 0.96 ± 0.009 | 0.95 ± 0.011 |        87 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.92 ± 0.032 | 0.95 ± 0.039 | 0.93 ± 0.034 | 134 ± 18  |
+| xlm-roberta-large      | 0.97 ± 0.019 | 0.97 ± 0.020 | 0.97 ± 0.018 | 134 ± 18  |
+| gelectra-large         | 0.96 ± 0.020 | 0.98 ± 0.021 | 0.97 ± 0.019 | 134 ± 18  |
 
 <b>(NAME_DOCTOR):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.69 ± 0.044 | 0.85 ± 0.056 | 0.76 ± 0.038 |        21 |
-| XLM-RoBERTa-large | 0.82 ± 0.035 | 0.98 ± 0.023 | 0.89 ± 0.026 |        21 |
-| gELECTRA-large    | 0.82 ± 0.031 | 0.97 ± 0.023 | 0.89 ± 0.014 |        21 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.71 ± 0.092 | 0.82 ± 0.042 | 0.75 ± 0.048 | 27 ± 6    |
+| xlm-roberta-large      | 0.81 ± 0.025 | 0.99 ± 0.015 | 0.89 ± 0.017 | 27 ± 6    |
+| gelectra-large         | 0.82 ± 0.037 | 0.95 ± 0.031 | 0.88 ± 0.023 | 27 ± 6    |
 
 <b>(NAME_PATIENT):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.72 ± 0.048 | 0.73 ± 0.024 | 0.72 ± 0.035 |        20 |
-| XLM-RoBERTa-large | 0.94 ± 0.038 | 0.88 ± 0.024 | 0.91 ± 0.020 |        20 |
-| gELECTRA-large    | 0.96 ± 0.038 | 0.85 ± 0.032 | 0.90 ± 0.020 |        20 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.70 ± 0.111 | 0.68 ± 0.120 | 0.69 ± 0.112 | 34 ± 6    |
+| xlm-roberta-large      | 0.90 ± 0.088 | 0.80 ± 0.122 | 0.84 ± 0.101 | 34 ± 6    |
+| gelectra-large         | 0.88 ± 0.087 | 0.81 ± 0.091 | 0.85 ± 0.079 | 34 ± 6    |
 
 <br>
 
@@ -284,27 +288,27 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <b>(NAME_TITLE):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.87 ± 0.076 | 0.96 ± 0.061 | 0.91 ± 0.068 |        19 |
-| XLM-RoBERTa-large | 0.96 ± 0.038 | 0.96 ± 0.039 | 0.96 ± 0.032 |        19 |
-| gELECTRA-large    | 0.96 ± 0.038 | 0.95 ± 0.047 | 0.95 ± 0.039 |        19 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.81 ± 0.112 | 0.87 ± 0.096 | 0.84 ± 0.103 | 25 ± 3    |
+| xlm-roberta-large      | 0.88 ± 0.108 | 0.93 ± 0.059 | 0.90 ± 0.084 | 25 ± 3    |
+| gelectra-large         | 0.90 ± 0.072 | 0.89 ± 0.090 | 0.89 ± 0.080 | 25 ± 3    |
 
 <b>(ID):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.66 ± 0.098 | 0.68 ± 0.033 | 0.67 ± 0.059 |        12 |
-| XLM-RoBERTa-large | 0.62 ± 0.113 | 0.77 ± 0.082 | 0.68 ± 0.098 |        12 |
-| gELECTRA-large    | 0.51 ± 0.012 | 0.75 ± 0.000 | 0.60 ± 0.008 |        12 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.77 ± 0.109 | 0.72 ± 0.099 | 0.74 ± 0.090 | 13 ± 3    |
+| xlm-roberta-large      | 0.83 ± 0.088 | 0.83 ± 0.109 | 0.83 ± 0.090 | 13 ± 3    |
+| gelectra-large         | 0.73 ± 0.123 | 0.78 ± 0.062 | 0.75 ± 0.069 | 13 ± 3    |
 
 <b>(LOCATION_CITY):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.86 ± 0.142 | 0.73 ± 0.089 | 0.79 ± 0.106 |         9 |
-| XLM-RoBERTa-large | 0.93 ± 0.090 | 0.58 ± 0.163 | 0.69 ± 0.092 |         9 |
-| gELECTRA-large    | 0.91 ± 0.085 | 0.78 ± 0.000 | 0.83 ± 0.037 |         9 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.84 ± 0.138 | 0.72 ± 0.101 | 0.77 ± 0.100 | 11 ± 3    |
+| xlm-roberta-large      | 0.80 ± 0.137 | 0.64 ± 0.186 | 0.71 ± 0.168 | 11 ± 3    |
+| gelectra-large         | 0.87 ± 0.130 | 0.73 ± 0.094 | 0.79 ± 0.109 | 11 ± 3    |
 
 <br>
 
@@ -314,27 +318,27 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <b>(LOCATION_STREET):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.51 ± 0.151 | 0.57 ± 0.082 | 0.53 ± 0.105 |         6 |
-| XLM-RoBERTa-large | 0.63 ± 0.210 | 0.70 ± 0.163 | 0.66 ± 0.189 |         6 |
-| gELECTRA-large    | 0.71 ± 0.000 | 0.83 ± 0.000 | 0.77 ± 0.000 |         6 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.57 ± 0.183 | 0.63 ± 0.173 | 0.60 ± 0.176 | 8 ± 2     |
+| xlm-roberta-large      | 0.73 ± 0.200 | 0.81 ± 0.139 | 0.77 ± 0.174 | 8 ± 2     |
+| gelectra-large         | 0.83 ± 0.149 | 0.94 ± 0.070 | 0.88 ± 0.113 | 8 ± 2     |
 
 <b>(LOCATION_ZIP):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.81 ± 0.062 | 0.97 ± 0.067 | 0.88 ± 0.061 |         6 |
-| XLM-RoBERTa-large | 0.97 ± 0.057 | 0.90 ± 0.200 | 0.92 ± 0.129 |         6 |
-| gELECTRA-large    | 0.59 ± 0.361 | 0.63 ± 0.323 | 0.60 ± 0.345 |         6 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.79 ± 0.144 | 0.93 ± 0.099 | 0.85 ± 0.119 | 8 ± 2     |
+| xlm-roberta-large      | 0.98 ± 0.044 | 0.98 ± 0.031 | 0.98 ± 0.025 | 8 ± 2     |
+| gelectra-large         | 0.89 ± 0.104 | 0.95 ± 0.058 | 0.92 ± 0.077 | 8 ± 2     |
 
 <b>(CONTACT_PHONE):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.49 ± 0.118 | 0.85 ± 0.122 | 0.62 ± 0.127 |         4 |
-| XLM-RoBERTa-large | 0.50 ± 0.071 | 0.75 ± 0.000 | 0.59 ± 0.053 |         4 |
-| gELECTRA-large    | 0.40 ± 0.057 | 0.75 ± 0.000 | 0.52 ± 0.047 |         4 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.29 ± 0.173 | 0.58 ± 0.247 | 0.38 ± 0.202 | 3 ± 1     |
+| xlm-roberta-large      | 0.21 ± 0.150 | 0.38 ± 0.233 | 0.27 ± 0.183 | 3 ± 1     |
+| gelectra-large         | 0.32 ± 0.160 | 0.57 ± 0.133 | 0.40 ± 0.162 | 3 ± 1     |
 
 <br>
 
@@ -344,27 +348,27 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <b>(LOCATION_HOSPITAL):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.36 ± 0.136 | 0.55 ± 0.187 | 0.43 ± 0.156 |         4 |
-| XLM-RoBERTa-large | 0.52 ± 0.233 | 0.60 ± 0.200 | 0.55 ± 0.218 |         4 |
-| gELECTRA-large    | 0.44 ± 0.107 | 0.70 ± 0.100 | 0.54 ± 0.102 |         4 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.28 ± 0.071 | 0.50 ± 0.278 | 0.35 ± 0.116 | 6 ± 2     |
+| xlm-roberta-large      | 0.34 ± 0.097 | 0.57 ± 0.249 | 0.41 ± 0.117 | 6 ± 2     |
+| gelectra-large         | 0.38 ± 0.114 | 0.67 ± 0.242 | 0.46 ± 0.118 | 6 ± 2     |
 
 <b>(CONTACT_FAX):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         2 |
-| XLM-RoBERTa-large | 0.30 ± 0.400 | 0.30 ± 0.400 | 0.30 ± 0.400 |         2 |
-| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         2 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 2 ± 0     |
+| xlm-roberta-large      | 0.20 ± 0.400 | 0.10 ± 0.200 | 0.13 ± 0.267 | 2 ± 0     |
+| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 2 ± 0     |
 
 <b>(AGE):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|-----------|
-| germanBERT-base   | 0.87 ± 0.267 | 1.00 ± 0.000 | 0.90 ± 0.200 |         1 |
-| XLM-RoBERTa-large | 1.00 ± 0.000 | 1.00 ± 0.000 | 1.00 ± 0.000 |         1 |
-| gELECTRA-large    | 0.80 ± 0.245 | 1.00 ± 0.000 | 0.87 ± 0.163 |         1 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 1.00 ± 0.000 | 0.72 ± 0.254 | 0.81 ± 0.185 | 3 ± 1     |
+| xlm-roberta-large      | 0.95 ± 0.100 | 1.00 ± 0.000 | 0.97 ± 0.057 | 3 ± 1     |
+| gelectra-large         | 0.90 ± 0.200 | 1.00 ± 0.000 | 0.93 ± 0.133 | 3 ± 1     |
 
 <br>
 
@@ -374,27 +378,27 @@ NER performance comparison of the three models on the test set with mean and sta
 
 <b>(LOCATION_COUNTRY):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|----------:|
-| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
-| XLM-RoBERTa-large | 0.60 ± 0.490 | 0.60 ± 0.490 | 0.60 ± 0.490 |         1 |
-| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.20 ± 0.400 | 0.20 ± 0.400 | 0.20 ± 0.400 | 1 ± 0     |
+| xlm-roberta-large      | 0.60 ± 0.490 | 0.60 ± 0.490 | 0.60 ± 0.490 | 1 ± 0     |
+| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
 
 <b>(LOCATION_ORGANIZATION):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|----------:|
-| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
-| XLM-RoBERTa-large | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
-| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| xlm-roberta-large      | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
 
 <b>(PROFESSION):</b>
 
-| Model             | Precision    | Recall       | F1-score     |   Support |
-|-------------------|--------------|--------------|--------------|----------:|
-| germanBERT-base   | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
-| XLM-RoBERTa-large | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
-| gELECTRA-large    | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 |         1 |
+| Model                  | Precision    | Recall       | F1-score     | Support   |
+|------------------------|--------------|--------------|--------------|-----------|
+| bert-base-german-cased | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| xlm-roberta-large      | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
 
 <br>
 
@@ -406,8 +410,8 @@ NER performance comparison of the three models on the test set with mean and sta
 
 Based on micro avg F1-score:
 
-| Model             | Fold | Precision | Recall | F1-score |
-|-------------------|------|-----------|--------|----------|
-| germanBERT-base   | K1   | 0.8300    | 0.8557 | 0.8426   |
-| XLM-RoBERTa-large | K5   | 0.9062    | 0.8969 | 0.9016   |
-| gELECTRA-large    | K4   | 0.8406    | 0.8969 | 0.8678   |
+| Model                  | Fold | Precision | Recall | F1-score |
+|------------------------|------|-----------|--------|----------|
+| bert-base-german-cased | K1   | 0.8242    | 0.8095 | 0.8168   |
+| xlm-roberta-large      | K5   | 0.9115    | 0.9360 | 0.9236   |
+| gelectra-large         | K1   | 0.9179    | 0.8988 | 0.9083   |

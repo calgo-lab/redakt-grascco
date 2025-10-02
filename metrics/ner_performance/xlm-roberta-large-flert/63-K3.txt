@@ -1,0 +1,28 @@
+2025-09-28 12:06:02,274 
+Results:
+- F-score (micro) 0.8906
+- F-score (macro) 0.6357
+- Accuracy 0.8194
+
+By class:
+                       precision    recall  f1-score   support
+
+                 DATE     0.9435    0.9435    0.9435       124
+          NAME_DOCTOR     0.8529    1.0000    0.9206        29
+         NAME_PATIENT     1.0000    0.8621    0.9259        29
+           NAME_TITLE     1.0000    1.0000    1.0000        25
+                   ID     0.9167    0.7857    0.8462        14
+        LOCATION_CITY     0.9000    0.8182    0.8571        11
+         LOCATION_ZIP     1.0000    1.0000    1.0000         9
+      LOCATION_STREET     0.4000    0.5714    0.4706         7
+    LOCATION_HOSPITAL     0.5000    0.6667    0.5714         6
+        CONTACT_PHONE     0.0000    0.0000    0.0000         2
+                  AGE     1.0000    1.0000    1.0000         2
+          CONTACT_FAX     0.0000    0.0000    0.0000         2
+     LOCATION_COUNTRY     1.0000    1.0000    1.0000         1
+           PROFESSION     0.0000    0.0000    0.0000         1
+LOCATION_ORGANIZATION     0.0000    0.0000    0.0000         1
+
+            micro avg     0.8839    0.8973    0.8906       263
+            macro avg     0.6342    0.6432    0.6357       263
+         weighted avg     0.8984    0.8973    0.8956       263
