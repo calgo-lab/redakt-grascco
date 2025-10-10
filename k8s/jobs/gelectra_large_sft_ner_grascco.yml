@@ -28,15 +28,25 @@ spec:
             - name: ssaha-pv
               mountPath: /home/ssaha
           env:
+            - name: RUN_PYTHON_SCRIPT
+              value: "yes"
+            - name: PYTHON_SCRIPT_PATH
+              value: "/home/ssaha/Projects/redakt-grascco/src/training_scripts/ner/fine_tune_sequence_tagger_with_transformer_model.py"
             - name: FLAIR_CACHE_ROOT
               value: /home/ssaha/.flair
             - name: HF_HOME
               value: /home/ssaha/.cache/huggingface
-            - name: TRANSFORMER_MODEL_NAME
-              value: deepset/gelectra-large
             - name: MODEL_CHECKPOINTS_ROOT_DIR
               value: /home/ssaha/model-checkpoints
+            - name: DATA_DIR
+              value: /home/ssaha/data/grascco
             - name: DATA_FOLD_K_VALUE
+              value: "1"
+            - name: LOG_TO_WANDB
+              value: "1"
+            - name: TRANSFORMER_MODEL_NAME
+              value: deepset/gelectra-large
+            - name: USE_CONTEXT
               value: "1"
             - name: LEARNING_RATE
               value: "5e-5"
@@ -44,17 +54,11 @@ spec:
               value: "35"
             - name: MINI_BATCH_SIZE
               value: "1"
-            - name: USE_CONTEXT
-              value: "1"
             - name: WANDB_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: wandb-secret-sksdotsauravs
                   key: wandb_api_key
-            - name: RUN_PYTHON_SCRIPT
-              value: "yes"
-            - name: PYTHON_SCRIPT_PATH
-              value: "/home/ssaha/Projects/redakt-grascco/src/training_scripts/ner/fine_tune_sequence_tagger_with_transformer_model.py"
       restartPolicy: Never
       volumes:
         - name: ssaha-pv

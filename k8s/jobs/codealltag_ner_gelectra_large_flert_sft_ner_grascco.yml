@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: bert-base-german-cased-sft-ner-grascco
+  name: codealltag-ner-gelectra-large-flert-sft-ner-grascco
   namespace: ssaha
 spec:
   ttlSecondsAfterFinished: 60
@@ -9,10 +9,10 @@ spec:
   template:
     metadata:
       labels:
-        app: bert-base-german-cased-sft-ner-grascco
+        app: codealltag-ner-gelectra-large-flert-sft-ner-grascco
     spec:
       containers:
-        - name: bert-base-german-cased-sft-ner-grascco-container
+        - name: codealltag-ner-gelectra-large-flert-sft-ner-grascco-container
           image: sksdotsauravs/python-nlp-dev-container:ubuntu24.04-python3.12.11-cuda12.8.1-torch2.7.1
           workingDir: /home/ssaha
           resources:
@@ -44,8 +44,12 @@ spec:
               value: "1"
             - name: LOG_TO_WANDB
               value: "1"
-            - name: TRANSFORMER_MODEL_NAME
-              value: google-bert/bert-base-german-cased
+            - name: USE_PRETRAINED_MODEL
+              value: "1"
+            - name: PRETRAINED_MODEL_PATH
+              value: /home/ssaha/model-checkpoints/codealltag/ner/deepset--gelectra-large-flert/additional-embeddings-none/use-context-64/sample-size-175000/data-fold-1/learning-rate-5e-5/max-epochs-50/mini-batch-size-50/best-model.pt
+            - name: PRETRAINED_MODEL_NAME
+              value: calgo-lab/codealltag-ner-gelectra-large-flert
             - name: USE_CONTEXT
               value: "1"
             - name: LEARNING_RATE

@@ -13,17 +13,46 @@ from utils.project_utils import ProjectUtils
 
 
 import os
+import warnings
+
+warnings.filterwarnings("ignore", message=r".*torch\.cuda\.amp\.GradScaler.*")
 
 
 def fine_tune():
 
-    transformer_model_name = os.environ.get("TRANSFORMER_MODEL_NAME", "google-bert/bert-base-german-cased")
-    
     model_checkpoints_root_dir = os.environ.get("MODEL_CHECKPOINTS_ROOT_DIR", None)
     model_checkpoints_root_dir = Path(model_checkpoints_root_dir) if model_checkpoints_root_dir else Path.home() / "model_checkpoints"
-    
+
+    data_dir = os.environ.get("DATA_DIR", None)
+    data_dir = Path(data_dir) if data_dir else None
+
     data_fold_k_value = os.environ.get("DATA_FOLD_K_VALUE", None)
     data_fold_k_value = int(data_fold_k_value) if data_fold_k_value else 1
+
+    log_to_wandb = os.environ.get("LOG_TO_WANDB", None)
+    log_to_wandb = int(log_to_wandb) if log_to_wandb else 0
+    log_to_wandb = bool(log_to_wandb) if log_to_wandb else False
+
+    if log_to_wandb:
+        wandb_entity = os.environ.get("WANDB_ENTITY", "sksdotsauravs-dev")
+
+    use_pretrained_model = os.environ.get("USE_PRETRAINED_MODEL", None)
+    use_pretrained_model = int(use_pretrained_model) if use_pretrained_model else 0
+    use_pretrained_model = bool(use_pretrained_model) if use_pretrained_model else False
+
+    pretrained_model_path = None
+    pretrained_model_name = None
+    transformer_model_name = None
+    if use_pretrained_model:
+        pretrained_model_path = os.environ.get("PRETRAINED_MODEL_PATH", None)
+        pretrained_model_name = os.environ.get("PRETRAINED_MODEL_NAME", None)
+    else:
+        transformer_model_name = os.environ.get("TRANSFORMER_MODEL_NAME", "google-bert/bert-base-german-cased")
+
+    use_context = os.environ.get("USE_CONTEXT", None)
+    use_context = int(use_context) if use_context else 1
+    if use_context == 0 or use_context == 1:
+        use_context = bool(use_context)
     
     learning_rate = os.environ.get("LEARNING_RATE", None)
     learning_rate = float(learning_rate) if learning_rate else 5e-5
@@ -34,14 +63,8 @@ def fine_tune():
     mini_batch_size = os.environ.get("MINI_BATCH_SIZE", None)
     mini_batch_size = int(mini_batch_size) if mini_batch_size else 1
     
-    use_context = os.environ.get("USE_CONTEXT", None)
-    use_context = int(use_context) if use_context else 0
-    if use_context == 0 or use_context == 1:
-        use_context = bool(use_context)
-    
-
     project_root: Path = ProjectUtils.get_project_root()
-    data_handler = GrasccoDataHandler(project_root)
+    data_handler = GrasccoDataHandler(project_root, data_dir=data_dir)
     datasetdict = data_handler.get_train_dev_test_datasetdict(data_fold_k_value)
     
     label_order = [
@@ -57,17 +80,41 @@ def fine_tune():
     test_df = datasetdict["test"].to_pandas()
     sample_size = len(train_df) + len(dev_df) + len(test_df)
 
-    print(f"transformer_model_name: {transformer_model_name}")
     print(f"model_checkpoints_root_dir: {model_checkpoints_root_dir}")
+    print(f"data_dir: {data_dir}")
     print(f"data_fold_k_value: {data_fold_k_value}")
-    print(f"sample_size: {sample_size}")
+
+    print(f"log_to_wandb: {log_to_wandb}")
+    if log_to_wandb:
+        print(f"wandb_entity: {wandb_entity}")
+    
+    print(f"use_pretrained_model: {use_pretrained_model}")
+    if use_pretrained_model:
+        print(f"pretrained_model_path: {pretrained_model_path}")
+        print(f"pretrained_model_name: {pretrained_model_name}")
+    else:
+        print(f"transformer_model_name: {transformer_model_name}")
+
+    print(f"use_context: {use_context}")
     print(f"learning_rate: {learning_rate:.0e}".replace('e-0', 'e-'))
     print(f"mini_batch_size: {mini_batch_size}")
     print(f"max_epochs: {max_epochs}")
-    print(f"use_context: {use_context}")
+    print(f"sample_size: {sample_size}")
 
-    model_dir_name = transformer_model_name.replace("/", "--").replace("_", "-")
-    if use_context:
+    model_dir_name = ""
+    if use_pretrained_model:
+        if not pretrained_model_path or not pretrained_model_name:
+            raise ValueError(
+                "Both 'PRETRAINED_MODEL_PATH' and 'PRETRAINED_MODEL_NAME' environment variables must be set when 'USE_PRETRAINED_MODEL' is True."
+            )
+        if not Path(pretrained_model_path).exists():
+            raise FileNotFoundError(f"Pretrained model path '{pretrained_model_path}' does not exist.")
+
+        model_dir_name = pretrained_model_name.replace("/", "--").replace("_", "-")
+    else:
+        model_dir_name = transformer_model_name.replace("/", "--").replace("_", "-")
+
+    if use_context and not model_dir_name.endswith("-flert"):
         model_dir_name += "-flert"
 
     data_dir_path = model_checkpoints_root_dir / "grascco" / "ner" / model_dir_name
@@ -84,7 +131,6 @@ def fine_tune():
     data_dir_path =  data_dir_path / f"sample-size-{sample_size}" / f"data-fold-{data_fold_k_value}"
     data_dir_path.mkdir(parents=True, exist_ok=True)
 
-    
     train_text = train_df.bioes_text.str.cat(sep="\n\n")
     dev_text = dev_df.bioes_text.str.cat(sep="\n\n")
     test_text = test_df.bioes_text.str.cat(sep="\n\n")
@@ -103,57 +149,90 @@ def fine_tune():
     model_dir_path = model_dir_path / f"mini-batch-size-{mini_batch_size}"
     model_dir_path.mkdir(parents=True, exist_ok=True)
 
-    embeddings: TokenEmbeddings = TransformerWordEmbeddings(
-        model=transformer_model_name,
-        use_context=use_context,
-        fine_tune=True
-    )
+    if use_pretrained_model:
+        print(f"Loading pretrained Flair model from: {pretrained_model_path}")
+        pretrained_tagger = SequenceTagger.load(pretrained_model_path)
+        
+        if hasattr(pretrained_tagger.embeddings, 'model') and hasattr(pretrained_tagger.embeddings.model, 'name_or_path'):
+            base_transformer_name = pretrained_tagger.embeddings.model.name_or_path
+            print(f"base_transformer_name [pretrained_tagger.embeddings.model.name_or_path]: {base_transformer_name}")
+        
+        embeddings: TokenEmbeddings = TransformerWordEmbeddings(
+            model=base_transformer_name,
+            use_context=use_context,
+            fine_tune=True
+        )
+        
+        if hasattr(pretrained_tagger.embeddings, 'model') and hasattr(embeddings, 'model'):
+            print("Transferring fine-tuned transformer weights from pretrained model...")
+            embeddings.model.load_state_dict(pretrained_tagger.embeddings.model.state_dict())
+            print("Transformer weights transferred successfully!")
+        
+        tagger: SequenceTagger = SequenceTagger(
+            hidden_size=256,
+            embeddings=embeddings,
+            tag_dictionary=label_dict,
+            tag_type="ner",
+            use_rnn=False,
+            use_crf=False,
+            reproject_embeddings=False
+        )
+    else:
+        embeddings: TokenEmbeddings = TransformerWordEmbeddings(
+            model=transformer_model_name,
+            use_context=use_context,
+            fine_tune=True
+        )
 
-    tagger: SequenceTagger = SequenceTagger(
-        hidden_size = 256,
-        embeddings=embeddings,
-        tag_dictionary=label_dict,
-        tag_type="ner",
-        use_rnn=False,
-        use_crf=False,
-        reproject_embeddings=False
-    )
+        tagger: SequenceTagger = SequenceTagger(
+            hidden_size = 256,
+            embeddings=embeddings,
+            tag_dictionary=label_dict,
+            tag_type="ner",
+            use_rnn=False,
+            use_crf=False,
+            reproject_embeddings=False
+        )
+    
     tagger.label_dictionary.add_unk = True
 
     trainer: ModelTrainer = ModelTrainer(tagger, corpus)
     
-    wandb_plugin = WandbLoggerPlugin(
-        project = project_root.name,
-        config = {
-            "transformer_model_name": transformer_model_name, 
-            "data_fold": data_fold_k_value, 
-            "learning_rate": learning_rate, 
-            "max_epochs": max_epochs, 
-            "mini_batch_size": mini_batch_size, 
-            "use_context": use_context, 
-            "sample_size": sample_size, 
-            "fold_stats": fold_stats
-        },
-        tracked = {
-            "train/loss", 
-            "dev/loss", 
-            "test/loss", 
-            "dev/micro avg/precision", 
-            "dev/micro avg/recall", 
-            "dev/micro avg/f1-score", 
-            "dev/macro avg/precision", 
-            "dev/macro avg/recall", 
-            "dev/macro avg/f1-score", 
-            "dev/accuracy", 
-            "test/micro avg/precision", 
-            "test/micro avg/recall", 
-            "test/micro avg/f1-score", 
-            "test/macro avg/precision", 
-            "test/macro avg/recall", 
-            "test/macro avg/f1-score", 
-            "test/accuracy"
-        }
-    )
+    wandb_plugin = None
+    if log_to_wandb:
+        wandb_plugin = WandbLoggerPlugin(
+            entity = wandb_entity,
+            project = project_root.name,
+            config = {
+                "transformer_model_name": transformer_model_name if not use_pretrained_model else pretrained_model_name, 
+                "data_fold": data_fold_k_value, 
+                "learning_rate": learning_rate, 
+                "max_epochs": max_epochs, 
+                "mini_batch_size": mini_batch_size, 
+                "use_context": use_context, 
+                "sample_size": sample_size, 
+                "fold_stats": fold_stats
+            },
+            tracked = {
+                "train/loss", 
+                "dev/loss", 
+                "test/loss", 
+                "dev/micro avg/precision", 
+                "dev/micro avg/recall", 
+                "dev/micro avg/f1-score", 
+                "dev/macro avg/precision", 
+                "dev/macro avg/recall", 
+                "dev/macro avg/f1-score", 
+                "dev/accuracy", 
+                "test/micro avg/precision", 
+                "test/micro avg/recall", 
+                "test/micro avg/f1-score", 
+                "test/macro avg/precision", 
+                "test/macro avg/recall", 
+                "test/macro avg/f1-score", 
+                "test/accuracy"
+            }
+        )
 
     trainer.fine_tune(
         model_dir_path, 
@@ -165,7 +244,7 @@ def fine_tune():
         monitor_test = True, 
         save_final_model = False, 
         use_final_model_for_eval = False, 
-        plugins = [wandb_plugin]
+        plugins = [wandb_plugin] if log_to_wandb else None
     )
 
 if __name__ == "__main__":

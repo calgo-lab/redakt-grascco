@@ -19,13 +19,16 @@ class GrasccoDataHandler:
         Initialize the GrasccoDataHandler with the path to the data directory.
         The path to all the GraSCCo PHI annotation .json files exports created 
         with the INCEpTION annotation platform.
+        :param project_root: Path to the root of the project.
+        :param data_dir: Optional path to the data directory. If None, defaults to 'data' directory in the project root.
         """
-        self._project_root = project_root
-        self._data_root = project_root / "data"
+        self.project_root = project_root
         if data_dir:
-            self._data_dir = data_dir
+            self.data_dir: Path = data_dir
         else:
-            self._data_dir = self._data_root / "raw" / "11502329" / "grascco_phi_annotation_json"
+            self.data_dir: Path = self.project_root / "data"
+        
+        self._json_data_files_dir: Path = self.data_dir / "raw" / "11502329" / "grascco_phi_annotation_json"
         self._json_data_items: List[Dict[str, Any]] = list()
         self._json_data_required_key_dict: Dict[str, str] = {
             "feature_structures": "%FEATURE_STRUCTURES",
@@ -52,7 +55,7 @@ class GrasccoDataHandler:
         Load all JSON files from the data directory.
         """
         json_data_path_dict: Dict[str, Dict[str, Any]] = dict()
-        for json_file in self._data_dir.glob("*.json"):
+        for json_file in self._json_data_files_dir.glob("*.json"):
             with json_file.open("r", encoding="utf-8") as f:
                 data: Dict[str, Any] = json.load(f)
                 json_data_path_dict[json_file.name] = data
@@ -312,7 +315,7 @@ class GrasccoDataHandler:
         Get the file path for the NER data CSV file.
         :return: The Path object representing the CSV file path.
         """
-        return self._data_root / "grascco_ner_data.csv"
+        return self.data_dir / "grascco_ner_data.csv"
     
     def get_ner_dataframe(self) -> DataFrame:
         """
