@@ -197,22 +197,28 @@ def fine_tune():
     tagger.label_dictionary.add_unk = True
 
     trainer: ModelTrainer = ModelTrainer(tagger, corpus)
-    
+
     wandb_plugin = None
     if log_to_wandb:
+
+        wandb_config = dict()
+        if use_pretrained_model:
+            wandb_config["transformer_model_name"] = pretrained_model_name
+            wandb_config["pretrained_model_path"] = pretrained_model_path
+        else:
+            wandb_config["transformer_model_name"] = transformer_model_name
+        wandb_config["data_fold"] = data_fold_k_value
+        wandb_config["learning_rate"] = learning_rate
+        wandb_config["max_epochs"] = max_epochs
+        wandb_config["mini_batch_size"] = mini_batch_size
+        wandb_config["use_context"] = use_context
+        wandb_config["sample_size"] = sample_size
+        wandb_config["fold_stats"] = fold_stats
+
         wandb_plugin = WandbLoggerPlugin(
             entity = wandb_entity,
             project = project_root.name,
-            config = {
-                "transformer_model_name": transformer_model_name if not use_pretrained_model else pretrained_model_name, 
-                "data_fold": data_fold_k_value, 
-                "learning_rate": learning_rate, 
-                "max_epochs": max_epochs, 
-                "mini_batch_size": mini_batch_size, 
-                "use_context": use_context, 
-                "sample_size": sample_size, 
-                "fold_stats": fold_stats
-            },
+            config = wandb_config,
             tracked = {
                 "train/loss", 
                 "dev/loss", 

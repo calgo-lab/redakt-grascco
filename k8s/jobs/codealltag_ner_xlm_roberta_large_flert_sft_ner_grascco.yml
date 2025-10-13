@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: codealltag-ner-gelectra-large-flert-sft-ner-grascco
+  name: codealltag-ner-xlm-roberta-large-flert-sft-ner-grascco
   namespace: ssaha
 spec:
   ttlSecondsAfterFinished: 60
@@ -9,10 +9,10 @@ spec:
   template:
     metadata:
       labels:
-        app: codealltag-ner-gelectra-large-flert-sft-ner-grascco
+        app: codealltag-ner-xlm-roberta-large-flert-sft-ner-grascco
     spec:
       containers:
-        - name: codealltag-ner-gelectra-large-flert-sft-ner-grascco-container
+        - name: codealltag-ner-xrlf-sft-ner-grascco-container
           image: sksdotsauravs/python-nlp-dev-container:ubuntu24.04-python3.12.11-cuda12.8.1-torch2.7.1
           workingDir: /home/ssaha
           resources:
@@ -41,15 +41,15 @@ spec:
             - name: DATA_DIR
               value: /home/ssaha/data/grascco
             - name: DATA_FOLD_K_VALUE
-              value: "1"
+              value: "5"
             - name: LOG_TO_WANDB
               value: "1"
             - name: USE_PRETRAINED_MODEL
               value: "1"
             - name: PRETRAINED_MODEL_PATH
-              value: /home/ssaha/model-checkpoints/codealltag/ner/deepset--gelectra-large-flert/additional-embeddings-none/use-context-64/sample-size-175000/data-fold-4/learning-rate-5e-5/max-epochs-50/mini-batch-size-50/best-model.pt
+              value: /home/ssaha/model-checkpoints/codealltag/ner/xlm-roberta-large-flert/additional-embeddings-none/use-context-64/sample-size-175000/data-fold-5/learning-rate-5e-5/max-epochs-50/mini-batch-size-50/best-model.pt
             - name: PRETRAINED_MODEL_NAME
-              value: calgo-lab/codealltag-ner-gelectra-large-flert-175k
+              value: calgo-lab/codealltag-ner-xlm-roberta-large-flert-175k
             - name: USE_CONTEXT
               value: "1"
             - name: LEARNING_RATE
