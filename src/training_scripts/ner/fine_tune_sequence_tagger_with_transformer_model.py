@@ -114,7 +114,7 @@ def fine_tune():
     else:
         model_dir_name = transformer_model_name.replace("/", "--").replace("_", "-")
 
-    if use_context and not model_dir_name.endswith("-flert"):
+    if use_context and "-flert" not in model_dir_name:
         model_dir_name += "-flert"
 
     data_dir_path = model_checkpoints_root_dir / "grascco" / "ner" / model_dir_name

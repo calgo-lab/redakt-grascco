@@ -18,12 +18,12 @@ spec:
           resources:
             requests:
               nvidia.com/gpu: "1"
-              memory: "32Gi"
-              cpu: "16000m"
+              memory: "8Gi"
+              cpu: "4000m"
             limits:
               nvidia.com/gpu: "1"
-              memory: "64Gi"
-              cpu: "32000m"
+              memory: "16Gi"
+              cpu: "8000m"
           volumeMounts:
             - name: ssaha-pv
               mountPath: /home/ssaha
@@ -69,4 +69,4 @@ spec:
           persistentVolumeClaim:
             claimName: ssaha-pvc
       nodeSelector:
-        kubernetes.io/hostname: cl-worker27
+        gpu: a100
