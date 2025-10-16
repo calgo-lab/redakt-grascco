@@ -232,7 +232,7 @@ class PlotUtils:
                                                                                           'capthick': 0.75
                                                                                        },
                                                                                        "title_fontsize": 12,
-                                                                                       "y_lim": (0.00, 1.05),
+                                                                                       "y_lim": (0.00, 1.99),
                                                                                        "y_ticks": (0.00, 1.01, 0.20),
                                                                                        "y_ticks_labelsize": 12,
                                                                                        "y_label_spec": ('Scores', 12, 5),
@@ -285,7 +285,7 @@ class PlotUtils:
         if "title_fontsize" not in plot_config or plot_config["title_fontsize"] is None:
             plot_config["title_fontsize"] = 12
         if "y_lim" not in plot_config or plot_config["y_lim"] is None:
-            plot_config["y_lim"] = (0.00, 1.05)
+            plot_config["y_lim"] = (0.00, 1.99)
         if "y_ticks" not in plot_config or plot_config["y_ticks"] is None:
             plot_config["y_ticks"] = (0.00, 1.01, 0.20)
         if "y_ticks_labelsize" not in plot_config or plot_config["y_ticks_labelsize"] is None:

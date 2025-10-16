@@ -113,7 +113,7 @@ if __name__ == "__main__":
             "deepset--gelectra-large-flert": "gelectra-large",
             "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
         },
-        stat_or_label="NAME_PATIENT",
+        stat_or_label="PROFESSION",
     )
     print(metrics.to_markdown(index=False))
     """
@@ -216,7 +216,6 @@ if __name__ == "__main__":
         "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
     }
 
-    
     #### Plot micro avg performance comparison of models
     PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
         figure_output_dir=figure_output_dir,
@@ -298,6 +297,162 @@ if __name__ == "__main__":
             "y_lim": (0.55, 1.45),
             "y_ticks": (0.55, 1.01, 0.09)
         },
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label NAME_TITLE
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="NAME_TITLE",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.68, 1.32),
+            "y_ticks": (0.68, 1.01, 0.08)
+        },
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label ID
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="ID",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.52, 1.48),
+            "y_ticks": (0.52, 1.01, 0.12)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label LOCATION_CITY
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="LOCATION_CITY",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.44, 1.56),
+            "y_ticks": (0.44, 1.01, 0.14)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label LOCATION_STREET
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="LOCATION_STREET",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.35, 1.65),
+            "y_ticks": (0.35, 1.01, 0.13)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label LOCATION_ZIP
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="LOCATION_ZIP",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.32, 1.68),
+            "y_ticks": (0.32, 1.01, 0.17)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label CONTACT_PHONE
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="CONTACT_PHONE",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.05, 1.84),
+            "y_ticks": (0.05, 0.951, 0.15)
+        },
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label LOCATION_HOSPITAL
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="LOCATION_HOSPITAL",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.15, 1.71),
+            "y_ticks": (0.15, 0.931, 0.13)
+        },
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label CONTACT_FAX
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="CONTACT_FAX",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.00, 1.30),
+            "y_ticks": (0.00, 0.651, 0.13)
+        },
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label AGE
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="AGE",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.45, 1.55),
+            "y_ticks": (0.45, 1.01, 0.11)
+        },
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label LOCATION_COUNTRY
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="LOCATION_COUNTRY",
+        plot_in_pairs=True,
+        show_logs=True
+    )
+
+    #### Plot performance comparison of models for label LOCATION_ORGANIZATION
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="LOCATION_ORGANIZATION",
+        plot_in_pairs=True,
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label PROFESSION
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="PROFESSION",
+        plot_in_pairs=True,
         show_logs=True
     )
     """

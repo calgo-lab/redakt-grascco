@@ -315,125 +315,161 @@ NER performance comparison of all models on the test set with mean and standard 
 
 ![ner_name_patient](reports/figures/entity_prediction_performance_comparison_of_models_paired_name_patient.jpg)
 
-<br>
-
 <b>(NAME_TITLE):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.81 ± 0.112 | 0.87 ± 0.096 | 0.84 ± 0.103 | 25 ± 3    |
-| xlm-roberta-large      | 0.88 ± 0.108 | 0.93 ± 0.059 | 0.90 ± 0.084 | 25 ± 3    |
-| gelectra-large         | 0.90 ± 0.072 | 0.89 ± 0.090 | 0.89 ± 0.080 | 25 ± 3    |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.8131 ± 0.112 | 0.8722 ± 0.096 | 0.8411 ± 0.103 | 25 ± 3    |
+| codealltag-bert-base-german-cased | 0.8089 ± 0.104 | 0.8562 ± 0.118 | 0.8310 ± 0.108 | 25 ± 3    |
+| xlm-roberta-large                 | 0.8818 ± 0.108 | <b>0.9303 ± 0.059</b> | <b>0.9040 ± 0.084</b> | 25 ± 3    |
+| codealltag-xlm-roberta-large      | 0.8375 ± 0.086 | 0.9095 ± 0.058 | 0.8713 ± 0.071 | 25 ± 3    |
+| gelectra-large                    | <b>0.8958 ± 0.072</b> | 0.8875 ± 0.090 | 0.8913 ± 0.080 | 25 ± 3    |
+| codealltag-gelectra-large         | 0.8756 ± 0.079 | 0.8911 ± 0.080 | 0.8829 ± 0.078 | 25 ± 3    |
+
+![ner_name_title](reports/figures/entity_prediction_performance_comparison_of_models_paired_name_title.jpg)
 
 <b>(ID):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.77 ± 0.109 | 0.72 ± 0.099 | 0.74 ± 0.090 | 13 ± 3    |
-| xlm-roberta-large      | 0.83 ± 0.088 | 0.83 ± 0.109 | 0.83 ± 0.090 | 13 ± 3    |
-| gelectra-large         | 0.73 ± 0.123 | 0.78 ± 0.062 | 0.75 ± 0.069 | 13 ± 3    |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.7730 ± 0.109 | 0.7234 ± 0.099 | 0.7445 ± 0.090 | 13 ± 3    |
+| codealltag-bert-base-german-cased | <b>0.8914 ± 0.082</b> | 0.7556 ± 0.142 | 0.8147 ± 0.116 | 13 ± 3    |
+| xlm-roberta-large                 | 0.8345 ± 0.088 | 0.8305 ± 0.109 | 0.8308 ± 0.090 | 13 ± 3    |
+| codealltag-xlm-roberta-large      | 0.8709 ± 0.063 | <b>0.9002 ± 0.083</b> | <b>0.8830 ± 0.060</b> | 13 ± 3    |
+| gelectra-large                    | 0.7266 ± 0.123 | 0.7812 ± 0.062 | 0.7457 ± 0.069 | 13 ± 3    |
+| codealltag-gelectra-large         | 0.7138 ± 0.184 | 0.8371 ± 0.138 | 0.7672 ± 0.166 | 13 ± 3    |
+
+![ner_id](reports/figures/entity_prediction_performance_comparison_of_models_paired_id.jpg)
 
 <b>(LOCATION_CITY):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.84 ± 0.138 | 0.72 ± 0.101 | 0.77 ± 0.100 | 11 ± 3    |
-| xlm-roberta-large      | 0.80 ± 0.137 | 0.64 ± 0.186 | 0.71 ± 0.168 | 11 ± 3    |
-| gelectra-large         | 0.87 ± 0.130 | 0.73 ± 0.094 | 0.79 ± 0.109 | 11 ± 3    |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.8388 ± 0.138 | 0.7230 ± 0.101 | 0.7709 ± 0.100 | 11 ± 3    |
+| codealltag-bert-base-german-cased | 0.8133 ± 0.172 | 0.7412 ± 0.108 | 0.7737 ± 0.138 | 11 ± 3    |
+| xlm-roberta-large                 | 0.7991 ± 0.137 | 0.6374 ± 0.186 | 0.7053 ± 0.168 | 11 ± 3    |
+| codealltag-xlm-roberta-large      | 0.8656 ± 0.111 | 0.7482 ± 0.101 | 0.7990 ± 0.094 | 11 ± 3    |
+| gelectra-large                    | 0.8667 ± 0.130 | 0.7300 ± 0.094 | 0.7923 ± 0.109 | 11 ± 3    |
+| codealltag-gelectra-large         | <b>0.8985 ± 0.129</b> | <b>0.7793 ± 0.108</b> | <b>0.8294 ± 0.104</b> | 11 ± 3    |
 
-<br>
-
-![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_name_title_id_location_city.jpg)
-
-<br>
+![ner_location_city](reports/figures/entity_prediction_performance_comparison_of_models_paired_location_city.jpg)
 
 <b>(LOCATION_STREET):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.57 ± 0.183 | 0.63 ± 0.173 | 0.60 ± 0.176 | 8 ± 2     |
-| xlm-roberta-large      | 0.73 ± 0.200 | 0.81 ± 0.139 | 0.77 ± 0.174 | 8 ± 2     |
-| gelectra-large         | 0.83 ± 0.149 | 0.94 ± 0.070 | 0.88 ± 0.113 | 8 ± 2     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.5724 ± 0.183 | 0.6343 ± 0.173 | 0.5984 ± 0.176 | 8 ± 2     |
+| codealltag-bert-base-german-cased | 0.8157 ± 0.115 | 0.9143 ± 0.114 | 0.8590 ± 0.103 | 8 ± 2     |
+| xlm-roberta-large                 | 0.7343 ± 0.200 | 0.8079 ± 0.139 | 0.7667 ± 0.174 | 8 ± 2     |
+| codealltag-xlm-roberta-large      | 0.9429 ± 0.114 | 0.9429 ± 0.114 | 0.9429 ± 0.114 | 8 ± 2     |
+| gelectra-large                    | 0.8333 ± 0.149 | 0.9428 ± 0.070 | 0.8818 ± 0.113 | 8 ± 2     |
+| codealltag-gelectra-large         | <b>0.9714 ± 0.057</b> | <b>0.9714 ± 0.057</b> | <b>0.9714 ± 0.057</b> | 8 ± 2     |
+
+![ner_location_street](reports/figures/entity_prediction_performance_comparison_of_models_paired_location_street.jpg)
 
 <b>(LOCATION_ZIP):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.79 ± 0.144 | 0.93 ± 0.099 | 0.85 ± 0.119 | 8 ± 2     |
-| xlm-roberta-large      | 0.98 ± 0.044 | 0.98 ± 0.031 | 0.98 ± 0.025 | 8 ± 2     |
-| gelectra-large         | 0.89 ± 0.104 | 0.95 ± 0.058 | 0.92 ± 0.077 | 8 ± 2     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.7932 ± 0.144 | 0.9278 ± 0.099 | 0.8516 ± 0.119 | 8 ± 2     |
+| codealltag-bert-base-german-cased | 0.8657 ± 0.152 | 0.9100 ± 0.111 | 0.8859 ± 0.132 | 8 ± 2     |
+| xlm-roberta-large                 | <b>0.9778 ± 0.044</b> | <b>0.9846 ± 0.031</b> | <b>0.9802 ± 0.025</b> | 8 ± 2     |
+| codealltag-xlm-roberta-large      | 0.9556 ± 0.089 | 0.9750 ± 0.05  | 0.9647 ± 0.071 | 8 ± 2     |
+| gelectra-large                    | 0.8871 ± 0.104 | 0.9528 ± 0.058 | 0.9168 ± 0.077 | 8 ± 2     |
+| codealltag-gelectra-large         | 0.6296 ± 0.297 | 0.6831 ± 0.249 | 0.6513 ± 0.277 | 8 ± 2     |
+
+![ner_location_zip](reports/figures/entity_prediction_performance_comparison_of_models_paired_location_zip.jpg)
 
 <b>(CONTACT_PHONE):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.29 ± 0.173 | 0.58 ± 0.247 | 0.38 ± 0.202 | 3 ± 1     |
-| xlm-roberta-large      | 0.21 ± 0.150 | 0.38 ± 0.233 | 0.27 ± 0.183 | 3 ± 1     |
-| gelectra-large         | 0.32 ± 0.160 | 0.57 ± 0.133 | 0.40 ± 0.162 | 3 ± 1     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.2908 ± 0.173 | 0.5833 ± 0.247 | 0.3800 ± 0.202 | 3 ± 1     |
+| codealltag-bert-base-german-cased | 0.4000 ± 0.192 | 0.7000 ± 0.245 | 0.4984 ± 0.205 | 3 ± 1     |
+| xlm-roberta-large                 | 0.2133 ± 0.150 | 0.3833 ± 0.233 | 0.2717 ± 0.183 | 3 ± 1     |
+| codealltag-xlm-roberta-large      | 0.3607 ± 0.158 | 0.6167 ± 0.145 | 0.4486 ± 0.164 | 3 ± 1     |
+| gelectra-large                    | 0.3155 ± 0.160 | 0.5667 ± 0.133 | 0.3989 ± 0.162 | 3 ± 1     |
+| codealltag-gelectra-large         | <b>0.4250 ± 0.150</b> | <b>0.7167 ± 0.194</b> | <b>0.5295 ± 0.164</b> | 3 ± 1     |
 
-<br>
-
-![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_location_street_location_zip_contact_phone.jpg)
-
-<br>
+![ner_contact_phone](reports/figures/entity_prediction_performance_comparison_of_models_paired_contact_phone.jpg)
 
 <b>(LOCATION_HOSPITAL):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.28 ± 0.071 | 0.50 ± 0.278 | 0.35 ± 0.116 | 6 ± 2     |
-| xlm-roberta-large      | 0.34 ± 0.097 | 0.57 ± 0.249 | 0.41 ± 0.117 | 6 ± 2     |
-| gelectra-large         | 0.38 ± 0.114 | 0.67 ± 0.242 | 0.46 ± 0.118 | 6 ± 2     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.2764 ± 0.071 | 0.5032 ± 0.278 | 0.3464 ± 0.116 | 6 ± 2     |
+| codealltag-bert-base-german-cased | 0.3571 ± 0.202 | 0.5302 ± 0.326 | 0.4029 ± 0.212 | 6 ± 2     |
+| xlm-roberta-large                 | 0.3394 ± 0.097 | 0.5651 ± 0.249 | 0.4119 ± 0.117 | 6 ± 2     |
+| codealltag-xlm-roberta-large      | 0.3583 ± 0.082 | 0.4540 ± 0.093 | 0.3915 ± 0.068 | 6 ± 2     |
+| gelectra-large                    | <b>0.3765 ± 0.114</b> | <b>0.6714 ± 0.242</b> | <b>0.4641 ± 0.118</b> | 6 ± 2     |
+| codealltag-gelectra-large         | 0.3260 ± 0.112 | 0.5698 ± 0.294 | 0.4091 ± 0.162 | 6 ± 2     |
+
+![ner_location_hospital](reports/figures/entity_prediction_performance_comparison_of_models_paired_location_hospital.jpg)
 
 <b>(CONTACT_FAX):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 2 ± 0     |
-| xlm-roberta-large      | 0.20 ± 0.400 | 0.10 ± 0.200 | 0.13 ± 0.267 | 2 ± 0     |
-| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 2 ± 0     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 2 ± 0     |
+| codealltag-bert-base-german-cased | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 2 ± 0     |
+| xlm-roberta-large                 | <b>0.2000 ± 0.400</b> | <b>0.1000 ± 0.200</b> | <b>0.1333 ± 0.267</b> | 2 ± 0     |
+| codealltag-xlm-roberta-large      | 0.1000 ± 0.200 | 0.1000 ± 0.200 | 0.1000 ± 0.200 | 2 ± 0     |
+| gelectra-large                    | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 2 ± 0     |
+| codealltag-gelectra-large         | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 2 ± 0     |
+
+![ner_contact_fax](reports/figures/entity_prediction_performance_comparison_of_models_paired_contact_fax.jpg)
 
 <b>(AGE):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 1.00 ± 0.000 | 0.72 ± 0.254 | 0.81 ± 0.185 | 3 ± 1     |
-| xlm-roberta-large      | 0.95 ± 0.100 | 1.00 ± 0.000 | 0.97 ± 0.057 | 3 ± 1     |
-| gelectra-large         | 0.90 ± 0.200 | 1.00 ± 0.000 | 0.93 ± 0.133 | 3 ± 1     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | <b>1.0000 ± 0.000</b> | 0.7200 ± 0.254 | 0.8100 ± 0.185 | 3 ± 1     |
+| codealltag-bert-base-german-cased | 0.9100 ± 0.111 | 0.7867 ± 0.176 | 0.8388 ± 0.138 | 3 ± 1     |
+| xlm-roberta-large                 | 0.9500 ± 0.100 | <b>1.0000 ± 0.000</b> | <b>0.9714 ± 0.057</b> | 3 ± 1     |
+| codealltag-xlm-roberta-large      | 0.9667 ± 0.067 | 0.8867 ± 0.157 | 0.9167 ± 0.105 | 3 ± 1     |
+| gelectra-large                    | 0.9000 ± 0.200 | 1.0000 ± 0.000 | 0.9333 ± 0.133 | 3 ± 1     |
+| codealltag-gelectra-large         | 0.9500 ± 0.100 | 0.9200 ± 0.160 | 0.9214 ± 0.102 | 3 ± 1     |
 
-<br>
-
-![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_location_hospital_contact_fax_age.jpg)
-
-<br>
+![ner_age](reports/figures/entity_prediction_performance_comparison_of_models_paired_age.jpg)
 
 <b>(LOCATION_COUNTRY):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.20 ± 0.400 | 0.20 ± 0.400 | 0.20 ± 0.400 | 1 ± 0     |
-| xlm-roberta-large      | 0.60 ± 0.490 | 0.60 ± 0.490 | 0.60 ± 0.490 | 1 ± 0     |
-| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.2000 ± 0.400 | 0.2000 ± 0.400 | 0.2000 ± 0.400 | 1 ± 0     |
+| codealltag-bert-base-german-cased | 0.2000 ± 0.400 | 0.2000 ± 0.400 | 0.2000 ± 0.400 | 1 ± 0     |
+| xlm-roberta-large                 | <b>0.6000 ± 0.490</b> | <b>0.6000 ± 0.490</b> | <b>0.6000 ± 0.490</b> | 1 ± 0     |
+| codealltag-xlm-roberta-large      | 0.4000 ± 0.490 | 0.4000 ± 0.490 | 0.4000 ± 0.490 | 1 ± 0     |
+| gelectra-large                    | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-gelectra-large         | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+
+![ner_location_country](reports/figures/entity_prediction_performance_comparison_of_models_paired_location_country.jpg)
 
 <b>(LOCATION_ORGANIZATION):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
-| xlm-roberta-large      | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
-| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-bert-base-german-cased | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| xlm-roberta-large                 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-xlm-roberta-large      | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| gelectra-large                    | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-gelectra-large         | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+
+![ner_location_organization](reports/figures/entity_prediction_performance_comparison_of_models_paired_location_organization.jpg)
 
 <b>(PROFESSION):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
-| xlm-roberta-large      | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
-| gelectra-large         | 0.00 ± 0.000 | 0.00 ± 0.000 | 0.00 ± 0.000 | 1 ± 0     |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-bert-base-german-cased | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| xlm-roberta-large                 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-xlm-roberta-large      | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| gelectra-large                    | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
+| codealltag-gelectra-large         | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 0.0000 ± 0.000 | 1 ± 0     |
 
-<br>
-
-![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_location_country_location_organization_profession.jpg)
+![ner_profession](reports/figures/entity_prediction_performance_comparison_of_models_paired_profession.jpg)
 
 <br>
 
