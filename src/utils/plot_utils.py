@@ -305,8 +305,6 @@ class PlotUtils:
         all_data = np.array(metrics_data[class_or_stat])
         all_means = np.mean(all_data, axis=2)
         all_std_devs = np.std(all_data, axis=2)
-
-        print(all_data)
         
         upper = np.clip(all_means + all_std_devs, None, 1.0)
         lower = np.clip(all_means - all_std_devs, 0.0, None)

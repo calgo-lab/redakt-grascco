@@ -237,34 +237,40 @@ NER performance comparison of all models on the test set with mean and standard 
 
 | Model                             | Precision      | Recall         | F1-score       | Support   |
 |:----------------------------------|:---------------|:---------------|:---------------|:----------|
-| bert-base-german-cased            | 0.7976 ± 0.015 | 0.8304 ± 0.019 | 0.8135 ± 0.01  | 280 ± 33  |
+| bert-base-german-cased            | 0.7976 ± 0.015 | 0.8304 ± 0.019 | 0.8135 ± 0.010 | 280 ± 33  |
 | codealltag-bert-base-german-cased | 0.8539 ± 0.037 | 0.8688 ± 0.023 | 0.8611 ± 0.029 | 280 ± 33  |
 | xlm-roberta-large                 | 0.8761 ± 0.028 | 0.8954 ± 0.022 | 0.8854 ± 0.022 | 280 ± 33  |
 | codealltag-xlm-roberta-large      | <b>0.8773 ± 0.026</b> | <b>0.9047 ± 0.019</b> | <b>0.8907 ± 0.022</b> | 280 ± 33  |
-| gelectra-large                    | 0.8746 ± 0.029 | 0.8986 ± 0.015 | 0.8863 ± 0.02  | 280 ± 33  |
-| codealltag-gelectra-large         | 0.8604 ± 0.036 | 0.8890 ± 0.02  | 0.8743 ± 0.027 | 280 ± 33  |
+| gelectra-large                    | 0.8746 ± 0.029 | 0.8986 ± 0.015 | 0.8863 ± 0.020 | 280 ± 33  |
+| codealltag-gelectra-large         | 0.8604 ± 0.036 | 0.8890 ± 0.020 | 0.8743 ± 0.027 | 280 ± 33  |
 
 ![ner_micro_avg](reports/figures/entity_prediction_performance_comparison_of_models_paired_micro_avg.jpg)
 
 <b>(macro avg)</b>:
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.53 ± 0.029 | 0.56 ± 0.038 | 0.53 ± 0.025 | 280 ± 33  |
-| xlm-roberta-large      | 0.61 ± 0.057 | 0.64 ± 0.043 | 0.62 ± 0.047 | 280 ± 33  |
-| gelectra-large         | 0.56 ± 0.049 | 0.62 ± 0.016 | 0.58 ± 0.037 | 280 ± 33  |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.5256 ± 0.029 | 0.5553 ± 0.038 | 0.5277 ± 0.025 | 280 ± 33  |
+| codealltag-bert-base-german-cased | 0.5667 ± 0.073 | 0.5976 ± 0.062 | 0.5728 ± 0.068 | 280 ± 33  |
+| xlm-roberta-large                 | 0.6141 ± 0.057 | 0.6405 ± 0.043 | 0.6190 ± 0.047 | 280 ± 33  |
+| codealltag-xlm-roberta-large      | <b>0.6151 ± 0.058</b> | <b>0.6459 ± 0.052</b> | <b>0.6243 ± 0.056</b> | 280 ± 33  |
+| gelectra-large                    | 0.5645 ± 0.049 | 0.6187 ± 0.016 | 0.5815 ± 0.037 | 280 ± 33  |
+| codealltag-gelectra-large         | 0.5596 ± 0.041 | 0.6057 ± 0.027 | 0.5742 ± 0.035 | 280 ± 33  |
+
+![ner_macro_avg](reports/figures/entity_prediction_performance_comparison_of_models_paired_macro_avg.jpg)
 
 <b>(weighted avg)</b>:
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.80 ± 0.011 | 0.83 ± 0.019 | 0.81 ± 0.010 | 280 ± 33  |
-| xlm-roberta-large      | 0.88 ± 0.025 | 0.90 ± 0.022 | 0.89 ± 0.022 | 280 ± 33  |
-| gelectra-large         | 0.88 ± 0.027 | 0.90 ± 0.015 | 0.88 ± 0.019 | 280 ± 33  |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.8037 ± 0.011 | 0.8304 ± 0.019 | 0.8129 ± 0.010 | 280 ± 33  |
+| codealltag-bert-base-german-cased | 0.8508 ± 0.034 | 0.8688 ± 0.023 | 0.8562 ± 0.027 | 280 ± 33  |
+| xlm-roberta-large                 | <b>0.8828 ± 0.025</b> | 0.8954 ± 0.022 | 0.8856 ± 0.022 | 280 ± 33  |
+| codealltag-xlm-roberta-large      | 0.8796 ± 0.026 | <b>0.9047 ± 0.019</b> | <b>0.8893 ± 0.023</b> | 280 ± 33  |
+| gelectra-large                    | 0.8773 ± 0.027 | 0.8986 ± 0.015 | 0.8846 ± 0.019 | 280 ± 33  |
+| codealltag-gelectra-large         | 0.8642 ± 0.032 | 0.8890 ± 0.020 | 0.8735 ± 0.025 | 280 ± 33  |
 
-<br>
-
-![ner_micro_macro_weighted](reports/figures/entity_prediction_performance_comparison_of_models_micro_avg_macro_avg_weighted_avg.jpg)
+![ner_weighted_avg](reports/figures/entity_prediction_performance_comparison_of_models_paired_weighted_avg.jpg)
 
 <br>
 

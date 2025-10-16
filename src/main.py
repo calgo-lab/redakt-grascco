@@ -113,7 +113,7 @@ if __name__ == "__main__":
             "deepset--gelectra-large-flert": "gelectra-large",
             "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
         },
-        stat_or_label="micro avg",
+        stat_or_label="weighted avg",
     )
     print(metrics.to_markdown(index=False))
     """
@@ -215,6 +215,7 @@ if __name__ == "__main__":
         "deepset--gelectra-large-flert": "gelectra-large",
         "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
     }
+
     
     #### Plot micro avg performance comparison of models
     PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
@@ -222,6 +223,34 @@ if __name__ == "__main__":
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
         class_or_stat="micro avg",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.78, 1.08),
+            "y_ticks": (0.78, 0.931, 0.03)
+        },
+        show_logs=True
+    )
+
+    #### Plot macro avg performance comparison of models
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="macro avg",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.48, 0.96),
+            "y_ticks": (0.48, 0.721, 0.06)
+        },
+        show_logs=True
+    )
+    
+    #### Plot weighted avg performance comparison of models
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="weighted avg",
         plot_in_pairs=True,
         plot_config={
             "y_lim": (0.78, 1.08),
