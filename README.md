@@ -471,14 +471,16 @@ NER performance comparison of all models on the test set with mean and standard 
 
 ![ner_profession](reports/figures/entity_prediction_performance_comparison_of_models_paired_profession.jpg)
 
-<br>
 
 ## Best models per architecture
 
-Based on micro avg F1-score:
+Based on <b>weighted avg</b> F1-score:
 
-| Model                  | Fold | Precision | Recall | F1-score |
-|------------------------|------|-----------|--------|----------|
-| bert-base-german-cased | K1   | 0.8242    | 0.8095 | 0.8168   |
-| xlm-roberta-large      | K5   | 0.9115    | 0.9360 | 0.9236   |
-| gelectra-large         | K1   | 0.9179    | 0.8988 | 0.9083   |
+| Model                             | Fold | Precision | Recall | F1-score |
+|-----------------------------------|------|-----------|--------|----------|
+| bert-base-german-cased            | K5   | 0.8073    | 0.8653 | 0.8315   |
+| codealltag-bert-base-german-cased | K1   | 0.8827    | 0.8869 | 0.8808   |
+| xlm-roberta-large                 | K5   | 0.9158    | <b>0.9360</b> | <b>0.9234</b>   |
+| codealltag-xlm-roberta-large      | K5   | 0.9107    | 0.9259 | 0.9159   |
+| gelectra-large                    | K1   | <b>0.9180</b>    | 0.8988 | 0.9048   |
+| codealltag-gelectra-large         | K5   | 0.8843    | 0.9192 | 0.8995   |
