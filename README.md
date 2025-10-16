@@ -192,6 +192,13 @@ Three separate transformers based pre-trained language models are fine-tuned for
 2. 🤗 [xlm-roberta-large](https://huggingface.co/FacebookAI/xlm-roberta-large) (<b>aka</b> xlm-roberta-large)
 3. 🤗 [deepset/gelectra-large](https://huggingface.co/deepset/gelectra-large) (<b>aka</b> gelectra-large)
 
+Additionally, checkpoint of NER models fine-tuned on the CodE Alltag corpus are further fine-tuned on the GraSCCo corpus:
+
+GitHub: [calgo-lab/redakt-codealltag](https://github.com/calgo-lab/redakt-codealltag)
+
+4. calgo-lab/codealltag-ner-bert-base-german-cased-flert-175k [K=5] (<b>aka</b> codealltag-bert-base-german-cased)
+5. calgo-lab/codealltag-ner-xlm-roberta-large-flert-175k [K=5] (<b>aka</b> codealltag-xlm-roberta-large)
+6. calgo-lab/codealltag-ner-gelectra-large-flert-175k [K=4] (<b>aka</b> codealltag-gelectra-large)
 
 ## System setup
 
@@ -224,15 +231,20 @@ The following hyperparameters were used for fine-tuning all the three models:
 
 ## Overall model performance
 
-NER performance comparison of the three models on the test set with mean and standard deviation over 5-folds cross validation setup:
+NER performance comparison of all models on the test set with mean and standard deviation over 5-folds cross validation setup:
 
 <b>(micro avg)</b>:
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.80 ± 0.015 | 0.83 ± 0.019 | 0.81 ± 0.010 | 280 ± 33  |
-| xlm-roberta-large      | 0.88 ± 0.028 | 0.90 ± 0.022 | 0.89 ± 0.022 | 280 ± 33  |
-| gelectra-large         | 0.87 ± 0.029 | 0.90 ± 0.015 | 0.89 ± 0.020 | 280 ± 33  |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.7976 ± 0.015 | 0.8304 ± 0.019 | 0.8135 ± 0.01  | 280 ± 33  |
+| codealltag-bert-base-german-cased | 0.8539 ± 0.037 | 0.8688 ± 0.023 | 0.8611 ± 0.029 | 280 ± 33  |
+| xlm-roberta-large                 | 0.8761 ± 0.028 | 0.8954 ± 0.022 | 0.8854 ± 0.022 | 280 ± 33  |
+| codealltag-xlm-roberta-large      | <b>0.8773 ± 0.026</b> | <b>0.9047 ± 0.019</b> | <b>0.8907 ± 0.022</b> | 280 ± 33  |
+| gelectra-large                    | 0.8746 ± 0.029 | 0.8986 ± 0.015 | 0.8863 ± 0.02  | 280 ± 33  |
+| codealltag-gelectra-large         | 0.8604 ± 0.036 | 0.8890 ± 0.02  | 0.8743 ± 0.027 | 280 ± 33  |
+
+![ner_micro_avg](reports/figures/entity_prediction_performance_comparison_of_models_paired_micro_avg.jpg)
 
 <b>(macro avg)</b>:
 

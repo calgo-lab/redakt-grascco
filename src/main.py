@@ -105,12 +105,15 @@ if __name__ == "__main__":
     """
     metrics = ReportUtils.get_performance_metrics_summary_by_class_or_stat(
         metrics_dir=project_root / "metrics" / "ner_performance",
-        model_alias_dict={
+        model_alias_dict = {
             "google-bert--bert-base-german-cased-flert": "bert-base-german-cased",
+            "calgo-lab--codealltag-ner-bert-base-german-cased-flert-175k": "codealltag-bert-base-german-cased",
             "xlm-roberta-large-flert": "xlm-roberta-large",
-            "deepset--gelectra-large-flert": "gelectra-large"
+            "calgo-lab--codealltag-ner-xlm-roberta-large-flert-175k": "codealltag-xlm-roberta-large",
+            "deepset--gelectra-large-flert": "gelectra-large",
+            "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
         },
-        stat_or_label="PROFESSION"
+        stat_or_label="micro avg",
     )
     print(metrics.to_markdown(index=False))
     """
@@ -126,7 +129,7 @@ if __name__ == "__main__":
     }
     
     #### Plot micro avg, macro avg and weighted avg performance comparison of models
-    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(
         figure_output_dir=figure_output_dir,
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
@@ -139,7 +142,7 @@ if __name__ == "__main__":
     )
     
     #### Plot DATE, NAME_DOCTOR, NAME_PATIENT performance comparison of models
-    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(
         figure_output_dir=figure_output_dir,
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
@@ -152,7 +155,7 @@ if __name__ == "__main__":
     )
     
     #### Plot NAME_TITLE, ID, LOCATION_CITY performance comparison of models
-    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(
         figure_output_dir=figure_output_dir,
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
@@ -165,7 +168,7 @@ if __name__ == "__main__":
     )
 
     #### Plot LOCATION_STREET, LOCATION_ZIP, CONTACT_PHONE performance comparison of models
-    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(
         figure_output_dir=figure_output_dir,
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
@@ -178,7 +181,7 @@ if __name__ == "__main__":
     )
 
     #### Plot LOCATION_HOSPITAL, CONTACT_FAX, AGE performance comparison of models
-    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(
         figure_output_dir=figure_output_dir,
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
@@ -191,11 +194,39 @@ if __name__ == "__main__":
     )
     
     #### Plot LOCATION_COUNTRY, LOCATION_ORGANIZATION, PROFESSION performance comparison of models
-    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(
         figure_output_dir=figure_output_dir,
         metrics_dir=metrics_dir,
         model_alias_dict=model_alias_dict,
         class_or_stat_list=["LOCATION_COUNTRY", "LOCATION_ORGANIZATION", "PROFESSION"],
+        show_logs=True
+    )
+    """
+
+    ### Plot performance comparison of models for selected class or statistic
+    """
+    figure_output_dir: Path = project_root / "reports" / "figures"
+    metrics_dir: Path = project_root / "metrics" / "ner_performance"
+    model_alias_dict: Dict[str, str] = {
+        "google-bert--bert-base-german-cased-flert": "bert-base-german-cased",
+        "calgo-lab--codealltag-ner-bert-base-german-cased-flert-175k": "codealltag-bert-base-german-cased",
+        "xlm-roberta-large-flert": "xlm-roberta-large",
+        "calgo-lab--codealltag-ner-xlm-roberta-large-flert-175k": "codealltag-xlm-roberta-large",
+        "deepset--gelectra-large-flert": "gelectra-large",
+        "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
+    }
+    
+    #### Plot micro avg performance comparison of models
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="micro avg",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.78, 1.08),
+            "y_ticks": (0.78, 0.931, 0.03)
+        },
         show_logs=True
     )
     """

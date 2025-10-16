@@ -12,43 +12,44 @@ class PlotUtils:
     """
 
     @staticmethod
-    def plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(figure_output_dir: Path, 
-                                                                                  metrics_dir: Path, 
-                                                                                  model_alias_dict: Dict[str, str], 
-                                                                                  class_or_stat_list: List[str], 
-                                                                                  metrics: List[str] = ['Prec', 'Rec', 'F1'], 
-                                                                                  plot_config: Dict[str, Any] = {
-                                                                                      "n_rows": 1, 
-                                                                                      "n_cols": 3, 
-                                                                                      "figsize": (15, 4), 
-                                                                                      "subplots_wspace": 0.50, 
-                                                                                      "bar_width": 0.004, 
-                                                                                      "space_between_metric_bars": 0.02, 
-                                                                                      "bar_colors": ['skyblue', 'yellowgreen', 'rosybrown'], 
-                                                                                      "edge_colors": ['dodgerblue', 'darkgreen', 'brown'], 
-                                                                                      "error_kw_dict": {
-                                                                                          'capsize': 4, 
-                                                                                          'elinewidth': 1.5, 
-                                                                                          'capthick': 1.5
-                                                                                      },
-                                                                                      "title_fontsize": 17, 
-                                                                                      "y_lim_list": [(0.00, 1.52), (0.00, 1.52), (0.00, 1.52)], 
-                                                                                      "y_ticks_list": [(0.00, 1.01, 0.20), (0.00, 1.01, 0.20), (0.00, 1.01, 0.20)], 
-                                                                                      "y_ticks_labelsize": 15, 
-                                                                                      "y_label_spec": ('Scores', 15, 5), 
-                                                                                      "y_grid_spec": ('--', 0.7), 
-                                                                                      "x_ticks_labelsize": 15, 
-                                                                                      "legend_spec": ('upper right', 12),
-                                                                                  }, 
-                                                                                  figure_file_ext: str = "jpg", 
-                                                                                  figure_name: Union[str, None] = None, 
-                                                                                  figure_name_prefix: Union[str, None] = "entity_prediction_performance_comparison_of_models_", 
-                                                                                  figure_dpi: int = 600, 
-                                                                                  show_logs: bool = False) -> None:
+    def plot_entity_prediction_performance_comparison_of_models_for_classes_or_stats(figure_output_dir: Path, 
+                                                                                     metrics_dir: Path, 
+                                                                                     model_alias_dict: Dict[str, str], 
+                                                                                     class_or_stat_list: List[str], 
+                                                                                     metrics: List[str] = ['Prec', 'Rec', 'F1'], 
+                                                                                     plot_config: Dict[str, Any] = {
+                                                                                         "n_rows": 1, 
+                                                                                         "n_cols": 3, 
+                                                                                         "figsize": (15, 4), 
+                                                                                         "subplots_wspace": 0.50, 
+                                                                                         "bar_width": 0.004, 
+                                                                                         "space_between_metric_bars": 0.02, 
+                                                                                         "bar_colors": ['skyblue', 'yellowgreen', 'rosybrown'], 
+                                                                                         "edge_colors": ['dodgerblue', 'darkgreen', 'brown'], 
+                                                                                         "error_kw_dict": {
+                                                                                             'capsize': 4, 
+                                                                                             'elinewidth': 1.5, 
+                                                                                             'capthick': 1.5
+                                                                                         },
+                                                                                         "title_fontsize": 17, 
+                                                                                         "y_lim_list": [(0.00, 1.52), (0.00, 1.52), (0.00, 1.52)], 
+                                                                                         "y_ticks_list": [(0.00, 1.01, 0.20), (0.00, 1.01, 0.20), (0.00, 1.01, 0.20)], 
+                                                                                         "y_ticks_labelsize": 15, 
+                                                                                         "y_label_spec": ('Scores', 15, 5), 
+                                                                                         "y_grid_spec": ('--', 0.7), 
+                                                                                         "x_ticks_labelsize": 15, 
+                                                                                         "legend_spec": ('upper right', 12),
+                                                                                     }, 
+                                                                                     figure_file_ext: str = "jpg", 
+                                                                                     figure_name: Union[str, None] = None, 
+                                                                                     figure_name_prefix: Union[str, None] = "entity_prediction_performance_comparison_of_models_", 
+                                                                                     figure_dpi: int = 600, 
+                                                                                     show_logs: bool = False) -> None:
         """
         Utility method to plot entity prediction performance comparison of models for specified classes or statistics.
         The method reads performance metrics from the specified directory, processes the data, and generates bar plots
         comparing the performance of different models for each specified class or statistic.
+        
         :param figure_output_dir: Directory to save the generated figure.
         :param metrics_dir: Directory containing the performance metrics files.
         :param model_alias_dict: Dictionary mapping model identifiers to their display names.
@@ -124,18 +125,15 @@ class PlotUtils:
             class_or_stat_means = np.mean(class_or_stat_data, axis=2)
             class_or_stat_std_devs = np.std(class_or_stat_data, axis=2)
 
-            if show_logs:
-                class_or_stat_min = np.min(class_or_stat_means - class_or_stat_std_devs)
-                class_or_stat_max = np.max(class_or_stat_means + class_or_stat_std_devs)
-                print(f'{class_or_stat}: [{class_or_stat_min}, {class_or_stat_max}]')
-
             class_or_stat_upper = np.clip(class_or_stat_means + class_or_stat_std_devs, None, 1.0)
             class_or_stat_lower = np.clip(class_or_stat_means - class_or_stat_std_devs, 0.0, None)
             yerr_class_or_stat = np.array(
                 [class_or_stat_means - class_or_stat_lower, 
                  class_or_stat_upper - class_or_stat_means]
             )
-
+            if show_logs:
+                print(f'{class_or_stat}: [{np.min(class_or_stat_means - class_or_stat_std_devs):.4f} ({np.min(class_or_stat_lower):.4f}), {np.max(class_or_stat_means + class_or_stat_std_devs):.4f} ({np.max(class_or_stat_upper):.4f})]')
+            
             for model_idx, model in enumerate(list(model_alias_dict.values())):
                 error_kw_dict = plot_config["error_kw_dict"].copy()
                 error_kw_dict.update({'ecolor': plot_config["edge_colors"][model_idx]})
@@ -207,3 +205,242 @@ class PlotUtils:
             dpi=figure_dpi, 
             bbox_inches='tight'
         )
+
+        plt.close()
+        
+        if show_logs:
+            print(f"figure_path: {plot_file_path}")
+    
+    @staticmethod
+    def plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(figure_output_dir: Path,
+                                                                                  metrics_dir: Path,
+                                                                                  model_alias_dict: Dict[str, str],
+                                                                                  class_or_stat: str,
+                                                                                  plot_in_pairs: bool = False,
+                                                                                  metrics: List[str] = ['Prec', 'Rec', 'F1'],
+                                                                                  plot_config: Dict[str, Any] = {
+                                                                                      "figsize": (6, 4),
+                                                                                      "bar_width": 0.004,
+                                                                                      "space_between_metric_bars": 0.008,
+                                                                                      "space_between_model_pairs": 0.002,
+                                                                                      "bar_colors": ['skyblue', 'yellowgreen', 'rosybrown'],
+                                                                                      "edge_colors": ['dodgerblue', 'darkgreen', 'brown'],
+                                                                                      "hatch_style": '///',
+                                                                                      "error_kw_dict": {
+                                                                                          'capsize': 2,
+                                                                                          'elinewidth': 0.75,
+                                                                                          'capthick': 0.75
+                                                                                       },
+                                                                                       "title_fontsize": 12,
+                                                                                       "y_lim": (0.00, 1.05),
+                                                                                       "y_ticks": (0.00, 1.01, 0.20),
+                                                                                       "y_ticks_labelsize": 12,
+                                                                                       "y_label_spec": ('Scores', 12, 5),
+                                                                                       "y_grid_spec": ('--', 0.7),
+                                                                                       "x_ticks_labelsize": 12,
+                                                                                       "legend_spec": ('upper right', 11)
+                                                                                  },
+                                                                                  figure_file_ext: str = "jpg",
+                                                                                  figure_name: Union[str, None] = None,
+                                                                                  figure_name_prefix: Union[str, None] = "entity_prediction_performance_comparison_of_models_",
+                                                                                  figure_dpi: int = 600,
+                                                                                  show_logs: bool = False) -> None:
+        """
+        Utility method to plot entity prediction performance comparison of models for specified class or statistic.
+        The method reads performance metrics from the specified directory, processes the data, and generates bar plots
+        comparing the performance of different models for specified class or statistic.
+        
+        :param figure_output_dir: Directory to save the generated figure.
+        :param metrics_dir: Directory containing the performance metrics files.
+        :param model_alias_dict: Dictionary mapping model identifiers to their display names.
+        :param class_or_stat: The class or statistic to plot.
+        :param plot_in_pairs: If True, models are plotted in pairs with spacing. Even-indexed models get striped bars.
+                              If False, all models are plotted consecutively without pair spacing.
+        :param metrics: List of performance metrics to consider (default: ['Prec', 'Rec', 'F1']).
+        :param plot_config: Configuration dictionary for plot aesthetics and layout.
+        :param figure_file_ext: File extension for the saved figure (default: 'jpg').
+        :param figure_name: Name of the figure file (without extension). If None, a name will be generated.
+        :param figure_name_prefix: Prefix for the figure name if figure_name is None (default: 'entity_prediction_performance_comparison_of_models_').
+        :param figure_dpi: DPI for the saved figure (default: 600).
+        :param show_logs: Whether to print logs during processing (default: False).
+        :return: None
+        """
+        
+        if "figsize" not in plot_config or plot_config["figsize"] is None:
+            plot_config["figsize"] = (6, 4)
+        if "bar_width" not in plot_config or plot_config["bar_width"] is None:
+            plot_config["bar_width"] = 0.004
+        if "space_between_metric_bars" not in plot_config or plot_config["space_between_metric_bars"] is None:
+            plot_config["space_between_metric_bars"] = 0.008
+        if "space_between_model_pairs" not in plot_config or plot_config["space_between_model_pairs"] is None:
+            plot_config["space_between_model_pairs"] = 0.002
+        if "bar_colors" not in plot_config or plot_config["bar_colors"] is None:
+            plot_config["bar_colors"] = ['skyblue', 'yellowgreen', 'rosybrown']
+        if "edge_colors" not in plot_config or plot_config["edge_colors"] is None:
+            plot_config["edge_colors"] = ['dodgerblue', 'darkgreen', 'brown']
+        if "hatch_style" not in plot_config or plot_config["hatch_style"] is None:
+            plot_config["hatch_style"] = '///'
+        if "error_kw_dict" not in plot_config or plot_config["error_kw_dict"] is None:
+            plot_config["error_kw_dict"] = {'capsize': 2, 'elinewidth': 0.75, 'capthick': 0.75}
+        if "title_fontsize" not in plot_config or plot_config["title_fontsize"] is None:
+            plot_config["title_fontsize"] = 12
+        if "y_lim" not in plot_config or plot_config["y_lim"] is None:
+            plot_config["y_lim"] = (0.00, 1.05)
+        if "y_ticks" not in plot_config or plot_config["y_ticks"] is None:
+            plot_config["y_ticks"] = (0.00, 1.01, 0.20)
+        if "y_ticks_labelsize" not in plot_config or plot_config["y_ticks_labelsize"] is None:
+            plot_config["y_ticks_labelsize"] = 12
+        if "y_label_spec" not in plot_config or plot_config["y_label_spec"] is None:
+            plot_config["y_label_spec"] = ('Scores', 12, 5)
+        if "y_grid_spec" not in plot_config or plot_config["y_grid_spec"] is None:
+            plot_config["y_grid_spec"] = ('--', 0.7)
+        if "x_ticks_labelsize" not in plot_config or plot_config["x_ticks_labelsize"] is None:
+            plot_config["x_ticks_labelsize"] = 12
+        if "legend_spec" not in plot_config or plot_config["legend_spec"] is None:
+            plot_config["legend_spec"] = ('upper right', 11)
+
+        metrics_data = ReportUtils.get_performance_metrics_grouped_by_class_or_stat(metrics_dir, list(model_alias_dict.keys()))
+        metrics_data[class_or_stat] = [model_data[:3] for model_data in metrics_data[class_or_stat]]
+        
+        all_data = np.array(metrics_data[class_or_stat])
+        all_means = np.mean(all_data, axis=2)
+        all_std_devs = np.std(all_data, axis=2)
+
+        print(all_data)
+        
+        upper = np.clip(all_means + all_std_devs, None, 1.0)
+        lower = np.clip(all_means - all_std_devs, 0.0, None)
+        yerr = np.array([all_means - lower, upper - all_means])
+
+        if show_logs:
+            print(f'{class_or_stat}: [{np.min(all_means - all_std_devs):.4f} ({np.min(lower):.4f}), {np.max(all_means + all_std_devs):.4f} ({np.max(upper):.4f})]')
+        
+        _, ax = plt.subplots(figsize=plot_config["figsize"])
+        
+        bar_width = plot_config["bar_width"]
+        space_between_metric_bars = plot_config["space_between_metric_bars"]
+        space_between_model_pairs = plot_config["space_between_model_pairs"]
+        
+        n_metrics = len(metrics)
+        n_models = len(model_alias_dict)
+        model_names = list(model_alias_dict.values())
+        
+        if plot_in_pairs:
+            
+            n_pairs = n_models // 2
+            pair_width = 2 * bar_width
+            metric_group_width = n_pairs * pair_width + (n_pairs - 1) * space_between_model_pairs
+            metric_group_starts = np.arange(n_metrics) * (metric_group_width + space_between_metric_bars)
+            
+            for model_idx, model_name in enumerate(model_names):
+                pair_idx = model_idx // 2
+                within_pair_idx = model_idx % 2
+                
+                color_idx = pair_idx
+                
+                error_kw_dict = plot_config["error_kw_dict"].copy()
+                error_kw_dict.update({'ecolor': plot_config["edge_colors"][color_idx]})
+                
+                is_striped = (model_idx + 1) % 2 == 0
+
+                pair_offset = pair_idx * (pair_width + space_between_model_pairs)
+                bar_offset = within_pair_idx * bar_width
+                positions = metric_group_starts + pair_offset + bar_offset
+                
+                if is_striped:
+                    ax.bar(
+                        positions,
+                        all_means[model_idx],
+                        bar_width,
+                        label=model_name,
+                        facecolor='white',
+                        edgecolor=plot_config["edge_colors"][color_idx],
+                        hatch=plot_config["hatch_style"],
+                        yerr=yerr[:, model_idx],
+                        error_kw=error_kw_dict
+                    )
+                else:
+                    ax.bar(
+                        positions,
+                        all_means[model_idx],
+                        bar_width,
+                        label=model_name,
+                        color=plot_config["bar_colors"][color_idx],
+                        edgecolor=plot_config["edge_colors"][color_idx],
+                        yerr=yerr[:, model_idx],
+                        error_kw=error_kw_dict
+                    )
+            
+            metric_group_centers = metric_group_starts + metric_group_width / 2
+            
+        else:
+            metric_group_width = n_models * bar_width
+            metric_group_starts = np.arange(n_metrics) * (metric_group_width + space_between_metric_bars)
+            
+            for model_idx, model_name in enumerate(model_names):
+                color_idx = model_idx % len(plot_config["bar_colors"])
+                
+                error_kw_dict = plot_config["error_kw_dict"].copy()
+                error_kw_dict.update({'ecolor': plot_config["edge_colors"][color_idx]})
+                
+                positions = metric_group_starts + model_idx * bar_width
+                
+                ax.bar(
+                    positions,
+                    all_means[model_idx],
+                    bar_width,
+                    label=model_name,
+                    color=plot_config["bar_colors"][color_idx],
+                    edgecolor=plot_config["edge_colors"][color_idx],
+                    yerr=yerr[:, model_idx],
+                    error_kw=error_kw_dict
+                )
+            
+            metric_group_centers = metric_group_starts + metric_group_width / 2
+        
+        ax.set_title(class_or_stat, fontsize=plot_config["title_fontsize"], fontweight='bold')
+        ax.set_ylabel(
+            plot_config["y_label_spec"][0],
+            fontsize=plot_config["y_label_spec"][1],
+            labelpad=plot_config["y_label_spec"][2]
+        )
+        
+        ax.set_ylim(plot_config["y_lim"][0], plot_config["y_lim"][1])
+        ax.set_yticks(np.arange(
+            plot_config['y_ticks'][0],
+            plot_config['y_ticks'][1],
+            plot_config['y_ticks'][2]
+        ))
+        ax.tick_params(axis='y', labelsize=plot_config["y_ticks_labelsize"])
+        ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+        ax.grid(
+            axis='y',
+            linestyle=plot_config["y_grid_spec"][0],
+            alpha=plot_config["y_grid_spec"][1]
+        )
+        
+        ax.set_xticks(metric_group_centers)
+        ax.set_xticklabels(metrics)
+        ax.tick_params(axis='x', labelsize=plot_config["x_ticks_labelsize"])
+        
+        ax.legend(
+            loc=plot_config["legend_spec"][0],
+            fontsize=plot_config["legend_spec"][1]
+        )
+        
+        figure_output_dir.mkdir(parents=True, exist_ok=True)
+        if figure_name is None:
+            suffix = "paired" if plot_in_pairs else ""
+            figure_name = f"{figure_name_prefix}{suffix}_{class_or_stat.lower().replace(' ', '_')}"
+        plot_file_name = f"{figure_name}.{figure_file_ext}"
+        plot_file_path = figure_output_dir / plot_file_name
+        plt.savefig(
+            plot_file_path,
+            format=figure_file_ext,
+            dpi=figure_dpi,
+            bbox_inches='tight'
+        )
+        plt.close()
+        
+        if show_logs:
+            print(f"figure_path: {plot_file_path}")

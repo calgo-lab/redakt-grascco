@@ -16,6 +16,7 @@ class ReportUtils:
     def get_classification_report_dict(report_file_path: Path) -> Dict[str, Dict[str, Any]]:
         """
         Parses a classification report from a text file and returns a dictionary with metrics for each class or statistic.
+        
         :param report_file_path: Path to the classification report text file.
         :return: Dictionary with class or statistic name as keys and their metrics as values.
         """
@@ -46,6 +47,7 @@ class ReportUtils:
     def get_model_and_sample_size_and_fold_wise_metrics(metrics_dir: Path) -> Dict[str, Dict[str, Dict[str, Dict]]]:
         """
         Parses classification report text files in a hierarchical dictionary structure.
+        
         :param metrics_dir: Path to the root directory containing classification report text files.
         :return: Nested dictionary with hierarchy in the order of - 
                  (1) model names, 
@@ -58,7 +60,13 @@ class ReportUtils:
         model_wise_dict: Dict[str, Dict[str, Dict[str, Dict[str, Dict[str, Any]]]]] = dict()
         metrics_files: List[Path] = list(metrics_dir.glob("**/*.txt"))
         model_names: List[str] = [item.name for item in metrics_dir.iterdir() if item.is_dir()]
-        model_wise_files: Dict[str, List[Path]] = {model_name: [path for path in metrics_files if model_name in str(path.resolve())] for model_name in model_names}
+        model_wise_files: Dict[str, List[Path]] = {
+            model_name: [
+                path for path in metrics_files 
+                if path.relative_to(metrics_dir).parts[0] == model_name
+            ]
+            for model_name in model_names
+        }
         for model_name in model_names:
             sample_size_wise_dict: Dict[str, Dict[str, Dict[str, Dict[str, Any]]]] = dict()
             sample_sizes: List[str] = list(set([path.name.split("-")[0] for path in model_wise_files[model_name]]))
@@ -80,6 +88,7 @@ class ReportUtils:
                                                          folds: List[int] = [1, 2, 3, 4, 5]) -> Dict[str, List[List[List[Union[float, int]]]]]:
         """
         Collect all metrics (prec./rec./f1./support) for all folds, all models in lists for each class or statistic.
+        
         :param metrics_dir: Path to the root directory containing classification report text files.
         :param model_names: List of model names to include in the output.
         :param sample_size: Sample size to filter the output.
@@ -97,7 +106,7 @@ class ReportUtils:
                 recalls: List[float] = list()
                 f1_scores: List[float] = list()
                 supports: List[int] = list()
-                for idx, fold in enumerate(folds):
+                for fold in folds:
                     precisions.append(round(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['precision'], 4))
                     recalls.append(round(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['recall'], 4))
                     f1_scores.append(round(model_wise_dict[model_name][f'{sample_size}'][f'K{fold}'][class_or_stat]['f1-score'], 4))
@@ -112,6 +121,7 @@ class ReportUtils:
                                                          stat_or_label: str) -> DataFrame:
         """
         Prepare a summary table of performance metrics (mean ± std) for a specific class or statistic.
+        
         :param metrics_dir: Path to the root directory containing classification report text files.
         :param model_alias_dict: Dictionary mapping model names to their aliases for display.
         :param stat_or_label: The class name or statistic (e.g., 'micro avg', 'DATE', etc.) to summarize.
@@ -125,9 +135,9 @@ class ReportUtils:
         std_devs = np.std(label_data, axis=2)
         table_tuples: List[str] = list()
         for idx in range(len(model_names)):
-            precision_str = f'{round(means[idx][0], 2): .2f} ± {round(std_devs[idx][0], 3)}'
-            recall_str = f'{round(means[idx][1], 2): .2f} ± {round(std_devs[idx][1], 3)}'
-            f1_score_str = f'{round(means[idx][2], 2): .2f} ± {round(std_devs[idx][2], 3)}'
+            precision_str = f'{round(means[idx][0], 4): .4f} ± {round(std_devs[idx][0], 3)}'
+            recall_str = f'{round(means[idx][1], 4): .4f} ± {round(std_devs[idx][1], 3)}'
+            f1_score_str = f'{round(means[idx][2], 4): .4f} ± {round(std_devs[idx][2], 3)}'
             support_str = f'{int(means[idx][3])} ± {int(std_devs[idx][3])}'
             table_tuples.append((model_alias_dict[model_names[idx]], precision_str, recall_str, f1_score_str, support_str))
         return pd.DataFrame(table_tuples, columns=["Model", "Precision", "Recall", "F1-score", "Support"])
