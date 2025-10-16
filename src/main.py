@@ -113,7 +113,7 @@ if __name__ == "__main__":
             "deepset--gelectra-large-flert": "gelectra-large",
             "calgo-lab--codealltag-ner-gelectra-large-flert-175k": "codealltag-gelectra-large"
         },
-        stat_or_label="weighted avg",
+        stat_or_label="NAME_PATIENT",
     )
     print(metrics.to_markdown(index=False))
     """
@@ -255,6 +255,48 @@ if __name__ == "__main__":
         plot_config={
             "y_lim": (0.78, 1.08),
             "y_ticks": (0.78, 0.931, 0.03)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label DATE
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="DATE",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.88, 1.12),
+            "y_ticks": (0.88, 1.01, 0.03)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label NAME_DOCTOR
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="NAME_DOCTOR",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.60, 1.40),
+            "y_ticks": (0.60, 1.01, 0.08)
+        },
+        show_logs=True
+    )
+    
+    #### Plot performance comparison of models for label NAME_PATIENT
+    PlotUtils.plot_entity_prediction_performance_comparison_of_models_for_class_or_stat(
+        figure_output_dir=figure_output_dir,
+        metrics_dir=metrics_dir,
+        model_alias_dict=model_alias_dict,
+        class_or_stat="NAME_PATIENT",
+        plot_in_pairs=True,
+        plot_config={
+            "y_lim": (0.55, 1.45),
+            "y_ticks": (0.55, 1.01, 0.09)
         },
         show_logs=True
     )

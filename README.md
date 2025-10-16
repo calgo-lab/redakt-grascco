@@ -192,7 +192,7 @@ Three separate transformers based pre-trained language models are fine-tuned for
 2. 🤗 [xlm-roberta-large](https://huggingface.co/FacebookAI/xlm-roberta-large) (<b>aka</b> xlm-roberta-large)
 3. 🤗 [deepset/gelectra-large](https://huggingface.co/deepset/gelectra-large) (<b>aka</b> gelectra-large)
 
-Additionally, checkpoint of NER models fine-tuned on the CodE Alltag corpus are further fine-tuned on the GraSCCo corpus:
+Additionally, checkpoint of NER models fine-tuned on the CodE Alltag corpus are further fine-tuned with classification head for labels present in GraSCCo corpus:
 
 GitHub: [calgo-lab/redakt-codealltag](https://github.com/calgo-lab/redakt-codealltag)
 
@@ -278,31 +278,42 @@ NER performance comparison of all models on the test set with mean and standard 
 
 <b>(DATE):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.92 ± 0.032 | 0.95 ± 0.039 | 0.93 ± 0.034 | 134 ± 18  |
-| xlm-roberta-large      | 0.97 ± 0.019 | 0.97 ± 0.020 | 0.97 ± 0.018 | 134 ± 18  |
-| gelectra-large         | 0.96 ± 0.020 | 0.98 ± 0.021 | 0.97 ± 0.019 | 134 ± 18  |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.9152 ± 0.032 | 0.9484 ± 0.039 | 0.9314 ± 0.034 | 134 ± 18  |
+| codealltag-bert-base-german-cased | 0.9602 ± 0.019 | 0.9768 ± 0.017 | 0.9683 ± 0.015 | 134 ± 18  |
+| xlm-roberta-large                 | <b>0.9698 ± 0.019</b> | 0.9742 ± 0.020 | <b>0.9720 ± 0.018</b> | 134 ± 18  |
+| codealltag-xlm-roberta-large      | 0.9680 ± 0.016 | 0.9747 ± 0.016 | 0.9713 ± 0.015 | 134 ± 18  |
+| gelectra-large                    | 0.9622 ± 0.020 | <b>0.9793 ± 0.021</b> | 0.9706 ± 0.019 | 134 ± 18  |
+| codealltag-gelectra-large         | 0.9623 ± 0.019 | 0.9738 ± 0.017 | 0.9679 ± 0.017 | 134 ± 18  |
+
+![ner_date](reports/figures/entity_prediction_performance_comparison_of_models_paired_date.jpg)
 
 <b>(NAME_DOCTOR):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.71 ± 0.092 | 0.82 ± 0.042 | 0.75 ± 0.048 | 27 ± 6    |
-| xlm-roberta-large      | 0.81 ± 0.025 | 0.99 ± 0.015 | 0.89 ± 0.017 | 27 ± 6    |
-| gelectra-large         | 0.82 ± 0.037 | 0.95 ± 0.031 | 0.88 ± 0.023 | 27 ± 6    |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.7080 ± 0.092 | 0.8175 ± 0.042 | 0.7542 ± 0.048 | 27 ± 6    |
+| codealltag-bert-base-german-cased | 0.6835 ± 0.061 | 0.8732 ± 0.063 | 0.7665 ± 0.061 | 27 ± 6    |
+| xlm-roberta-large                 | 0.8141 ± 0.025 | <b>0.9926 ± 0.015</b> | <b>0.8943 ± 0.017</b> | 27 ± 6    |
+| codealltag-xlm-roberta-large      | 0.7152 ± 0.087 | 0.9249 ± 0.033 | 0.8046 ± 0.066 | 27 ± 6    |
+| gelectra-large                    | <b>0.8197 ± 0.037</b> | 0.9537 ± 0.031 | 0.8809 ± 0.023 | 27 ± 6    |
+| codealltag-gelectra-large         | 0.7665 ± 0.083 | 0.9217 ± 0.071 | 0.8358 ± 0.073 | 27 ± 6    |
+
+![ner_name_doctor](reports/figures/entity_prediction_performance_comparison_of_models_paired_name_doctor.jpg)
 
 <b>(NAME_PATIENT):</b>
 
-| Model                  | Precision    | Recall       | F1-score     | Support   |
-|------------------------|--------------|--------------|--------------|-----------|
-| bert-base-german-cased | 0.70 ± 0.111 | 0.68 ± 0.120 | 0.69 ± 0.112 | 34 ± 6    |
-| xlm-roberta-large      | 0.90 ± 0.088 | 0.80 ± 0.122 | 0.84 ± 0.101 | 34 ± 6    |
-| gelectra-large         | 0.88 ± 0.087 | 0.81 ± 0.091 | 0.85 ± 0.079 | 34 ± 6    |
+| Model                             | Precision      | Recall         | F1-score       | Support   |
+|:----------------------------------|:---------------|:---------------|:---------------|:----------|
+| bert-base-german-cased            | 0.7027 ± 0.111 | 0.6761 ± 0.120 | 0.6874 ± 0.112 | 34 ± 6    |
+| codealltag-bert-base-german-cased | 0.7942 ± 0.086 | 0.7204 ± 0.091 | 0.7529 ± 0.077 | 34 ± 6    |
+| xlm-roberta-large                 | <b>0.8968 ± 0.088</b> | 0.8006 ± 0.122 | 0.8428 ± 0.101 | 34 ± 6    |
+| codealltag-xlm-roberta-large      | 0.8853 ± 0.089 | <b>0.8564 ± 0.103</b> | <b>0.8704 ± 0.096</b> | 34 ± 6    |
+| gelectra-large                    | 0.8849 ± 0.087 | 0.8147 ± 0.091 | 0.8463 ± 0.079 | 34 ± 6    |
+| codealltag-gelectra-large         | 0.8757 ± 0.108 | 0.8218 ± 0.085 | 0.8463 ± 0.089 | 34 ± 6    |
 
-<br>
-
-![ner_date_doctor_patient](reports/figures/entity_prediction_performance_comparison_of_models_date_name_doctor_name_patient.jpg)
+![ner_name_patient](reports/figures/entity_prediction_performance_comparison_of_models_paired_name_patient.jpg)
 
 <br>
 
